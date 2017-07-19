@@ -21,6 +21,7 @@ defmodule Foody.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Foody.TestHelpers
       import Foody.ModelCase
     end
   end

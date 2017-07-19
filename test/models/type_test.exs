@@ -1,9 +1,9 @@
 defmodule Foody.TypeTest do
-  use Foody.ModelCase
+  use Foody.ModelCase, async: true
 
   alias Foody.Type
 
-  @valid_attrs %{name: "some content"}
+  @valid_attrs %{name: "some type"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -26,6 +26,7 @@ defmodule Foody.ConnCase do
       import Ecto.Query
 
       import Foody.Router.Helpers
+      import Foody.TestHelpers
 
       # The default endpoint for testing
       @endpoint Foody.Endpoint

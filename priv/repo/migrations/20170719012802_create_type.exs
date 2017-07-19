@@ -8,5 +8,6 @@ defmodule Foody.Repo.Migrations.CreateType do
       timestamps()
     end
 
+    create unique_index(:types, [:name])
   end
 end
