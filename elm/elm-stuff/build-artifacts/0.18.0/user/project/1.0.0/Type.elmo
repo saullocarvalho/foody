@@ -1,0 +1,2 @@
+var _user$project$Type$Decrement = {ctor: 'Decrement'};
+var _user$project$Type$Increment = {ctor: 'Increment'};

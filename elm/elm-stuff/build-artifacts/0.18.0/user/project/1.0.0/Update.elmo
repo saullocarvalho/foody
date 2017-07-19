@@ -1,0 +1,15 @@
+var _user$project$Update$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Increment') {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model + 1,
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model - 1,
+				{ctor: '[]'});
+		}
+	});
