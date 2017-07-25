@@ -1,6 +1,8 @@
 defmodule Foody.Type do
   use Foody.Web, :model
 
+  @derive {Poison.Encoder, except: [:__meta__, :inserted_at, :updated_at]}
+
   schema "types" do
     field :name, :string
 
