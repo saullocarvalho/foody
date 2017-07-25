@@ -1,7 +1,16 @@
-var _user$project$Model$socketServer = 'ws://localhost:4000/socket/websocket';
-var _user$project$Model$initPhxSocket = _fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
-	_fbonetti$elm_phoenix_socket$Phoenix_Socket$init(_user$project$Model$socketServer));
-var _user$project$Model$initialModel = {phxSocket: _user$project$Model$initPhxSocket};
-var _user$project$Model$Model = function (a) {
-	return {phxSocket: a};
+var _user$project$Model$initialTypeList = {
+	types: {ctor: '[]'}
 };
+var _user$project$Model$initialModel = {typeList: _user$project$Model$initialTypeList, error: _elm_lang$core$Maybe$Nothing};
+var _user$project$Model$socketServer = 'ws://localhost:4000/socket/websocket';
+var _user$project$Model$Model = F2(
+	function (a, b) {
+		return {typeList: a, error: b};
+	});
+var _user$project$Model$TypeList = function (a) {
+	return {types: a};
+};
+var _user$project$Model$Type = F2(
+	function (a, b) {
+		return {id: a, name: b};
+	});

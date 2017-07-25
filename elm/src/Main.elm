@@ -5,12 +5,15 @@ import Model exposing (..)
 import View exposing (..)
 import Update exposing (..)
 import Messages exposing (Msg(..))
-import Subscriptions exposing (..)
+import Commands exposing (..)
+
+
+-- import Subscriptions exposing (..)
 
 
 init : ( Model, Cmd Msg )
 init =
-    initialModel ! []
+    initialModel ! [ fetchTypes ]
 
 
 main : Program Never Model Msg
@@ -19,5 +22,5 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = always <| Sub.none
         }

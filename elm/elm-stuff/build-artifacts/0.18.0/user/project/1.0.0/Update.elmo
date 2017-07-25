@@ -1,17 +1,21 @@
 var _user$project$Update$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		var _p1 = A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$update, _p0._0, model.phxSocket);
-		var phxSocket = _p1._0;
-		var phxCmd = _p1._1;
-		return A2(
-			_elm_lang$core$Platform_Cmd_ops['!'],
-			_elm_lang$core$Native_Utils.update(
-				model,
-				{phxSocket: phxSocket}),
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Messages$PhoenixMsg, phxCmd),
-				_1: {ctor: '[]'}
-			});
+		if (_p0._0.ctor === 'Ok') {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{typeList: _p0._0._0}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						error: _elm_lang$core$Maybe$Just('Something went wrong...')
+					}),
+				{ctor: '[]'});
+		}
 	});

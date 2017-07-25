@@ -1,1 +1,5 @@
-var _user$project$Commands$command = 'Command';
+var _user$project$Commands$fetchTypes = function () {
+	var apiUrl = '/api/types';
+	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$typeListDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$FetchType, request);
+}();

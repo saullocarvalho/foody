@@ -1,7 +1,10 @@
 module Messages exposing (..)
 
-import Phoenix.Socket
+-- import Phoenix.Socket
+
+import Http
+import Model exposing (TypeList)
 
 
 type Msg
-    = PhoenixMsg (Phoenix.Socket.Msg Msg)
+    = FetchType (Result Http.Error TypeList)

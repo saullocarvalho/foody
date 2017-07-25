@@ -1,3 +1,1 @@
-var _user$project$Subscriptions$subscriptions = function (model) {
-	return A2(_fbonetti$elm_phoenix_socket$Phoenix_Socket$listen, model.phxSocket, _user$project$Messages$PhoenixMsg);
-};
+var _user$project$Subscriptions$sub = '';
