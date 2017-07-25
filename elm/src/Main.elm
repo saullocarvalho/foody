@@ -5,6 +5,7 @@ import Model exposing (..)
 import View exposing (..)
 import Update exposing (..)
 import Messages exposing (Msg(..))
+import Subscriptions exposing (..)
 
 
 init : ( Model, Cmd Msg )
@@ -18,5 +19,5 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = always <| Sub.none
+        , subscriptions = subscriptions
         }

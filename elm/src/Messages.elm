@@ -1,6 +1,7 @@
 module Messages exposing (..)
 
+import Phoenix.Socket
+
 
 type Msg
-    = Increment
-    | Decrement
+    = PhoenixMsg (Phoenix.Socket.Msg Msg)

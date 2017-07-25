@@ -1,10 +1,24 @@
 module Model exposing (..)
 
+import Phoenix.Socket
+import Messages exposing (..)
+
+
+socketServer : String
+socketServer =
+    "ws://localhost:4000/socket/websocket"
+
 
 type alias Model =
-    Int
+    { phxSocket : Phoenix.Socket.Socket Msg }
+
+
+initPhxSocket : Phoenix.Socket.Socket Msg
+initPhxSocket =
+    Phoenix.Socket.init socketServer
+        |> Phoenix.Socket.withDebug
 
 
 initialModel : Model
 initialModel =
-    0
+    { phxSocket = initPhxSocket }

@@ -1,2 +1,3 @@
-var _user$project$Messages$Decrement = {ctor: 'Decrement'};
-var _user$project$Messages$Increment = {ctor: 'Increment'};
+var _user$project$Messages$PhoenixMsg = function (a) {
+	return {ctor: 'PhoenixMsg', _0: a};
+};

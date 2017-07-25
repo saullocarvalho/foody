@@ -3,6 +3,7 @@ defmodule Foody.UserSocket do
 
   ## Channels
   # channel "room:*", Foody.RoomChannel
+  channel "products", Foody.ProductsChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

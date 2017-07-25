@@ -3,9 +3,4 @@ var _user$project$Main$init = A2(
 	_user$project$Model$initialModel,
 	{ctor: '[]'});
 var _user$project$Main$main = _elm_lang$html$Html$program(
-	{
-		init: _user$project$Main$init,
-		view: _user$project$View$view,
-		update: _user$project$Update$update,
-		subscriptions: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Sub$none)
-	})();
+	{init: _user$project$Main$init, view: _user$project$View$view, update: _user$project$Update$update, subscriptions: _user$project$Subscriptions$subscriptions})();
