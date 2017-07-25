@@ -1,0 +1,8 @@
+var _user$project$TypeList_View$typeListView = function (model) {
+	return (_elm_lang$core$Native_Utils.cmp(
+		_elm_lang$core$List$length(model.typeList.types),
+		0) > 0) ? A2(
+		_elm_lang$html$Html$ul,
+		{ctor: '[]'},
+		A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)) : _elm_lang$html$Html$text('There is no types yet.');
+};

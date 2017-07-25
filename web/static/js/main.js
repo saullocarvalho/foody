@@ -12907,15 +12907,69 @@ var _user$project$Commands$fetchTypes = function () {
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$FetchType, request);
 }();
 
-var _user$project$View$view = function (model) {
+var _user$project$Type_View$typeView = function (t) {
+	return A2(
+		_elm_lang$html$Html$li,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(t.id)),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(t.name),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+
+var _user$project$TypeList_View$typeListView = function (model) {
+	return (_elm_lang$core$Native_Utils.cmp(
+		_elm_lang$core$List$length(model.typeList.types),
+		0) > 0) ? A2(
+		_elm_lang$html$Html$ul,
+		{ctor: '[]'},
+		A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)) : _elm_lang$html$Html$text('There is no types yet.');
+};
+
+var _user$project$View$header = A2(
+	_elm_lang$html$Html$h1,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('Foddy'),
+		_1: {ctor: '[]'}
+	});
+var _user$project$View$layout = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html$text('Hello World!'),
-			_1: {ctor: '[]'}
+			_0: _user$project$View$header,
+			_1: {
+				ctor: '::',
+				_0: _user$project$TypeList_View$typeListView(model),
+				_1: {ctor: '[]'}
+			}
 		});
+};
+var _user$project$View$view = function (model) {
+	return _user$project$View$layout(model);
 };
 
 var _user$project$Update$update = F2(
