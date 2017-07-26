@@ -12,10 +12,12 @@ defmodule Foody.Brand do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
+  @fields [:name]
+  @required [:name]
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, @fields)
+    |> validate_required(@required)
     |> unique_constraint(:name)
   end
 end
