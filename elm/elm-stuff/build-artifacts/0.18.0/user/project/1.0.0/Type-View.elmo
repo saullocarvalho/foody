@@ -1,11 +1,11 @@
 var _user$project$Type_View$typeView = function (t) {
 	return A2(
-		_elm_lang$html$Html$li,
+		_elm_lang$html$Html$tr,
 		{ctor: '[]'},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$div,
+				_elm_lang$html$Html$td,
 				{ctor: '[]'},
 				{
 					ctor: '::',
@@ -16,7 +16,7 @@ var _user$project$Type_View$typeView = function (t) {
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$div,
+					_elm_lang$html$Html$td,
 					{ctor: '[]'},
 					{
 						ctor: '::',

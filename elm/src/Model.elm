@@ -1,15 +1,13 @@
 module Model exposing (..)
 
+import Routing exposing (Route)
+
+
 -- import Phoenix.Socket
 -- import Model exposing (Msg)
-
-
-socketServer : String
-socketServer =
-    "ws://localhost:4000/socket/websocket"
-
-
-
+-- socketServer : String
+-- socketServer =
+--     "ws://localhost:4000/socket/websocket"
 -- initPhxSocket : Phoenix.Socket.Socket Msg
 -- initPhxSocket =
 --     Phoenix.Socket.init socketServer
@@ -21,12 +19,13 @@ initialTypeList =
     { types = [] }
 
 
-initialModel : Model
-initialModel =
+initialModel : Route -> Model
+initialModel route =
     { typeList = initialTypeList
 
     -- , phxSocket = initPhxSocket
     , error = Nothing
+    , route = route
     }
 
 
@@ -35,6 +34,7 @@ type alias Model =
 
     -- , phxSocket : Phoenix.Socket.Socket Msg
     , error : Maybe String
+    , route : Route
     }
 
 

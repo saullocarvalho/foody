@@ -1,11 +1,12 @@
 var _user$project$Model$initialTypeList = {
 	types: {ctor: '[]'}
 };
-var _user$project$Model$initialModel = {typeList: _user$project$Model$initialTypeList, error: _elm_lang$core$Maybe$Nothing};
-var _user$project$Model$socketServer = 'ws://localhost:4000/socket/websocket';
-var _user$project$Model$Model = F2(
-	function (a, b) {
-		return {typeList: a, error: b};
+var _user$project$Model$initialModel = function (route) {
+	return {typeList: _user$project$Model$initialTypeList, error: _elm_lang$core$Maybe$Nothing, route: route};
+};
+var _user$project$Model$Model = F3(
+	function (a, b, c) {
+		return {typeList: a, error: b, route: c};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};

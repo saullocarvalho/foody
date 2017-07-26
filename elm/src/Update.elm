@@ -2,8 +2,11 @@ module Update exposing (..)
 
 -- import Phoenix.Socket
 
+import Navigation
 import Model exposing (..)
 import Messages exposing (..)
+import Commands exposing (fetchTypes)
+import Routing exposing (Route(..), parse, toPath)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -14,6 +17,29 @@ update msg model =
 
         FetchType (Err error) ->
             { model | error = Just "Something went wrong..." } ! []
+
+        UrlChange location ->
+            let
+                currentRoute =
+                    parse location
+            in
+                urlUpdate { model | route = currentRoute }
+
+        NavigateTo route ->
+            model ! [ Navigation.newUrl <| toPath route ]
+
+
+urlUpdate : Model -> ( Model, Cmd Msg )
+urlUpdate model =
+    case model.route of
+        HomeIndexRoute ->
+            model ! []
+
+        TypeIndexRoute ->
+            model ! [ fetchTypes ]
+
+        _ ->
+            model ! []
 
 
 

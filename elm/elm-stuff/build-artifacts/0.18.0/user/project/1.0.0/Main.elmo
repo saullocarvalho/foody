@@ -1,12 +1,11 @@
-var _user$project$Main$init = A2(
-	_elm_lang$core$Platform_Cmd_ops['!'],
-	_user$project$Model$initialModel,
-	{
-		ctor: '::',
-		_0: _user$project$Commands$fetchTypes,
-		_1: {ctor: '[]'}
-	});
-var _user$project$Main$main = _elm_lang$html$Html$program(
+var _user$project$Main$init = function (location) {
+	var currentRoute = _user$project$Routing$parse(location);
+	var model = _user$project$Model$initialModel(currentRoute);
+	return _user$project$Update$urlUpdate(model);
+};
+var _user$project$Main$main = A2(
+	_elm_lang$navigation$Navigation$program,
+	_user$project$Messages$UrlChange,
 	{
 		init: _user$project$Main$init,
 		view: _user$project$View$view,

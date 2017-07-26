@@ -1,24 +1,32 @@
 module Main exposing (..)
 
-import Html exposing (..)
+import Navigation
 import Model exposing (..)
 import View exposing (..)
 import Update exposing (..)
 import Messages exposing (Msg(..))
 import Commands exposing (..)
+import Routing exposing (parse)
 
 
 -- import Subscriptions exposing (..)
 
 
-init : ( Model, Cmd Msg )
-init =
-    initialModel ! [ fetchTypes ]
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+    let
+        currentRoute =
+            parse location
+
+        model =
+            initialModel currentRoute
+    in
+        urlUpdate model
 
 
 main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program UrlChange
         { init = init
         , view = view
         , update = update

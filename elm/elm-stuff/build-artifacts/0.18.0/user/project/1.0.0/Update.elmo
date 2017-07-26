@@ -1,21 +1,64 @@
+var _user$project$Update$urlUpdate = function (model) {
+	var _p0 = model.route;
+	switch (_p0.ctor) {
+		case 'HomeIndexRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		case 'TypeIndexRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{
+					ctor: '::',
+					_0: _user$project$Commands$fetchTypes,
+					_1: {ctor: '[]'}
+				});
+		default:
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+	}
+};
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		if (_p0._0.ctor === 'Ok') {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				_elm_lang$core$Native_Utils.update(
-					model,
-					{typeList: _p0._0._0}),
-				{ctor: '[]'});
-		} else {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				_elm_lang$core$Native_Utils.update(
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'FetchType':
+				if (_p1._0.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{typeList: _p1._0._0}),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								error: _elm_lang$core$Maybe$Just('Something went wrong...')
+							}),
+						{ctor: '[]'});
+				}
+			case 'UrlChange':
+				var currentRoute = _user$project$Routing$parse(_p1._0);
+				return _user$project$Update$urlUpdate(
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{route: currentRoute}));
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
 					{
-						error: _elm_lang$core$Maybe$Just('Something went wrong...')
-					}),
-				{ctor: '[]'});
+						ctor: '::',
+						_0: _elm_lang$navigation$Navigation$newUrl(
+							_user$project$Routing$toPath(_p1._0)),
+						_1: {ctor: '[]'}
+					});
 		}
 	});

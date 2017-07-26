@@ -1,0 +1,38 @@
+var _user$project$Routing$toPath = function (route) {
+	var _p0 = route;
+	switch (_p0.ctor) {
+		case 'HomeIndexRoute':
+			return '/';
+		case 'TypeIndexRoute':
+			return '/types';
+		default:
+			return '/not-found';
+	}
+};
+var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
+var _user$project$Routing$TypeIndexRoute = {ctor: 'TypeIndexRoute'};
+var _user$project$Routing$HomeIndexRoute = {ctor: 'HomeIndexRoute'};
+var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
+	{
+		ctor: '::',
+		_0: A2(
+			_evancz$url_parser$UrlParser$map,
+			_user$project$Routing$HomeIndexRoute,
+			_evancz$url_parser$UrlParser$s('')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_evancz$url_parser$UrlParser$map,
+				_user$project$Routing$TypeIndexRoute,
+				_evancz$url_parser$UrlParser$s('types')),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Routing$parse = function (location) {
+	var _p1 = A2(_evancz$url_parser$UrlParser$parsePath, _user$project$Routing$matchers, location);
+	if (_p1.ctor === 'Just') {
+		return _p1._0;
+	} else {
+		return _user$project$Routing$NotFoundRoute;
+	}
+};

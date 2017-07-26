@@ -2,7 +2,54 @@ var _user$project$TypeList_View$typeListView = function (model) {
 	return (_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$List$length(model.typeList.types),
 		0) > 0) ? A2(
-		_elm_lang$html$Html$ul,
-		{ctor: '[]'},
-		A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)) : _elm_lang$html$Html$text('There is no types yet.');
+		_elm_lang$html$Html$table,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('table'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$thead,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$tr,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$th,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Id'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$th,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Type'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$tbody,
+					{ctor: '[]'},
+					A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)),
+				_1: {ctor: '[]'}
+			}
+		}) : _elm_lang$html$Html$text('There is no types yet.');
 };
