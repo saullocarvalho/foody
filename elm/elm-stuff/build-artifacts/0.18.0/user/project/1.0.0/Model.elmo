@@ -1,12 +1,6 @@
-var _user$project$Model$initialTypeList = {
-	types: {ctor: '[]'}
-};
-var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$initialTypeList, error: _elm_lang$core$Maybe$Nothing, route: route};
-};
-var _user$project$Model$Model = F3(
-	function (a, b, c) {
-		return {typeList: a, error: b, route: c};
+var _user$project$Model$Model = F2(
+	function (a, b) {
+		return {typeList: a, route: b};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -15,3 +9,14 @@ var _user$project$Model$Type = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
+var _user$project$Model$Success = function (a) {
+	return {ctor: 'Success', _0: a};
+};
+var _user$project$Model$Failure = function (a) {
+	return {ctor: 'Failure', _0: a};
+};
+var _user$project$Model$Requesting = {ctor: 'Requesting'};
+var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
+var _user$project$Model$initialModel = function (route) {
+	return {typeList: _user$project$Model$NotRequested, route: route};
+};

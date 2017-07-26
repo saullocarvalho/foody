@@ -1,55 +1,76 @@
 var _user$project$TypeList_View$typeListView = function (model) {
-	return (_elm_lang$core$Native_Utils.cmp(
-		_elm_lang$core$List$length(model.typeList.types),
-		0) > 0) ? A2(
-		_elm_lang$html$Html$table,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('table'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$thead,
-				{ctor: '[]'},
+	var _p0 = model.typeList;
+	switch (_p0.ctor) {
+		case 'Success':
+			return A2(
+				_elm_lang$html$Html$table,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('table'),
+					_1: {ctor: '[]'}
+				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$tr,
+						_elm_lang$html$Html$thead,
 						{ctor: '[]'},
 						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$th,
+								_elm_lang$html$Html$tr,
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('Id'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$th,
-									{ctor: '[]'},
-									{
+									_0: A2(
+										_elm_lang$html$Html$th,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Id'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('Type'),
+										_0: A2(
+											_elm_lang$html$Html$th,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Type'),
+												_1: {ctor: '[]'}
+											}),
 										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}
+									}
+								}),
+							_1: {ctor: '[]'}
 						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$tbody,
+							{ctor: '[]'},
+							A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, _p0._0.types)),
+						_1: {ctor: '[]'}
+					}
+				});
+		case 'Failure':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('alert alert-danger'),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p0._0),
 					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$tbody,
-					{ctor: '[]'},
-					A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)),
-				_1: {ctor: '[]'}
-			}
-		}) : _elm_lang$html$Html$text('There is no types yet.');
+				});
+		default:
+			return _elm_lang$html$Html$text('');
+	}
 };

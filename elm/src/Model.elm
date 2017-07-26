@@ -14,26 +14,26 @@ import Routing exposing (Route)
 --         |> Phoenix.Socket.withDebug
 
 
-initialTypeList : TypeList
-initialTypeList =
-    { types = [] }
+type RemoteData e a
+    = NotRequested
+    | Requesting
+    | Failure e
+    | Success a
 
 
 initialModel : Route -> Model
 initialModel route =
-    { typeList = initialTypeList
+    { typeList = NotRequested
 
     -- , phxSocket = initPhxSocket
-    , error = Nothing
     , route = route
     }
 
 
 type alias Model =
-    { typeList : TypeList
+    { typeList : RemoteData String TypeList
 
     -- , phxSocket : Phoenix.Socket.Socket Msg
-    , error : Maybe String
     , route : Route
     }
 

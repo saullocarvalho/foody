@@ -14212,15 +14212,9 @@ var _user$project$Routing$parse = function (location) {
 	}
 };
 
-var _user$project$Model$initialTypeList = {
-	types: {ctor: '[]'}
-};
-var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$initialTypeList, error: _elm_lang$core$Maybe$Nothing, route: route};
-};
-var _user$project$Model$Model = F3(
-	function (a, b, c) {
-		return {typeList: a, error: b, route: c};
+var _user$project$Model$Model = F2(
+	function (a, b) {
+		return {typeList: a, route: b};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -14229,6 +14223,17 @@ var _user$project$Model$Type = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
+var _user$project$Model$Success = function (a) {
+	return {ctor: 'Success', _0: a};
+};
+var _user$project$Model$Failure = function (a) {
+	return {ctor: 'Failure', _0: a};
+};
+var _user$project$Model$Requesting = {ctor: 'Requesting'};
+var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
+var _user$project$Model$initialModel = function (route) {
+	return {typeList: _user$project$Model$NotRequested, route: route};
+};
 
 var _user$project$Decoders$typeDecoder = A2(
 	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
@@ -14323,59 +14328,80 @@ var _user$project$Type_View$typeView = function (t) {
 };
 
 var _user$project$TypeList_View$typeListView = function (model) {
-	return (_elm_lang$core$Native_Utils.cmp(
-		_elm_lang$core$List$length(model.typeList.types),
-		0) > 0) ? A2(
-		_elm_lang$html$Html$table,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('table'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$thead,
-				{ctor: '[]'},
+	var _p0 = model.typeList;
+	switch (_p0.ctor) {
+		case 'Success':
+			return A2(
+				_elm_lang$html$Html$table,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('table'),
+					_1: {ctor: '[]'}
+				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$tr,
+						_elm_lang$html$Html$thead,
 						{ctor: '[]'},
 						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$th,
+								_elm_lang$html$Html$tr,
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('Id'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$th,
-									{ctor: '[]'},
-									{
+									_0: A2(
+										_elm_lang$html$Html$th,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Id'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('Type'),
+										_0: A2(
+											_elm_lang$html$Html$th,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Type'),
+												_1: {ctor: '[]'}
+											}),
 										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}
+									}
+								}),
+							_1: {ctor: '[]'}
 						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$tbody,
+							{ctor: '[]'},
+							A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, _p0._0.types)),
+						_1: {ctor: '[]'}
+					}
+				});
+		case 'Failure':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('alert alert-danger'),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p0._0),
 					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$tbody,
-					{ctor: '[]'},
-					A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, model.typeList.types)),
-				_1: {ctor: '[]'}
-			}
-		}) : _elm_lang$html$Html$text('There is no types yet.');
+				});
+		default:
+			return _elm_lang$html$Html$text('');
+	}
 };
 
 var _user$project$Navigation_View$navigationCollapse = A2(
@@ -14719,7 +14745,9 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{typeList: _p1._0._0}),
+							{
+								typeList: _user$project$Model$Success(_p1._0._0)
+							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
@@ -14727,7 +14755,7 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								error: _elm_lang$core$Maybe$Just('Something went wrong...')
+								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}

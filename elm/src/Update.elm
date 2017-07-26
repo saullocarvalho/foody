@@ -13,10 +13,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         FetchType (Ok typeList) ->
-            { model | typeList = typeList } ! []
+            { model | typeList = Success typeList } ! []
 
         FetchType (Err error) ->
-            { model | error = Just "Something went wrong..." } ! []
+            { model | typeList = Failure "Something went wrong..." } ! []
 
         UrlChange location ->
             let

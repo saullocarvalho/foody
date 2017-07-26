@@ -32,7 +32,9 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{typeList: _p1._0._0}),
+							{
+								typeList: _user$project$Model$Success(_p1._0._0)
+							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
@@ -40,7 +42,7 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								error: _elm_lang$core$Maybe$Just('Something went wrong...')
+								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
