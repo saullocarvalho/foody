@@ -5,7 +5,7 @@ module Update exposing (..)
 import Navigation
 import Model exposing (..)
 import Messages exposing (..)
-import Commands exposing (fetchTypes)
+import Commands exposing (fetchTypes, fetchBrands)
 import Routing exposing (Route(..), parse, toPath)
 
 
@@ -17,6 +17,12 @@ update msg model =
 
         FetchType (Err error) ->
             { model | typeList = Failure "Something went wrong..." } ! []
+
+        FetchBrand (Ok brandList) ->
+            { model | brandList = Success brandList } ! []
+
+        FetchBrand (Err error) ->
+            { model | brandList = Failure "Something went wrong..." } ! []
 
         UrlChange location ->
             let
@@ -37,6 +43,9 @@ urlUpdate model =
 
         TypeIndexRoute ->
             model ! [ fetchTypes ]
+
+        BrandIndexRoute ->
+            model ! [ fetchBrands ]
 
         _ ->
             model ! []

@@ -12,6 +12,7 @@
 
 alias Foody.Repo
 alias Foody.Type
+alias Foody.Brand
 
 IO.puts "---- Deleting existing food types"
 
@@ -27,4 +28,20 @@ for name <- ["Milk", "Eggs", "Meat", "Bread"] do
     |> Repo.insert
 
   IO.puts "---- Inserted food type #{type.id}"
+end
+
+IO.puts "---- Deleting existing food brands"
+
+Repo.delete_all Brand
+
+IO.puts "---- Creating food brands"
+
+for name <- ["Parmalat", "Danone", "JBS", "Molico"] do
+  params = %{name: name}
+
+  {:ok, brand} = %Brand{}
+    |> Brand.changeset(params)
+    |> Repo.insert
+
+  IO.puts "---- Inserted food brand #{brand.id}"
 end

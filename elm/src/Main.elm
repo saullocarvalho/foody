@@ -5,7 +5,6 @@ import Model exposing (..)
 import View exposing (..)
 import Update exposing (..)
 import Messages exposing (Msg(..))
-import Commands exposing (..)
 import Routing exposing (parse)
 
 

@@ -24,6 +24,7 @@ type RemoteData e a
 initialModel : Route -> Model
 initialModel route =
     { typeList = NotRequested
+    , brandList = NotRequested
 
     -- , phxSocket = initPhxSocket
     , route = route
@@ -32,6 +33,7 @@ initialModel route =
 
 type alias Model =
     { typeList : RemoteData String TypeList
+    , brandList : RemoteData String BrandList
 
     -- , phxSocket : Phoenix.Socket.Socket Msg
     , route : Route
@@ -43,6 +45,16 @@ type alias TypeList =
 
 
 type alias Type =
+    { id : Int
+    , name : String
+    }
+
+
+type alias BrandList =
+    { brands : List Brand }
+
+
+type alias Brand =
     { id : Int
     , name : String
     }

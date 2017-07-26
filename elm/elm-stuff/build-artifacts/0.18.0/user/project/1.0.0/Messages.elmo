@@ -4,6 +4,9 @@ var _user$project$Messages$NavigateTo = function (a) {
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
+var _user$project$Messages$FetchBrand = function (a) {
+	return {ctor: 'FetchBrand', _0: a};
+};
 var _user$project$Messages$FetchType = function (a) {
 	return {ctor: 'FetchType', _0: a};
 };

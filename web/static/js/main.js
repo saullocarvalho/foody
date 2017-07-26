@@ -14180,11 +14180,14 @@ var _user$project$Routing$toPath = function (route) {
 			return '/';
 		case 'TypeIndexRoute':
 			return '/types';
+		case 'BrandIndexRoute':
+			return '/brands';
 		default:
 			return '/not-found';
 	}
 };
 var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
+var _user$project$Routing$BrandIndexRoute = {ctor: 'BrandIndexRoute'};
 var _user$project$Routing$TypeIndexRoute = {ctor: 'TypeIndexRoute'};
 var _user$project$Routing$HomeIndexRoute = {ctor: 'HomeIndexRoute'};
 var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
@@ -14200,7 +14203,14 @@ var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
 				_evancz$url_parser$UrlParser$map,
 				_user$project$Routing$TypeIndexRoute,
 				_evancz$url_parser$UrlParser$s('types')),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_evancz$url_parser$UrlParser$map,
+					_user$project$Routing$BrandIndexRoute,
+					_evancz$url_parser$UrlParser$s('brands')),
+				_1: {ctor: '[]'}
+			}
 		}
 	});
 var _user$project$Routing$parse = function (location) {
@@ -14212,14 +14222,21 @@ var _user$project$Routing$parse = function (location) {
 	}
 };
 
-var _user$project$Model$Model = F2(
-	function (a, b) {
-		return {typeList: a, route: b};
+var _user$project$Model$Model = F3(
+	function (a, b, c) {
+		return {typeList: a, brandList: b, route: c};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
 };
 var _user$project$Model$Type = F2(
+	function (a, b) {
+		return {id: a, name: b};
+	});
+var _user$project$Model$BrandList = function (a) {
+	return {brands: a};
+};
+var _user$project$Model$Brand = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
@@ -14232,9 +14249,143 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, route: route};
+	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, route: route};
 };
 
+var _user$project$Messages$NavigateTo = function (a) {
+	return {ctor: 'NavigateTo', _0: a};
+};
+var _user$project$Messages$UrlChange = function (a) {
+	return {ctor: 'UrlChange', _0: a};
+};
+var _user$project$Messages$FetchBrand = function (a) {
+	return {ctor: 'FetchBrand', _0: a};
+};
+var _user$project$Messages$FetchType = function (a) {
+	return {ctor: 'FetchType', _0: a};
+};
+
+var _user$project$Brand_View$brandView = function (b) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$td,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(b.id)),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$td,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(b.name),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+
+var _user$project$BrandList_View$brandListView = function (model) {
+	var _p0 = model.brandList;
+	switch (_p0.ctor) {
+		case 'Success':
+			return A2(
+				_elm_lang$html$Html$table,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('table'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$thead,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$tr,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$th,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Id'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$th,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Type'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$tbody,
+							{ctor: '[]'},
+							A2(_elm_lang$core$List$map, _user$project$Brand_View$brandView, _p0._0.brands)),
+						_1: {ctor: '[]'}
+					}
+				});
+		case 'Failure':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('alert alert-danger'),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(_p0._0),
+					_1: {ctor: '[]'}
+				});
+		default:
+			return _elm_lang$html$Html$text('');
+	}
+};
+
+var _user$project$Decoders$brandDecoder = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	A2(
+		_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+		_elm_lang$core$Json_Decode$succeed(_user$project$Model$Brand),
+		A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int)),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
+var _user$project$Decoders$brandListDecoder = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	_elm_lang$core$Json_Decode$succeed(_user$project$Model$BrandList),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'brands',
+		_elm_lang$core$Json_Decode$list(_user$project$Decoders$brandDecoder)));
 var _user$project$Decoders$typeDecoder = A2(
 	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
 	A2(
@@ -14250,16 +14401,11 @@ var _user$project$Decoders$typeListDecoder = A2(
 		'types',
 		_elm_lang$core$Json_Decode$list(_user$project$Decoders$typeDecoder)));
 
-var _user$project$Messages$NavigateTo = function (a) {
-	return {ctor: 'NavigateTo', _0: a};
-};
-var _user$project$Messages$UrlChange = function (a) {
-	return {ctor: 'UrlChange', _0: a};
-};
-var _user$project$Messages$FetchType = function (a) {
-	return {ctor: 'FetchType', _0: a};
-};
-
+var _user$project$Commands$fetchBrands = function () {
+	var apiUrl = '/api/brands';
+	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$brandListDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$FetchBrand, request);
+}();
 var _user$project$Commands$fetchTypes = function () {
 	var apiUrl = '/api/types';
 	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$typeListDecoder);
@@ -14531,7 +14677,12 @@ var _user$project$Navigation_View$navigationCollapse = A2(
 													ctor: '::',
 													_0: A2(
 														_elm_lang$html$Html$a,
-														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Events$onClick(
+																_user$project$Messages$NavigateTo(_user$project$Routing$BrandIndexRoute)),
+															_1: {ctor: '[]'}
+														},
 														{
 															ctor: '::',
 															_0: _elm_lang$html$Html$text('Brands'),
@@ -14689,6 +14840,8 @@ var _user$project$View$page = function (model) {
 			return _user$project$Home_View$homeView;
 		case 'TypeIndexRoute':
 			return _user$project$TypeList_View$typeListView(model);
+		case 'BrandIndexRoute':
+			return _user$project$BrandList_View$brandListView(model);
 		default:
 			return _user$project$View$notFoundView;
 	}
@@ -14728,6 +14881,15 @@ var _user$project$Update$urlUpdate = function (model) {
 					_0: _user$project$Commands$fetchTypes,
 					_1: {ctor: '[]'}
 				});
+		case 'BrandIndexRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{
+					ctor: '::',
+					_0: _user$project$Commands$fetchBrands,
+					_1: {ctor: '[]'}
+				});
 		default:
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -14756,6 +14918,26 @@ var _user$project$Update$update = F2(
 							model,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
+							}),
+						{ctor: '[]'});
+				}
+			case 'FetchBrand':
+				if (_p1._0.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								brandList: _user$project$Model$Success(_p1._0._0)
+							}),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
@@ -14796,7 +14978,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"FetchBrand":["Result.Result Http.Error Model.BrandList"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

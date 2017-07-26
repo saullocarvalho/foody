@@ -5,6 +5,7 @@ import Messages exposing (Msg(..))
 import Model exposing (..)
 import Home.View exposing (homeView)
 import TypeList.View exposing (typeListView)
+import BrandList.View exposing (brandListView)
 import Navigation.View exposing (navigation)
 import Routing exposing (Route(..))
 
@@ -30,6 +31,9 @@ page model =
 
         TypeIndexRoute ->
             typeListView model
+
+        BrandIndexRoute ->
+            brandListView model
 
         NotFoundRoute ->
             notFoundView

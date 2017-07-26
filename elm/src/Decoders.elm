@@ -18,3 +18,18 @@ typeDecoder =
         Type
         |: (field "id" int)
         |: (field "name" string)
+
+
+brandListDecoder : JD.Decoder BrandList
+brandListDecoder =
+    succeed
+        BrandList
+        |: (field "brands" (list brandDecoder))
+
+
+brandDecoder : JD.Decoder Brand
+brandDecoder =
+    succeed
+        Brand
+        |: (field "id" int)
+        |: (field "name" string)
