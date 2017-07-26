@@ -10,4 +10,8 @@ defmodule Foody.TypeController do
 
     render conn, types: types
   end
+
+  def create(conn, params) do
+    IO.puts params
+  end
 end
