@@ -19,7 +19,7 @@ update msg model =
             { model | typeList = Failure "Something went wrong..." } ! []
 
         CreateType (Ok newType) ->
-            model ! []
+            updateTypeList model newType
 
         CreateType (Err error) ->
             model ! []
@@ -34,8 +34,15 @@ update msg model =
             in
                 { model | newType = newType } ! []
 
-        ClickCreateType ->
-            model ! [ createType model.newType ]
+        ClickSaveType ->
+            let
+                oldType =
+                    model.newType
+
+                newType =
+                    { oldType | name = "" }
+            in
+                { model | newType = newType } ! [ createType model.newType ]
 
         FetchBrand (Ok brandList) ->
             { model | brandList = Success brandList } ! []
@@ -65,6 +72,26 @@ urlUpdate model =
 
         BrandIndexRoute ->
             model ! [ fetchBrands ]
+
+        _ ->
+            model ! []
+
+
+updateTypeList : Model -> Type -> ( Model, Cmd Msg )
+updateTypeList model newType =
+    case model.typeList of
+        Success oldTypeList ->
+            let
+                oldTypes =
+                    oldTypeList.types
+
+                newTypes =
+                    List.sortBy .name (newType :: oldTypes)
+
+                newTypeList =
+                    { oldTypeList | types = newTypes }
+            in
+                { model | typeList = Success newTypeList } ! []
 
         _ ->
             model ! []

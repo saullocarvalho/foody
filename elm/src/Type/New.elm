@@ -9,7 +9,10 @@ import Messages exposing (..)
 
 typeNew : Type -> Html Msg
 typeNew newType =
-    div [ class "form-inline" ]
+    Html.form
+        [ class "form-inline"
+        , onSubmit ClickSaveType
+        ]
         [ div [ class "form-group" ]
             [ label
                 [ class "sr-only"
@@ -22,12 +25,13 @@ typeNew newType =
                 , id "typeName"
                 , placeholder "Name"
                 , onInput SetTypeName
+                , value newType.name
                 ]
                 []
             ]
         , button
-            [ onClick ClickCreateType
+            [ type_ "submit"
             , class "btn btn-primary"
             ]
-            [ text "Create Type" ]
+            [ text "Save Type" ]
         ]

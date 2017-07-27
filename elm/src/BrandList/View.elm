@@ -15,7 +15,7 @@ brandListView model =
                 [ thead []
                     [ tr []
                         [ th [] [ text "Id" ]
-                        , th [] [ text "Type" ]
+                        , th [] [ text "Brand" ]
                         ]
                     ]
                 , brandList.brands

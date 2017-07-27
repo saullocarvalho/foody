@@ -13,6 +13,6 @@ type Msg
     | CreateType (Result Http.Error Type)
     | FetchBrand (Result Http.Error BrandList)
     | SetTypeName String
-    | ClickCreateType
+    | ClickSaveType
     | UrlChange Navigation.Location
     | NavigateTo Route
