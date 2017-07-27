@@ -7,8 +7,8 @@ import Model exposing (Type)
 import Messages exposing (..)
 
 
-typeNew : Type -> Html Msg
-typeNew newType =
+typeNew : String -> Html Msg
+typeNew typeName =
     Html.form
         [ class "form-inline"
         , onSubmit ClickSaveType
@@ -23,9 +23,9 @@ typeNew newType =
                 [ class "form-control"
                 , type_ "text"
                 , id "typeName"
-                , placeholder "Name"
+                , placeholder "Add/Edit a Type"
                 , onInput SetTypeName
-                , value newType.name
+                , value typeName
                 ]
                 []
             ]

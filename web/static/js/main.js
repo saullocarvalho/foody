@@ -14222,10 +14222,9 @@ var _user$project$Routing$parse = function (location) {
 	}
 };
 
-var _user$project$Model$initialNewType = {id: 0, name: ''};
-var _user$project$Model$Model = F4(
-	function (a, b, c, d) {
-		return {typeList: a, newType: b, brandList: c, route: d};
+var _user$project$Model$Model = F5(
+	function (a, b, c, d, e) {
+		return {typeList: a, typeName: b, typeId: c, brandList: d, route: e};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -14250,7 +14249,7 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, newType: _user$project$Model$initialNewType, route: route};
+	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, route: route};
 };
 
 var _user$project$Messages$NavigateTo = function (a) {
@@ -14501,7 +14500,7 @@ var _user$project$Type_View$typeView = function (t) {
 		});
 };
 
-var _user$project$Type_New$typeNew = function (newType) {
+var _user$project$Type_New$typeNew = function (typeName) {
 	return A2(
 		_elm_lang$html$Html$form,
 		{
@@ -14555,13 +14554,13 @@ var _user$project$Type_New$typeNew = function (newType) {
 										_0: _elm_lang$html$Html_Attributes$id('typeName'),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$placeholder('Name'),
+											_0: _elm_lang$html$Html_Attributes$placeholder('Add/Edit a Type'),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Events$onInput(_user$project$Messages$SetTypeName),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$value(newType.name),
+													_0: _elm_lang$html$Html_Attributes$value(typeName),
 													_1: {ctor: '[]'}
 												}
 											}
@@ -14658,7 +14657,7 @@ var _user$project$TypeList_View$typeListView = function (model) {
 						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Type_New$typeNew(model.newType),
+						_0: _user$project$Type_New$typeNew(model.typeName),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -15095,29 +15094,22 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
-				var oldType = model.newType;
-				var newType = _elm_lang$core$Native_Utils.update(
-					oldType,
-					{name: _p3._0});
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{newType: newType}),
+						{typeName: _p3._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				var oldType = model.newType;
-				var newType = _elm_lang$core$Native_Utils.update(
-					oldType,
-					{name: ''});
+				var newType = {id: 0, name: model.typeName};
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{newType: newType}),
+						{typeName: ''}),
 					{
 						ctor: '::',
-						_0: _user$project$Commands$createType(model.newType),
+						_0: _user$project$Commands$createType(newType),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':

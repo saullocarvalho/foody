@@ -24,7 +24,7 @@ typeListView model =
                         |> List.map typeView
                         |> tbody []
                     ]
-                , typeNew model.newType
+                , typeNew model.typeName
                 ]
 
         Failure error ->

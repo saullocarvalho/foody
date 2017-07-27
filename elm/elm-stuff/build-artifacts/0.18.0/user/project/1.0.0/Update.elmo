@@ -95,29 +95,22 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
-				var oldType = model.newType;
-				var newType = _elm_lang$core$Native_Utils.update(
-					oldType,
-					{name: _p3._0});
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{newType: newType}),
+						{typeName: _p3._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				var oldType = model.newType;
-				var newType = _elm_lang$core$Native_Utils.update(
-					oldType,
-					{name: ''});
+				var newType = {id: 0, name: model.typeName};
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{newType: newType}),
+						{typeName: ''}),
 					{
 						ctor: '::',
-						_0: _user$project$Commands$createType(model.newType),
+						_0: _user$project$Commands$createType(newType),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':

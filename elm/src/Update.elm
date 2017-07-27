@@ -25,24 +25,16 @@ update msg model =
             model ! []
 
         SetTypeName typeName ->
-            let
-                oldType =
-                    model.newType
-
-                newType =
-                    { oldType | name = typeName }
-            in
-                { model | newType = newType } ! []
+            { model | typeName = typeName } ! []
 
         ClickSaveType ->
             let
-                oldType =
-                    model.newType
-
                 newType =
-                    { oldType | name = "" }
+                    { id = 0
+                    , name = model.typeName
+                    }
             in
-                { model | newType = newType } ! [ createType model.newType ]
+                { model | typeName = "" } ! [ createType newType ]
 
         FetchBrand (Ok brandList) ->
             { model | brandList = Success brandList } ! []
