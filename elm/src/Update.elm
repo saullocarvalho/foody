@@ -5,7 +5,7 @@ module Update exposing (..)
 import Navigation
 import Model exposing (..)
 import Messages exposing (..)
-import Commands exposing (fetchTypes, fetchBrands)
+import Commands exposing (..)
 import Routing exposing (Route(..), parse, toPath)
 
 
@@ -17,6 +17,25 @@ update msg model =
 
         FetchType (Err error) ->
             { model | typeList = Failure "Something went wrong..." } ! []
+
+        CreateType (Ok newType) ->
+            model ! []
+
+        CreateType (Err error) ->
+            model ! []
+
+        SetTypeName typeName ->
+            let
+                oldType =
+                    model.newType
+
+                newType =
+                    { oldType | name = typeName }
+            in
+                { model | newType = newType } ! []
+
+        ClickCreateType ->
+            model ! [ createType model.newType ]
 
         FetchBrand (Ok brandList) ->
             { model | brandList = Success brandList } ! []

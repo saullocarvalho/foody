@@ -55,6 +55,38 @@ var _user$project$Update$update = F2(
 							}),
 						{ctor: '[]'});
 				}
+			case 'CreateType':
+				if (_p1._0.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'SetTypeName':
+				var oldType = model.newType;
+				var newType = _elm_lang$core$Native_Utils.update(
+					oldType,
+					{name: _p1._0});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{newType: newType}),
+					{ctor: '[]'});
+			case 'ClickCreateType':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$createType(model.newType),
+						_1: {ctor: '[]'}
+					});
 			case 'FetchBrand':
 				if (_p1._0.ctor === 'Ok') {
 					return A2(

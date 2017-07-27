@@ -14222,9 +14222,10 @@ var _user$project$Routing$parse = function (location) {
 	}
 };
 
-var _user$project$Model$Model = F3(
-	function (a, b, c) {
-		return {typeList: a, brandList: b, route: c};
+var _user$project$Model$initialNewType = {id: 0, name: ''};
+var _user$project$Model$Model = F4(
+	function (a, b, c, d) {
+		return {typeList: a, newType: b, brandList: c, route: d};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -14249,7 +14250,7 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, route: route};
+	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, newType: _user$project$Model$initialNewType, route: route};
 };
 
 var _user$project$Messages$NavigateTo = function (a) {
@@ -14258,8 +14259,15 @@ var _user$project$Messages$NavigateTo = function (a) {
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
+var _user$project$Messages$ClickCreateType = {ctor: 'ClickCreateType'};
+var _user$project$Messages$SetTypeName = function (a) {
+	return {ctor: 'SetTypeName', _0: a};
+};
 var _user$project$Messages$FetchBrand = function (a) {
 	return {ctor: 'FetchBrand', _0: a};
+};
+var _user$project$Messages$CreateType = function (a) {
+	return {ctor: 'CreateType', _0: a};
 };
 var _user$project$Messages$FetchType = function (a) {
 	return {ctor: 'FetchType', _0: a};
@@ -14401,6 +14409,26 @@ var _user$project$Decoders$typeListDecoder = A2(
 		'types',
 		_elm_lang$core$Json_Decode$list(_user$project$Decoders$typeDecoder)));
 
+var _user$project$Encoders$typeEncoder = function (t) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'name',
+				_1: _elm_lang$core$Json_Encode$string(t.name)
+			},
+			_1: {ctor: '[]'}
+		});
+};
+
+var _user$project$Commands$createType = function (newType) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$typeEncoder(newType));
+	var apiUrl = '/api/types';
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$typeDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateType, request);
+};
 var _user$project$Commands$fetchBrands = function () {
 	var apiUrl = '/api/brands';
 	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$brandListDecoder);
@@ -14473,58 +14501,156 @@ var _user$project$Type_View$typeView = function (t) {
 		});
 };
 
-var _user$project$TypeList_View$typeListView = function (model) {
-	var _p0 = model.typeList;
-	switch (_p0.ctor) {
-		case 'Success':
-			return A2(
-				_elm_lang$html$Html$table,
+var _user$project$Type_New$typeNew = function (newType) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('table'),
+					_0: _elm_lang$html$Html_Attributes$class('form-group'),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$thead,
-						{ctor: '[]'},
+						_elm_lang$html$Html$label,
 						{
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$tr,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$th,
-										{ctor: '[]'},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Id'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$th,
-											{ctor: '[]'},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text('Type'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
-								}),
+							_0: _elm_lang$html$Html_Attributes$class('sr-only'),
+							_1: {
+								ctor: '::',
+								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'typeName'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Name'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$tbody,
-							{ctor: '[]'},
-							A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, _p0._0.types)),
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('form-control'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('text'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('typeName'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$placeholder('Name'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(_user$project$Messages$SetTypeName),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_user$project$Messages$ClickCreateType),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Create Type'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+
+var _user$project$TypeList_View$typeListView = function (model) {
+	var _p0 = model.typeList;
+	switch (_p0.ctor) {
+		case 'Success':
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$table,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('table'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$thead,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$tr,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$th,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Id'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$th,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Type'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$tbody,
+									{ctor: '[]'},
+									A2(_elm_lang$core$List$map, _user$project$Type_View$typeView, _p0._0.types)),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Type_New$typeNew(model.newType),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -14921,6 +15047,38 @@ var _user$project$Update$update = F2(
 							}),
 						{ctor: '[]'});
 				}
+			case 'CreateType':
+				if (_p1._0.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'SetTypeName':
+				var oldType = model.newType;
+				var newType = _elm_lang$core$Native_Utils.update(
+					oldType,
+					{name: _p1._0});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{newType: newType}),
+					{ctor: '[]'});
+			case 'ClickCreateType':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$createType(model.newType),
+						_1: {ctor: '[]'}
+					});
 			case 'FetchBrand':
 				if (_p1._0.ctor === 'Ok') {
 					return A2(
@@ -14978,7 +15136,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"FetchBrand":["Result.Result Http.Error Model.BrandList"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickCreateType":[],"SetTypeName":["String"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

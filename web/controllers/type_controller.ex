@@ -12,6 +12,8 @@ defmodule Foody.TypeController do
   end
 
   def create(conn, params) do
-    IO.puts params
+    changeset = Type.changeset(%Type{}, params)
+    IO.inspect changeset
+    conn
   end
 end

@@ -1,3 +1,10 @@
+var _user$project$Commands$createType = function (newType) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$typeEncoder(newType));
+	var apiUrl = '/api/types';
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$typeDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateType, request);
+};
 var _user$project$Commands$fetchBrands = function () {
 	var apiUrl = '/api/brands';
 	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$brandListDecoder);

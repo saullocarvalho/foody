@@ -5,22 +5,26 @@ import Html.Attributes exposing (..)
 import Messages exposing (Msg)
 import Model exposing (..)
 import Type.View exposing (typeView)
+import Type.New exposing (typeNew)
 
 
 typeListView : Model -> Html Msg
 typeListView model =
     case model.typeList of
         Success typeList ->
-            table [ class "table" ]
-                [ thead []
-                    [ tr []
-                        [ th [] [ text "Id" ]
-                        , th [] [ text "Type" ]
+            div []
+                [ table [ class "table" ]
+                    [ thead []
+                        [ tr []
+                            [ th [] [ text "Id" ]
+                            , th [] [ text "Type" ]
+                            ]
                         ]
+                    , typeList.types
+                        |> List.map typeView
+                        |> tbody []
                     ]
-                , typeList.types
-                    |> List.map typeView
-                    |> tbody []
+                , typeNew model.newType
                 ]
 
         Failure error ->

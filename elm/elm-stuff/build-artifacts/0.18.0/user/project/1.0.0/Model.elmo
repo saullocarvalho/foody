@@ -1,6 +1,7 @@
-var _user$project$Model$Model = F3(
-	function (a, b, c) {
-		return {typeList: a, brandList: b, route: c};
+var _user$project$Model$initialNewType = {id: 0, name: ''};
+var _user$project$Model$Model = F4(
+	function (a, b, c, d) {
+		return {typeList: a, newType: b, brandList: c, route: d};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -25,5 +26,5 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, route: route};
+	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, newType: _user$project$Model$initialNewType, route: route};
 };

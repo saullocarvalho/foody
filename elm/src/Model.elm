@@ -21,10 +21,18 @@ type RemoteData e a
     | Success a
 
 
+initialNewType : Type
+initialNewType =
+    { id = 0
+    , name = ""
+    }
+
+
 initialModel : Route -> Model
 initialModel route =
     { typeList = NotRequested
     , brandList = NotRequested
+    , newType = initialNewType
 
     -- , phxSocket = initPhxSocket
     , route = route
@@ -33,6 +41,7 @@ initialModel route =
 
 type alias Model =
     { typeList : RemoteData String TypeList
+    , newType : Type
     , brandList : RemoteData String BrandList
 
     -- , phxSocket : Phoenix.Socket.Socket Msg
