@@ -8,12 +8,18 @@ defmodule Foody.TypeController do
       |> order_by(:name)
       |> Repo.all
 
-    render conn, types: types
+    render(conn, "index.json", types: types)
   end
 
   def create(conn, params) do
     changeset = Type.changeset(%Type{}, params)
-    IO.inspect changeset
-    conn
+
+    case Repo.insert(changeset) do
+      {:ok, type} ->
+        conn
+        |> render("show.json", type: type)
+      {:error, changeset} ->
+        conn
+    end
   end
 end
