@@ -18,6 +18,7 @@ typeListView model =
                         [ tr []
                             [ th [] [ text "Id" ]
                             , th [] [ text "Type" ]
+                            , th [] []
                             ]
                         ]
                     , typeList.types
