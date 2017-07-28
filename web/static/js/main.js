@@ -14500,7 +14500,7 @@ var _user$project$Type_View$typeView = function (t) {
 		});
 };
 
-var _user$project$Type_New$typeNew = function (typeName) {
+var _user$project$Type_Form$typeForm = function (typeName) {
 	return A2(
 		_elm_lang$html$Html$form,
 		{
@@ -14657,7 +14657,7 @@ var _user$project$TypeList_View$typeListView = function (model) {
 						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Type_New$typeNew(model.typeName),
+						_0: _user$project$Type_Form$typeForm(model.typeName),
 						_1: {ctor: '[]'}
 					}
 				});

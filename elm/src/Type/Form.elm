@@ -1,14 +1,13 @@
-module Type.New exposing (..)
+module Type.Form exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Model exposing (Type)
 import Messages exposing (..)
 
 
-typeNew : String -> Html Msg
-typeNew typeName =
+typeForm : String -> Html Msg
+typeForm typeName =
     Html.form
         [ class "form-inline"
         , onSubmit ClickSaveType

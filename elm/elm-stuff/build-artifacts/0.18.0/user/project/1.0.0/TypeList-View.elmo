@@ -60,7 +60,7 @@ var _user$project$TypeList_View$typeListView = function (model) {
 						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Type_New$typeNew(model.typeName),
+						_0: _user$project$Type_Form$typeForm(model.typeName),
 						_1: {ctor: '[]'}
 					}
 				});

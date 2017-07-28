@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Messages exposing (Msg)
 import Model exposing (..)
 import Type.View exposing (typeView)
-import Type.New exposing (typeNew)
+import Type.Form exposing (typeForm)
 
 
 typeListView : Model -> Html Msg
@@ -24,7 +24,7 @@ typeListView model =
                         |> List.map typeView
                         |> tbody []
                     ]
-                , typeNew model.typeName
+                , typeForm model.typeName
                 ]
 
         Failure error ->
