@@ -60,3 +60,16 @@ httpPut url body decoder =
         , timeout = Nothing
         , withCredentials = False
         }
+
+
+httpDelete : String -> Body -> Request Int
+httpDelete url body =
+    request
+        { method = "DELETE"
+        , headers = []
+        , url = url
+        , body = body
+        , expect = expectJson int
+        , timeout = Nothing
+        , withCredentials = False
+        }

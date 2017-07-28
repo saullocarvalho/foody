@@ -1,3 +1,16 @@
+var _user$project$Commands$httpDelete = F2(
+	function (url, body) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'DELETE',
+				headers: {ctor: '[]'},
+				url: url,
+				body: body,
+				expect: _elm_lang$http$Http$expectJson(_elm_lang$core$Json_Decode$int),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
 var _user$project$Commands$httpPut = F3(
 	function (url, body, decoder) {
 		return _elm_lang$http$Http$request(
