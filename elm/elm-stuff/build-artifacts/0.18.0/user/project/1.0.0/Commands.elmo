@@ -1,3 +1,16 @@
+var _user$project$Commands$httpPut = F3(
+	function (url, body, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'PUT',
+				headers: {ctor: '[]'},
+				url: url,
+				body: body,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
 var _user$project$Commands$createType = function (newType) {
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$typeEncoder(newType));

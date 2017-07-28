@@ -2,9 +2,10 @@ module Commands exposing (..)
 
 import Decoders exposing (..)
 import Encoders exposing (..)
-import Http
+import Http exposing (..)
 import Messages exposing (Msg(..))
 import Model exposing (..)
+import Json.Decode exposing (..)
 
 
 fetchTypes : Cmd Msg
@@ -46,3 +47,16 @@ createType newType =
             Http.post apiUrl body typeDecoder
     in
         Http.send CreateType request
+
+
+httpPut : String -> Body -> Decoder a -> Request a
+httpPut url body decoder =
+    request
+        { method = "PUT"
+        , headers = []
+        , url = url
+        , body = body
+        , expect = expectJson decoder
+        , timeout = Nothing
+        , withCredentials = False
+        }
