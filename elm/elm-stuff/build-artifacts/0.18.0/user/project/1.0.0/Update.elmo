@@ -1,15 +1,15 @@
-var _user$project$Update$updateTypeList = F2(
-	function (model, newType) {
+var _user$project$Update$updateDeleteType = F2(
+	function (model, typeDeleted) {
 		var _p0 = model.typeList;
 		if (_p0.ctor === 'Success') {
 			var _p1 = _p0._0;
 			var oldTypes = _p1.types;
 			var newTypes = A2(
-				_elm_lang$core$List$sortBy,
-				function (_) {
-					return _.name;
+				_elm_lang$core$List$filter,
+				function (t) {
+					return !_elm_lang$core$Native_Utils.eq(t.id, typeDeleted.id);
 				},
-				{ctor: '::', _0: newType, _1: oldTypes});
+				oldTypes);
 			var newTypeList = _elm_lang$core$Native_Utils.update(
 				_p1,
 				{types: newTypes});
@@ -28,9 +28,39 @@ var _user$project$Update$updateTypeList = F2(
 				{ctor: '[]'});
 		}
 	});
+var _user$project$Update$updateCreateType = F2(
+	function (model, newType) {
+		var _p2 = model.typeList;
+		if (_p2.ctor === 'Success') {
+			var _p3 = _p2._0;
+			var oldTypes = _p3.types;
+			var newTypes = A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				{ctor: '::', _0: newType, _1: oldTypes});
+			var newTypeList = _elm_lang$core$Native_Utils.update(
+				_p3,
+				{types: newTypes});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						typeList: _user$project$Model$Success(newTypeList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
 var _user$project$Update$urlUpdate = function (model) {
-	var _p2 = model.route;
-	switch (_p2.ctor) {
+	var _p4 = model.route;
+	switch (_p4.ctor) {
 		case 'HomeIndexRoute':
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -63,16 +93,16 @@ var _user$project$Update$urlUpdate = function (model) {
 };
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p3 = msg;
-		switch (_p3.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
 			case 'FetchType':
-				if (_p3._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								typeList: _user$project$Model$Success(_p3._0._0)
+								typeList: _user$project$Model$Success(_p5._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -86,8 +116,17 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p3._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateTypeList, model, _p3._0._0);
+				if (_p5._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, model, _p5._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'DeleteType':
+				if (_p5._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, model, _p5._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -99,7 +138,7 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{typeName: _p3._0}),
+						{typeName: _p5._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
 				var newType = {id: 0, name: model.typeName};
@@ -113,14 +152,23 @@ var _user$project$Update$update = F2(
 						_0: _user$project$Commands$createType(newType),
 						_1: {ctor: '[]'}
 					});
+			case 'ClickDeleteType':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$deleteType(_p5._0),
+						_1: {ctor: '[]'}
+					});
 			case 'FetchBrand':
-				if (_p3._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								brandList: _user$project$Model$Success(_p3._0._0)
+								brandList: _user$project$Model$Success(_p5._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -134,7 +182,7 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p3._0);
+				var currentRoute = _user$project$Routing$parse(_p5._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
 						model,
@@ -146,7 +194,7 @@ var _user$project$Update$update = F2(
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p3._0)),
+							_user$project$Routing$toPath(_p5._0)),
 						_1: {ctor: '[]'}
 					});
 		}

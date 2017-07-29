@@ -49,6 +49,21 @@ createType newType =
         Http.send CreateType request
 
 
+deleteType : Int -> Cmd Msg
+deleteType typeId =
+    let
+        apiUrl =
+            "/api/types/" ++ toString typeId
+
+        body =
+            Http.emptyBody
+
+        request =
+            httpDelete apiUrl body typeDecoder
+    in
+        Http.send DeleteType request
+
+
 httpPut : String -> Body -> Decoder a -> Request a
 httpPut url body decoder =
     request
@@ -62,14 +77,14 @@ httpPut url body decoder =
         }
 
 
-httpDelete : String -> Body -> Request Int
-httpDelete url body =
+httpDelete : String -> Body -> Decoder a -> Request a
+httpDelete url body decoder =
     request
         { method = "DELETE"
         , headers = []
         , url = url
         , body = body
-        , expect = expectJson int
+        , expect = expectJson decoder
         , timeout = Nothing
         , withCredentials = False
         }

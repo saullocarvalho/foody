@@ -16,6 +16,9 @@ var _user$project$Model$Brand = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
+var _user$project$Model$Id = function (a) {
+	return {id: a};
+};
 var _user$project$Model$Success = function (a) {
 	return {ctor: 'Success', _0: a};
 };

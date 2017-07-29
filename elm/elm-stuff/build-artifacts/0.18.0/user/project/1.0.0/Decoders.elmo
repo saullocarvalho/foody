@@ -1,3 +1,7 @@
+var _user$project$Decoders$idDecoder = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	_elm_lang$core$Json_Decode$succeed(_user$project$Model$Id),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int));
 var _user$project$Decoders$brandDecoder = A2(
 	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
 	A2(

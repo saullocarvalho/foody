@@ -4,12 +4,18 @@ var _user$project$Messages$NavigateTo = function (a) {
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
+var _user$project$Messages$ClickDeleteType = function (a) {
+	return {ctor: 'ClickDeleteType', _0: a};
+};
 var _user$project$Messages$ClickSaveType = {ctor: 'ClickSaveType'};
 var _user$project$Messages$SetTypeName = function (a) {
 	return {ctor: 'SetTypeName', _0: a};
 };
 var _user$project$Messages$FetchBrand = function (a) {
 	return {ctor: 'FetchBrand', _0: a};
+};
+var _user$project$Messages$DeleteType = function (a) {
+	return {ctor: 'DeleteType', _0: a};
 };
 var _user$project$Messages$CreateType = function (a) {
 	return {ctor: 'CreateType', _0: a};

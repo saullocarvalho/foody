@@ -19,9 +19,15 @@ update msg model =
             { model | typeList = Failure "Something went wrong..." } ! []
 
         CreateType (Ok newType) ->
-            updateTypeList model newType
+            updateCreateType model newType
 
         CreateType (Err error) ->
+            model ! []
+
+        DeleteType (Ok typeDeleted) ->
+            updateDeleteType model typeDeleted
+
+        DeleteType (Err error) ->
             model ! []
 
         SetTypeName typeName ->
@@ -35,6 +41,9 @@ update msg model =
                     }
             in
                 { model | typeName = "" } ! [ createType newType ]
+
+        ClickDeleteType typeId ->
+            model ! [ deleteType typeId ]
 
         FetchBrand (Ok brandList) ->
             { model | brandList = Success brandList } ! []
@@ -69,8 +78,8 @@ urlUpdate model =
             model ! []
 
 
-updateTypeList : Model -> Type -> ( Model, Cmd Msg )
-updateTypeList model newType =
+updateCreateType : Model -> Type -> ( Model, Cmd Msg )
+updateCreateType model newType =
     case model.typeList of
         Success oldTypeList ->
             let
@@ -79,6 +88,26 @@ updateTypeList model newType =
 
                 newTypes =
                     List.sortBy .name (newType :: oldTypes)
+
+                newTypeList =
+                    { oldTypeList | types = newTypes }
+            in
+                { model | typeList = Success newTypeList } ! []
+
+        _ ->
+            model ! []
+
+
+updateDeleteType : Model -> Type -> ( Model, Cmd Msg )
+updateDeleteType model typeDeleted =
+    case model.typeList of
+        Success oldTypeList ->
+            let
+                oldTypes =
+                    oldTypeList.types
+
+                newTypes =
+                    List.filter (\t -> t.id /= typeDeleted.id) oldTypes
 
                 newTypeList =
                     { oldTypeList | types = newTypes }

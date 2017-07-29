@@ -14240,6 +14240,9 @@ var _user$project$Model$Brand = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
+var _user$project$Model$Id = function (a) {
+	return {id: a};
+};
 var _user$project$Model$Success = function (a) {
 	return {ctor: 'Success', _0: a};
 };
@@ -14258,12 +14261,18 @@ var _user$project$Messages$NavigateTo = function (a) {
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
+var _user$project$Messages$ClickDeleteType = function (a) {
+	return {ctor: 'ClickDeleteType', _0: a};
+};
 var _user$project$Messages$ClickSaveType = {ctor: 'ClickSaveType'};
 var _user$project$Messages$SetTypeName = function (a) {
 	return {ctor: 'SetTypeName', _0: a};
 };
 var _user$project$Messages$FetchBrand = function (a) {
 	return {ctor: 'FetchBrand', _0: a};
+};
+var _user$project$Messages$DeleteType = function (a) {
+	return {ctor: 'DeleteType', _0: a};
 };
 var _user$project$Messages$CreateType = function (a) {
 	return {ctor: 'CreateType', _0: a};
@@ -14379,6 +14388,10 @@ var _user$project$BrandList_View$brandListView = function (model) {
 	}
 };
 
+var _user$project$Decoders$idDecoder = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	_elm_lang$core$Json_Decode$succeed(_user$project$Model$Id),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int));
 var _user$project$Decoders$brandDecoder = A2(
 	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
 	A2(
@@ -14408,6 +14421,18 @@ var _user$project$Decoders$typeListDecoder = A2(
 		'types',
 		_elm_lang$core$Json_Decode$list(_user$project$Decoders$typeDecoder)));
 
+var _user$project$Encoders$idEncoder = function (id) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'id',
+				_1: _elm_lang$core$Json_Encode$int(id.id)
+			},
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$Encoders$typeEncoder = function (t) {
 	return _elm_lang$core$Json_Encode$object(
 		{
@@ -14421,15 +14446,15 @@ var _user$project$Encoders$typeEncoder = function (t) {
 		});
 };
 
-var _user$project$Commands$httpDelete = F2(
-	function (url, body) {
+var _user$project$Commands$httpDelete = F3(
+	function (url, body, decoder) {
 		return _elm_lang$http$Http$request(
 			{
 				method: 'DELETE',
 				headers: {ctor: '[]'},
 				url: url,
 				body: body,
-				expect: _elm_lang$http$Http$expectJson(_elm_lang$core$Json_Decode$int),
+				expect: _elm_lang$http$Http$expectJson(decoder),
 				timeout: _elm_lang$core$Maybe$Nothing,
 				withCredentials: false
 			});
@@ -14447,6 +14472,15 @@ var _user$project$Commands$httpPut = F3(
 				withCredentials: false
 			});
 	});
+var _user$project$Commands$deleteType = function (typeId) {
+	var body = _elm_lang$http$Http$emptyBody;
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/types/',
+		_elm_lang$core$Basics$toString(typeId));
+	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
+};
 var _user$project$Commands$createType = function (newType) {
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$typeEncoder(newType));
@@ -14552,7 +14586,12 @@ var _user$project$Type_View$typeView = function (t) {
 												_1: {
 													ctor: '::',
 													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(
+															_user$project$Messages$ClickDeleteType(t.id)),
+														_1: {ctor: '[]'}
+													}
 												}
 											}
 										},
@@ -15120,18 +15159,18 @@ var _user$project$View$view = function (model) {
 	return _user$project$View$layout(model);
 };
 
-var _user$project$Update$updateTypeList = F2(
-	function (model, newType) {
+var _user$project$Update$updateDeleteType = F2(
+	function (model, typeDeleted) {
 		var _p0 = model.typeList;
 		if (_p0.ctor === 'Success') {
 			var _p1 = _p0._0;
 			var oldTypes = _p1.types;
 			var newTypes = A2(
-				_elm_lang$core$List$sortBy,
-				function (_) {
-					return _.name;
+				_elm_lang$core$List$filter,
+				function (t) {
+					return !_elm_lang$core$Native_Utils.eq(t.id, typeDeleted.id);
 				},
-				{ctor: '::', _0: newType, _1: oldTypes});
+				oldTypes);
 			var newTypeList = _elm_lang$core$Native_Utils.update(
 				_p1,
 				{types: newTypes});
@@ -15150,9 +15189,39 @@ var _user$project$Update$updateTypeList = F2(
 				{ctor: '[]'});
 		}
 	});
+var _user$project$Update$updateCreateType = F2(
+	function (model, newType) {
+		var _p2 = model.typeList;
+		if (_p2.ctor === 'Success') {
+			var _p3 = _p2._0;
+			var oldTypes = _p3.types;
+			var newTypes = A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				{ctor: '::', _0: newType, _1: oldTypes});
+			var newTypeList = _elm_lang$core$Native_Utils.update(
+				_p3,
+				{types: newTypes});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						typeList: _user$project$Model$Success(newTypeList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
 var _user$project$Update$urlUpdate = function (model) {
-	var _p2 = model.route;
-	switch (_p2.ctor) {
+	var _p4 = model.route;
+	switch (_p4.ctor) {
 		case 'HomeIndexRoute':
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15185,16 +15254,16 @@ var _user$project$Update$urlUpdate = function (model) {
 };
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p3 = msg;
-		switch (_p3.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
 			case 'FetchType':
-				if (_p3._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								typeList: _user$project$Model$Success(_p3._0._0)
+								typeList: _user$project$Model$Success(_p5._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -15208,8 +15277,17 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p3._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateTypeList, model, _p3._0._0);
+				if (_p5._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, model, _p5._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'DeleteType':
+				if (_p5._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, model, _p5._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15221,7 +15299,7 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{typeName: _p3._0}),
+						{typeName: _p5._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
 				var newType = {id: 0, name: model.typeName};
@@ -15235,14 +15313,23 @@ var _user$project$Update$update = F2(
 						_0: _user$project$Commands$createType(newType),
 						_1: {ctor: '[]'}
 					});
+			case 'ClickDeleteType':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$deleteType(_p5._0),
+						_1: {ctor: '[]'}
+					});
 			case 'FetchBrand':
-				if (_p3._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								brandList: _user$project$Model$Success(_p3._0._0)
+								brandList: _user$project$Model$Success(_p5._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -15256,7 +15343,7 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p3._0);
+				var currentRoute = _user$project$Routing$parse(_p5._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
 						model,
@@ -15268,7 +15355,7 @@ var _user$project$Update$update = F2(
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p3._0)),
+							_user$project$Routing$toPath(_p5._0)),
 						_1: {ctor: '[]'}
 					});
 		}
@@ -15292,7 +15379,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickSaveType":[],"SetTypeName":["String"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"SetTypeName":["String"],"DeleteType":["Result.Result Http.Error Model.Type"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

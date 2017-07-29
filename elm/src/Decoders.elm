@@ -33,3 +33,10 @@ brandDecoder =
         Brand
         |: (field "id" int)
         |: (field "name" string)
+
+
+idDecoder : JD.Decoder Id
+idDecoder =
+    succeed
+        Id
+        |: (field "id" int)

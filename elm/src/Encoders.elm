@@ -8,3 +8,9 @@ typeEncoder : Type -> JE.Value
 typeEncoder t =
     object
         [ ( "name", string t.name ) ]
+
+
+idEncoder : Id -> JE.Value
+idEncoder id =
+    object
+        [ ( "id", int id.id ) ]

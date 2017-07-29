@@ -2,8 +2,9 @@ module Type.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Model exposing (Type)
-import Messages exposing (Msg)
+import Messages exposing (Msg(..))
 
 
 typeView : Type -> Html Msg
@@ -20,6 +21,7 @@ typeView t =
                     [ type_ "button"
                     , class "btn btn-danger btn-sm"
                     , attribute "arial-label" "Delete"
+                    , onClick (ClickDeleteType t.id)
                     ]
                     [ span
                         [ class "glyphicon glyphicon-trash"

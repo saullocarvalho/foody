@@ -22,4 +22,11 @@ defmodule Foody.TypeController do
         conn
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    type = Repo.get!(Type, id)
+    Repo.delete!(type)
+
+    render(conn, "show.json", type: type)
+  end
 end

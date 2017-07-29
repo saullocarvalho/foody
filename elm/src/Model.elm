@@ -62,3 +62,7 @@ type alias Brand =
     { id : Int
     , name : String
     }
+
+
+type alias Id =
+    { id : Int }

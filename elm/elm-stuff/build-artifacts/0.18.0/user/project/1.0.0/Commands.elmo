@@ -1,12 +1,12 @@
-var _user$project$Commands$httpDelete = F2(
-	function (url, body) {
+var _user$project$Commands$httpDelete = F3(
+	function (url, body, decoder) {
 		return _elm_lang$http$Http$request(
 			{
 				method: 'DELETE',
 				headers: {ctor: '[]'},
 				url: url,
 				body: body,
-				expect: _elm_lang$http$Http$expectJson(_elm_lang$core$Json_Decode$int),
+				expect: _elm_lang$http$Http$expectJson(decoder),
 				timeout: _elm_lang$core$Maybe$Nothing,
 				withCredentials: false
 			});
@@ -24,6 +24,15 @@ var _user$project$Commands$httpPut = F3(
 				withCredentials: false
 			});
 	});
+var _user$project$Commands$deleteType = function (typeId) {
+	var body = _elm_lang$http$Http$emptyBody;
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/types/',
+		_elm_lang$core$Basics$toString(typeId));
+	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
+};
 var _user$project$Commands$createType = function (newType) {
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$typeEncoder(newType));
