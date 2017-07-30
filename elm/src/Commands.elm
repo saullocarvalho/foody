@@ -49,6 +49,23 @@ createType newType =
         Http.send CreateType request
 
 
+updateType : Type -> Cmd Msg
+updateType editedType =
+    let
+        apiUrl =
+            "/api/types/" ++ toString editedType.id
+
+        body =
+            editedType
+                |> typeEncoder
+                |> Http.jsonBody
+
+        request =
+            httpPut apiUrl body typeDecoder
+    in
+        Http.send UpdateType request
+
+
 deleteType : Int -> Cmd Msg
 deleteType typeId =
     let

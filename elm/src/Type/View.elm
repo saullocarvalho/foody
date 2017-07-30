@@ -33,6 +33,7 @@ typeView t =
                     [ type_ "button"
                     , class "btn btn-default btn-sm"
                     , attribute "arial-label" "Edit"
+                    , onClick (ClickEditType t)
                     ]
                     [ span
                         [ class "glyphicon glyphicon-pencil"

@@ -23,6 +23,18 @@ defmodule Foody.TypeController do
     end
   end
 
+  def update(conn, type_params = %{"id" => id}) do
+    type = Repo.get!(Type, id)
+    changeset = Type.changeset(type, type_params)
+
+    case Repo.update(changeset) do
+      {:ok, type} ->
+        render(conn, "show.json", type: type)
+      {:error, changeset} ->
+        conn
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     type = Repo.get!(Type, id)
     Repo.delete!(type)
