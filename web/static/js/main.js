@@ -15217,13 +15217,18 @@ var _user$project$Update$updateUpdateType = F2(
 			var _p3 = _p2._0;
 			var oldTypes = _p3.types;
 			var newTypes = A2(
-				_elm_lang$core$List$map,
-				function (t) {
-					return _elm_lang$core$Native_Utils.eq(t.id, typeUpdated.id) ? _elm_lang$core$Native_Utils.update(
-						t,
-						{name: typeUpdated.name}) : t;
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
 				},
-				oldTypes);
+				A2(
+					_elm_lang$core$List$map,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.id, typeUpdated.id) ? _elm_lang$core$Native_Utils.update(
+							t,
+							{name: typeUpdated.name}) : t;
+					},
+					oldTypes));
 			var newTypeList = _elm_lang$core$Native_Utils.update(
 				_p3,
 				{types: newTypes});

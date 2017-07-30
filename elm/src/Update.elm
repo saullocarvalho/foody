@@ -132,14 +132,16 @@ updateUpdateType model typeUpdated =
                     oldTypeList.types
 
                 newTypes =
-                    List.map
-                        (\t ->
-                            if t.id == typeUpdated.id then
-                                { t | name = typeUpdated.name }
-                            else
-                                t
+                    List.sortBy .name
+                        (List.map
+                            (\t ->
+                                if t.id == typeUpdated.id then
+                                    { t | name = typeUpdated.name }
+                                else
+                                    t
+                            )
+                            oldTypes
                         )
-                        oldTypes
 
                 newTypeList =
                     { oldTypeList | types = newTypes }
