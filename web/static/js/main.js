@@ -14771,7 +14771,7 @@ var _user$project$Type_Form$typeForm = function (typeName) {
 		});
 };
 
-var _user$project$TypeList_View$typeListView = function (model) {
+var _user$project$Type_Index$typeIndex = function (model) {
 	var _p0 = model.typeList;
 	switch (_p0.ctor) {
 		case 'Success':
@@ -15155,7 +15155,7 @@ var _user$project$View$page = function (model) {
 		case 'HomeIndexRoute':
 			return _user$project$Home_View$homeView;
 		case 'TypeIndexRoute':
-			return _user$project$TypeList_View$typeListView(model);
+			return _user$project$Type_Index$typeIndex(model);
 		case 'BrandIndexRoute':
 			return _user$project$BrandList_View$brandListView(model);
 		default:

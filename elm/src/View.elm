@@ -4,7 +4,7 @@ import Html exposing (..)
 import Messages exposing (Msg(..))
 import Model exposing (..)
 import Home.View exposing (homeView)
-import TypeList.View exposing (typeListView)
+import Type.Index exposing (typeIndex)
 import BrandList.View exposing (brandListView)
 import Navigation.View exposing (navigation)
 import Routing exposing (Route(..))
@@ -30,7 +30,7 @@ page model =
             homeView
 
         TypeIndexRoute ->
-            typeListView model
+            typeIndex model
 
         BrandIndexRoute ->
             brandListView model

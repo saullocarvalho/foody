@@ -1,4 +1,4 @@
-module TypeList.View exposing (..)
+module Type.Index exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -8,8 +8,8 @@ import Type.View exposing (typeView)
 import Type.Form exposing (typeForm)
 
 
-typeListView : Model -> Html Msg
-typeListView model =
+typeIndex : Model -> Html Msg
+typeIndex model =
     case model.typeList of
         Success typeList ->
             div []
