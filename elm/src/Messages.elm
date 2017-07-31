@@ -1,7 +1,5 @@
 module Messages exposing (..)
 
--- import Phoenix.Socket
-
 import Http
 import Navigation
 import Model exposing (..)

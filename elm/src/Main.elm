@@ -8,9 +8,6 @@ import Messages exposing (Msg(..))
 import Routing exposing (parse)
 
 
--- import Subscriptions exposing (..)
-
-
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     let

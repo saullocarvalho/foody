@@ -1,7 +1,5 @@
 module Update exposing (..)
 
--- import Phoenix.Socket
-
 import Navigation
 import Model exposing (..)
 import Messages exposing (..)
@@ -170,12 +168,3 @@ updateDeleteType model typeDeleted =
 
         _ ->
             model ! []
-
-
-
--- PhoenixMsg msg ->
---     let
---         ( phxSocket, phxCmd ) =
---             Phoenix.Socket.update msg model.phxSocket
---     in
---         { model | phxSocket = phxSocket } ! [ Cmd.map PhoenixMsg phxCmd ]
