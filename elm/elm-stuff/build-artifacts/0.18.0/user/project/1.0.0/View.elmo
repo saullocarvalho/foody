@@ -7,7 +7,7 @@ var _user$project$View$page = function (model) {
 		case 'TypeIndexRoute':
 			return _user$project$Type_Index$typeIndex(model);
 		case 'BrandIndexRoute':
-			return _user$project$BrandList_View$brandListView(model);
+			return _user$project$Brand_Index$brandIndex(model);
 		default:
 			return _user$project$View$notFoundView;
 	}

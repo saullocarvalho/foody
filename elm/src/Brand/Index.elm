@@ -1,4 +1,4 @@
-module BrandList.View exposing (..)
+module Brand.Index exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -7,8 +7,8 @@ import Model exposing (..)
 import Brand.View exposing (brandView)
 
 
-brandListView : Model -> Html Msg
-brandListView model =
+brandIndex : Model -> Html Msg
+brandIndex model =
     case model.brandList of
         Success brandList ->
             table [ class "table" ]

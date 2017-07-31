@@ -14317,7 +14317,7 @@ var _user$project$Brand_View$brandView = function (b) {
 		});
 };
 
-var _user$project$BrandList_View$brandListView = function (model) {
+var _user$project$Brand_Index$brandIndex = function (model) {
 	var _p0 = model.brandList;
 	switch (_p0.ctor) {
 		case 'Success':
@@ -15157,7 +15157,7 @@ var _user$project$View$page = function (model) {
 		case 'TypeIndexRoute':
 			return _user$project$Type_Index$typeIndex(model);
 		case 'BrandIndexRoute':
-			return _user$project$BrandList_View$brandListView(model);
+			return _user$project$Brand_Index$brandIndex(model);
 		default:
 			return _user$project$View$notFoundView;
 	}
