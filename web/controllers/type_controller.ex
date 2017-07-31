@@ -29,7 +29,8 @@ defmodule Foody.TypeController do
 
     case Repo.update(changeset) do
       {:ok, type} ->
-        render(conn, "show.json", type: type)
+        conn
+        |> render("show.json", type: type)
       {:error, _changeset} ->
         conn
     end
@@ -39,6 +40,7 @@ defmodule Foody.TypeController do
     type = Repo.get!(Type, id)
     Repo.delete!(type)
 
-    render(conn, "show.json", type: type)
+    conn
+    |> render("show.json", type: type)
   end
 end

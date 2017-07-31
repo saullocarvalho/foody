@@ -17,7 +17,7 @@ defmodule Foody.Router do
     pipe_through :api
 
     resources "/types", TypeController, only: [:index, :create, :update, :delete]
-    resources "/brands", BrandController, only: [:index]
+    resources "/brands", BrandController, only: [:index, :create, :update, :delete]
   end
 
   scope "/", Foody do
