@@ -16,8 +16,8 @@ update msg model =
         FetchType (Err error) ->
             { model | typeList = Failure "Something went wrong..." } ! []
 
-        CreateType (Ok newType) ->
-            updateCreateType model newType
+        CreateType (Ok typeCreated) ->
+            updateCreateType model typeCreated
 
         CreateType (Err error) ->
             model ! []
@@ -51,6 +51,36 @@ update msg model =
 
         FetchBrand (Err error) ->
             { model | brandList = Failure "Something went wrong..." } ! []
+
+        CreateBrand (Ok brandCreated) ->
+            updateCreateBrand model brandCreated
+
+        CreateBrand (Err error) ->
+            model ! []
+
+        UpdateBrand (Ok brandUpdated) ->
+            updateUpdateBrand model brandUpdated
+
+        UpdateBrand (Err error) ->
+            model ! []
+
+        DeleteBrand (Ok brandDeleted) ->
+            updateDeleteBrand model brandDeleted
+
+        DeleteBrand (Err error) ->
+            model ! []
+
+        SetBrandName brandName ->
+            { model | brandName = brandName } ! []
+
+        ClickSaveBrand ->
+            saveBrand model
+
+        ClickEditBrand brandToEdit ->
+            { model | brandName = brandToEdit.name, brandId = Just brandToEdit.id } ! []
+
+        ClickDeleteBrand brandId ->
+            model ! [ deleteBrand brandId ]
 
         UrlChange location ->
             let
@@ -101,8 +131,30 @@ saveType model =
                 { model | typeName = "" } ! [ createType newType ]
 
 
+saveBrand : Model -> ( Model, Cmd Msg )
+saveBrand model =
+    case model.brandId of
+        Just id ->
+            let
+                editedBrand =
+                    { id = id
+                    , name = model.brandName
+                    }
+            in
+                { model | brandName = "", brandId = Nothing } ! [ updateBrand editedBrand ]
+
+        Nothing ->
+            let
+                newBrand =
+                    { id = 0
+                    , name = model.brandName
+                    }
+            in
+                { model | brandName = "" } ! [ createBrand newBrand ]
+
+
 updateCreateType : Model -> Type -> ( Model, Cmd Msg )
-updateCreateType model newType =
+updateCreateType model typeCreated =
     case model.typeList of
         Success oldTypeList ->
             let
@@ -110,12 +162,32 @@ updateCreateType model newType =
                     oldTypeList.types
 
                 newTypes =
-                    List.sortBy .name (newType :: oldTypes)
+                    List.sortBy .name (typeCreated :: oldTypes)
 
                 newTypeList =
                     { oldTypeList | types = newTypes }
             in
                 { model | typeList = Success newTypeList } ! []
+
+        _ ->
+            model ! []
+
+
+updateCreateBrand : Model -> Brand -> ( Model, Cmd Msg )
+updateCreateBrand model brandCreated =
+    case model.brandList of
+        Success oldBrandList ->
+            let
+                oldBrands =
+                    oldBrandList.brands
+
+                newBrands =
+                    List.sortBy .name (brandCreated :: oldBrands)
+
+                newBrandList =
+                    { oldBrandList | brands = newBrands }
+            in
+                { model | brandList = Success newBrandList } ! []
 
         _ ->
             model ! []
@@ -150,6 +222,35 @@ updateUpdateType model typeUpdated =
             model ! []
 
 
+updateUpdateBrand : Model -> Brand -> ( Model, Cmd Msg )
+updateUpdateBrand model brandUpdated =
+    case model.brandList of
+        Success oldBrandList ->
+            let
+                oldBrands =
+                    oldBrandList.brands
+
+                newBrands =
+                    List.sortBy .name
+                        (List.map
+                            (\b ->
+                                if b.id == brandUpdated.id then
+                                    { b | name = brandUpdated.name }
+                                else
+                                    b
+                            )
+                            oldBrands
+                        )
+
+                newBrandList =
+                    { oldBrandList | brands = newBrands }
+            in
+                { model | brandList = Success newBrandList } ! []
+
+        _ ->
+            model ! []
+
+
 updateDeleteType : Model -> Type -> ( Model, Cmd Msg )
 updateDeleteType model typeDeleted =
     case model.typeList of
@@ -165,6 +266,26 @@ updateDeleteType model typeDeleted =
                     { oldTypeList | types = newTypes }
             in
                 { model | typeList = Success newTypeList } ! []
+
+        _ ->
+            model ! []
+
+
+updateDeleteBrand : Model -> Brand -> ( Model, Cmd Msg )
+updateDeleteBrand model brandDeleted =
+    case model.brandList of
+        Success oldBrandList ->
+            let
+                oldBrands =
+                    oldBrandList.brands
+
+                newBrands =
+                    List.filter (\b -> b.id /= brandDeleted.id) oldBrands
+
+                newBrandList =
+                    { oldBrandList | brands = newBrands }
+            in
+                { model | brandList = Success newBrandList } ! []
 
         _ ->
             model ! []

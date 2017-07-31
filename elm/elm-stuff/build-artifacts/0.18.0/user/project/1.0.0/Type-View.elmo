@@ -34,7 +34,7 @@ var _user$project$Type_View$typeView = function (t) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('btn-toolbar'),
+									_0: _elm_lang$html$Html_Attributes$class('btn-toolbar pull-right'),
 									_1: {
 										ctor: '::',
 										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'toolbar'),
@@ -50,14 +50,14 @@ var _user$project$Type_View$typeView = function (t) {
 											_0: _elm_lang$html$Html_Attributes$type_('button'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
+												_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
 												_1: {
 													ctor: '::',
-													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$html$Html_Events$onClick(
-															_user$project$Messages$ClickDeleteType(t.id)),
+															_user$project$Messages$ClickEditType(t)),
 														_1: {ctor: '[]'}
 													}
 												}
@@ -69,7 +69,7 @@ var _user$project$Type_View$typeView = function (t) {
 												_elm_lang$html$Html$span,
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
+													_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
 													_1: {
 														ctor: '::',
 														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
@@ -88,14 +88,14 @@ var _user$project$Type_View$typeView = function (t) {
 												_0: _elm_lang$html$Html_Attributes$type_('button'),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
+													_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
 													_1: {
 														ctor: '::',
-														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
 														_1: {
 															ctor: '::',
 															_0: _elm_lang$html$Html_Events$onClick(
-																_user$project$Messages$ClickEditType(t)),
+																_user$project$Messages$ClickDeleteType(t.id)),
 															_1: {ctor: '[]'}
 														}
 													}
@@ -107,7 +107,7 @@ var _user$project$Type_View$typeView = function (t) {
 													_elm_lang$html$Html$span,
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
+														_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
 														_1: {
 															ctor: '::',
 															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),

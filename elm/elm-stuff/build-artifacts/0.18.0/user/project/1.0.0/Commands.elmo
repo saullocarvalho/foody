@@ -24,6 +24,15 @@ var _user$project$Commands$httpPut = F3(
 				withCredentials: false
 			});
 	});
+var _user$project$Commands$deleteBrand = function (brandId) {
+	var body = _elm_lang$http$Http$emptyBody;
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/brands/',
+		_elm_lang$core$Basics$toString(brandId));
+	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteBrand, request);
+};
 var _user$project$Commands$deleteType = function (typeId) {
 	var body = _elm_lang$http$Http$emptyBody;
 	var apiUrl = A2(
@@ -32,6 +41,16 @@ var _user$project$Commands$deleteType = function (typeId) {
 		_elm_lang$core$Basics$toString(typeId));
 	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
+};
+var _user$project$Commands$updateBrand = function (editedBrand) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$brandEncoder(editedBrand));
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/brands/',
+		_elm_lang$core$Basics$toString(editedBrand.id));
+	var request = A3(_user$project$Commands$httpPut, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$UpdateBrand, request);
 };
 var _user$project$Commands$updateType = function (editedType) {
 	var body = _elm_lang$http$Http$jsonBody(
@@ -42,6 +61,13 @@ var _user$project$Commands$updateType = function (editedType) {
 		_elm_lang$core$Basics$toString(editedType.id));
 	var request = A3(_user$project$Commands$httpPut, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$UpdateType, request);
+};
+var _user$project$Commands$createBrand = function (newBrand) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$brandEncoder(newBrand));
+	var apiUrl = '/api/brands';
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateBrand, request);
 };
 var _user$project$Commands$createType = function (newType) {
 	var body = _elm_lang$http$Http$jsonBody(

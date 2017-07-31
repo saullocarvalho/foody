@@ -14,22 +14,10 @@ typeView t =
         , td [] [ text t.name ]
         , td []
             [ div
-                [ class "btn-toolbar"
+                [ class "btn-toolbar pull-right"
                 , attribute "role" "toolbar"
                 ]
                 [ button
-                    [ type_ "button"
-                    , class "btn btn-danger btn-sm"
-                    , attribute "arial-label" "Delete"
-                    , onClick (ClickDeleteType t.id)
-                    ]
-                    [ span
-                        [ class "glyphicon glyphicon-trash"
-                        , attribute "aria-hidden" "true"
-                        ]
-                        []
-                    ]
-                , button
                     [ type_ "button"
                     , class "btn btn-default btn-sm"
                     , attribute "arial-label" "Edit"
@@ -37,6 +25,18 @@ typeView t =
                     ]
                     [ span
                         [ class "glyphicon glyphicon-pencil"
+                        , attribute "aria-hidden" "true"
+                        ]
+                        []
+                    ]
+                , button
+                    [ type_ "button"
+                    , class "btn btn-danger btn-sm"
+                    , attribute "arial-label" "Delete"
+                    , onClick (ClickDeleteType t.id)
+                    ]
+                    [ span
+                        [ class "glyphicon glyphicon-trash"
                         , attribute "aria-hidden" "true"
                         ]
                         []

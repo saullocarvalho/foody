@@ -4,6 +4,28 @@ var _user$project$Messages$NavigateTo = function (a) {
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
 };
+var _user$project$Messages$ClickEditBrand = function (a) {
+	return {ctor: 'ClickEditBrand', _0: a};
+};
+var _user$project$Messages$ClickDeleteBrand = function (a) {
+	return {ctor: 'ClickDeleteBrand', _0: a};
+};
+var _user$project$Messages$ClickSaveBrand = {ctor: 'ClickSaveBrand'};
+var _user$project$Messages$SetBrandName = function (a) {
+	return {ctor: 'SetBrandName', _0: a};
+};
+var _user$project$Messages$DeleteBrand = function (a) {
+	return {ctor: 'DeleteBrand', _0: a};
+};
+var _user$project$Messages$UpdateBrand = function (a) {
+	return {ctor: 'UpdateBrand', _0: a};
+};
+var _user$project$Messages$CreateBrand = function (a) {
+	return {ctor: 'CreateBrand', _0: a};
+};
+var _user$project$Messages$FetchBrand = function (a) {
+	return {ctor: 'FetchBrand', _0: a};
+};
 var _user$project$Messages$ClickEditType = function (a) {
 	return {ctor: 'ClickEditType', _0: a};
 };
@@ -13,9 +35,6 @@ var _user$project$Messages$ClickDeleteType = function (a) {
 var _user$project$Messages$ClickSaveType = {ctor: 'ClickSaveType'};
 var _user$project$Messages$SetTypeName = function (a) {
 	return {ctor: 'SetTypeName', _0: a};
-};
-var _user$project$Messages$FetchBrand = function (a) {
-	return {ctor: 'FetchBrand', _0: a};
 };
 var _user$project$Messages$DeleteType = function (a) {
 	return {ctor: 'DeleteType', _0: a};

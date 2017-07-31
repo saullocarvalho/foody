@@ -5,22 +5,27 @@ import Html.Attributes exposing (..)
 import Messages exposing (Msg)
 import Model exposing (..)
 import Brand.View exposing (brandView)
+import Brand.Form exposing (brandForm)
 
 
 brandIndex : Model -> Html Msg
 brandIndex model =
     case model.brandList of
         Success brandList ->
-            table [ class "table" ]
-                [ thead []
-                    [ tr []
-                        [ th [] [ text "Id" ]
-                        , th [] [ text "Brand" ]
+            div []
+                [ table [ class "table" ]
+                    [ thead []
+                        [ tr []
+                            [ th [] [ text "Id" ]
+                            , th [] [ text "Brand" ]
+                            , th [] []
+                            ]
                         ]
+                    , brandList.brands
+                        |> List.map brandView
+                        |> tbody []
                     ]
-                , brandList.brands
-                    |> List.map brandView
-                    |> tbody []
+                , brandForm model.brandName
                 ]
 
         Failure error ->

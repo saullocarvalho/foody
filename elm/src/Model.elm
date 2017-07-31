@@ -13,9 +13,11 @@ type RemoteData e a
 initialModel : Route -> Model
 initialModel route =
     { typeList = NotRequested
-    , brandList = NotRequested
     , typeName = ""
     , typeId = Nothing
+    , brandList = NotRequested
+    , brandName = ""
+    , brandId = Nothing
     , route = route
     }
 
@@ -25,6 +27,8 @@ type alias Model =
     , typeName : String
     , typeId : Maybe Int
     , brandList : RemoteData String BrandList
+    , brandName : String
+    , brandId : Maybe Int
     , route : Route
     }
 

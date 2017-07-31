@@ -14222,9 +14222,9 @@ var _user$project$Routing$parse = function (location) {
 	}
 };
 
-var _user$project$Model$Model = F5(
-	function (a, b, c, d, e) {
-		return {typeList: a, typeName: b, typeId: c, brandList: d, route: e};
+var _user$project$Model$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, route: g};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -14252,7 +14252,7 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, route: route};
+	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, route: route};
 };
 
 var _user$project$Messages$NavigateTo = function (a) {
@@ -14260,6 +14260,28 @@ var _user$project$Messages$NavigateTo = function (a) {
 };
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
+};
+var _user$project$Messages$ClickEditBrand = function (a) {
+	return {ctor: 'ClickEditBrand', _0: a};
+};
+var _user$project$Messages$ClickDeleteBrand = function (a) {
+	return {ctor: 'ClickDeleteBrand', _0: a};
+};
+var _user$project$Messages$ClickSaveBrand = {ctor: 'ClickSaveBrand'};
+var _user$project$Messages$SetBrandName = function (a) {
+	return {ctor: 'SetBrandName', _0: a};
+};
+var _user$project$Messages$DeleteBrand = function (a) {
+	return {ctor: 'DeleteBrand', _0: a};
+};
+var _user$project$Messages$UpdateBrand = function (a) {
+	return {ctor: 'UpdateBrand', _0: a};
+};
+var _user$project$Messages$CreateBrand = function (a) {
+	return {ctor: 'CreateBrand', _0: a};
+};
+var _user$project$Messages$FetchBrand = function (a) {
+	return {ctor: 'FetchBrand', _0: a};
 };
 var _user$project$Messages$ClickEditType = function (a) {
 	return {ctor: 'ClickEditType', _0: a};
@@ -14270,9 +14292,6 @@ var _user$project$Messages$ClickDeleteType = function (a) {
 var _user$project$Messages$ClickSaveType = {ctor: 'ClickSaveType'};
 var _user$project$Messages$SetTypeName = function (a) {
 	return {ctor: 'SetTypeName', _0: a};
-};
-var _user$project$Messages$FetchBrand = function (a) {
-	return {ctor: 'FetchBrand', _0: a};
 };
 var _user$project$Messages$DeleteType = function (a) {
 	return {ctor: 'DeleteType', _0: a};
@@ -14285,6 +14304,101 @@ var _user$project$Messages$CreateType = function (a) {
 };
 var _user$project$Messages$FetchType = function (a) {
 	return {ctor: 'FetchType', _0: a};
+};
+
+var _user$project$Brand_Form$brandForm = function (brandName) {
+	return A2(
+		_elm_lang$html$Html$form,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onSubmit(_user$project$Messages$ClickSaveBrand),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('form-group'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$label,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('sr-only'),
+							_1: {
+								ctor: '::',
+								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'brandName'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Name'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('form-control'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('text'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('brandName'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$placeholder('Add/Edit a Brand'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(_user$project$Messages$SetBrandName),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$value(brandName),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$type_('submit'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Save Brand'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
 };
 
 var _user$project$Brand_View$brandView = function (b) {
@@ -14312,7 +14426,107 @@ var _user$project$Brand_View$brandView = function (b) {
 						_0: _elm_lang$html$Html$text(b.name),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$td,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('btn-toolbar pull-right'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'toolbar'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$type_('button'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
+												_1: {
+													ctor: '::',
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(
+															_user$project$Messages$ClickEditBrand(b)),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$span,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
+													_1: {
+														ctor: '::',
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+														_1: {ctor: '[]'}
+													}
+												},
+												{ctor: '[]'}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$type_('button'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
+													_1: {
+														ctor: '::',
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Events$onClick(
+																_user$project$Messages$ClickDeleteBrand(b.id)),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$span,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
+														_1: {
+															ctor: '::',
+															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+															_1: {ctor: '[]'}
+														}
+													},
+													{ctor: '[]'}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
@@ -14322,53 +14536,71 @@ var _user$project$Brand_Index$brandIndex = function (model) {
 	switch (_p0.ctor) {
 		case 'Success':
 			return A2(
-				_elm_lang$html$Html$table,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('table'),
-					_1: {ctor: '[]'}
-				},
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$thead,
-						{ctor: '[]'},
+						_elm_lang$html$Html$table,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('table'),
+							_1: {ctor: '[]'}
+						},
 						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$tr,
+								_elm_lang$html$Html$thead,
 								{ctor: '[]'},
 								{
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$th,
+										_elm_lang$html$Html$tr,
 										{ctor: '[]'},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Id'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$th,
-											{ctor: '[]'},
-											{
+											_0: A2(
+												_elm_lang$html$Html$th,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Id'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Brand'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
+												_0: A2(
+													_elm_lang$html$Html$th,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Brand'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$th,
+														{ctor: '[]'},
+														{ctor: '[]'}),
+													_1: {ctor: '[]'}
+												}
+											}
+										}),
+									_1: {ctor: '[]'}
 								}),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$tbody,
+									{ctor: '[]'},
+									A2(_elm_lang$core$List$map, _user$project$Brand_View$brandView, _p0._0.brands)),
+								_1: {ctor: '[]'}
+							}
 						}),
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$tbody,
-							{ctor: '[]'},
-							A2(_elm_lang$core$List$map, _user$project$Brand_View$brandView, _p0._0.brands)),
+						_0: _user$project$Brand_Form$brandForm(model.brandName),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -14439,6 +14671,18 @@ var _user$project$Encoders$idEncoder = function (id) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$Encoders$brandEncoder = function (b) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'name',
+				_1: _elm_lang$core$Json_Encode$string(b.name)
+			},
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$Encoders$typeEncoder = function (t) {
 	return _elm_lang$core$Json_Encode$object(
 		{
@@ -14478,6 +14722,15 @@ var _user$project$Commands$httpPut = F3(
 				withCredentials: false
 			});
 	});
+var _user$project$Commands$deleteBrand = function (brandId) {
+	var body = _elm_lang$http$Http$emptyBody;
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/brands/',
+		_elm_lang$core$Basics$toString(brandId));
+	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteBrand, request);
+};
 var _user$project$Commands$deleteType = function (typeId) {
 	var body = _elm_lang$http$Http$emptyBody;
 	var apiUrl = A2(
@@ -14486,6 +14739,16 @@ var _user$project$Commands$deleteType = function (typeId) {
 		_elm_lang$core$Basics$toString(typeId));
 	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
+};
+var _user$project$Commands$updateBrand = function (editedBrand) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$brandEncoder(editedBrand));
+	var apiUrl = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/api/brands/',
+		_elm_lang$core$Basics$toString(editedBrand.id));
+	var request = A3(_user$project$Commands$httpPut, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$UpdateBrand, request);
 };
 var _user$project$Commands$updateType = function (editedType) {
 	var body = _elm_lang$http$Http$jsonBody(
@@ -14496,6 +14759,13 @@ var _user$project$Commands$updateType = function (editedType) {
 		_elm_lang$core$Basics$toString(editedType.id));
 	var request = A3(_user$project$Commands$httpPut, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$UpdateType, request);
+};
+var _user$project$Commands$createBrand = function (newBrand) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$brandEncoder(newBrand));
+	var apiUrl = '/api/brands';
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$brandDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateBrand, request);
 };
 var _user$project$Commands$createType = function (newType) {
 	var body = _elm_lang$http$Http$jsonBody(
@@ -14582,7 +14852,7 @@ var _user$project$Type_View$typeView = function (t) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('btn-toolbar'),
+									_0: _elm_lang$html$Html_Attributes$class('btn-toolbar pull-right'),
 									_1: {
 										ctor: '::',
 										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'toolbar'),
@@ -14598,14 +14868,14 @@ var _user$project$Type_View$typeView = function (t) {
 											_0: _elm_lang$html$Html_Attributes$type_('button'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
+												_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
 												_1: {
 													ctor: '::',
-													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$html$Html_Events$onClick(
-															_user$project$Messages$ClickDeleteType(t.id)),
+															_user$project$Messages$ClickEditType(t)),
 														_1: {ctor: '[]'}
 													}
 												}
@@ -14617,7 +14887,7 @@ var _user$project$Type_View$typeView = function (t) {
 												_elm_lang$html$Html$span,
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
+													_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
 													_1: {
 														ctor: '::',
 														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
@@ -14636,14 +14906,14 @@ var _user$project$Type_View$typeView = function (t) {
 												_0: _elm_lang$html$Html_Attributes$type_('button'),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
+													_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
 													_1: {
 														ctor: '::',
-														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
 														_1: {
 															ctor: '::',
 															_0: _elm_lang$html$Html_Events$onClick(
-																_user$project$Messages$ClickEditType(t)),
+																_user$project$Messages$ClickDeleteType(t.id)),
 															_1: {ctor: '[]'}
 														}
 													}
@@ -14655,7 +14925,7 @@ var _user$project$Type_View$typeView = function (t) {
 													_elm_lang$html$Html$span,
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
+														_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
 														_1: {
 															ctor: '::',
 															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
@@ -15180,27 +15450,27 @@ var _user$project$View$view = function (model) {
 	return _user$project$View$layout(model);
 };
 
-var _user$project$Update$updateDeleteType = F2(
-	function (model, typeDeleted) {
-		var _p0 = model.typeList;
+var _user$project$Update$updateDeleteBrand = F2(
+	function (model, brandDeleted) {
+		var _p0 = model.brandList;
 		if (_p0.ctor === 'Success') {
 			var _p1 = _p0._0;
-			var oldTypes = _p1.types;
-			var newTypes = A2(
+			var oldBrands = _p1.brands;
+			var newBrands = A2(
 				_elm_lang$core$List$filter,
-				function (t) {
-					return !_elm_lang$core$Native_Utils.eq(t.id, typeDeleted.id);
+				function (b) {
+					return !_elm_lang$core$Native_Utils.eq(b.id, brandDeleted.id);
 				},
-				oldTypes);
-			var newTypeList = _elm_lang$core$Native_Utils.update(
+				oldBrands);
+			var newBrandList = _elm_lang$core$Native_Utils.update(
 				_p1,
-				{types: newTypes});
+				{brands: newBrands});
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				_elm_lang$core$Native_Utils.update(
 					model,
 					{
-						typeList: _user$project$Model$Success(newTypeList)
+						brandList: _user$project$Model$Success(newBrandList)
 					}),
 				{ctor: '[]'});
 		} else {
@@ -15210,25 +15480,18 @@ var _user$project$Update$updateDeleteType = F2(
 				{ctor: '[]'});
 		}
 	});
-var _user$project$Update$updateUpdateType = F2(
-	function (model, typeUpdated) {
+var _user$project$Update$updateDeleteType = F2(
+	function (model, typeDeleted) {
 		var _p2 = model.typeList;
 		if (_p2.ctor === 'Success') {
 			var _p3 = _p2._0;
 			var oldTypes = _p3.types;
 			var newTypes = A2(
-				_elm_lang$core$List$sortBy,
-				function (_) {
-					return _.name;
+				_elm_lang$core$List$filter,
+				function (t) {
+					return !_elm_lang$core$Native_Utils.eq(t.id, typeDeleted.id);
 				},
-				A2(
-					_elm_lang$core$List$map,
-					function (t) {
-						return _elm_lang$core$Native_Utils.eq(t.id, typeUpdated.id) ? _elm_lang$core$Native_Utils.update(
-							t,
-							{name: typeUpdated.name}) : t;
-					},
-					oldTypes));
+				oldTypes);
 			var newTypeList = _elm_lang$core$Native_Utils.update(
 				_p3,
 				{types: newTypes});
@@ -15247,20 +15510,64 @@ var _user$project$Update$updateUpdateType = F2(
 				{ctor: '[]'});
 		}
 	});
-var _user$project$Update$updateCreateType = F2(
-	function (model, newType) {
-		var _p4 = model.typeList;
+var _user$project$Update$updateUpdateBrand = F2(
+	function (model, brandUpdated) {
+		var _p4 = model.brandList;
 		if (_p4.ctor === 'Success') {
 			var _p5 = _p4._0;
-			var oldTypes = _p5.types;
+			var oldBrands = _p5.brands;
+			var newBrands = A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				A2(
+					_elm_lang$core$List$map,
+					function (b) {
+						return _elm_lang$core$Native_Utils.eq(b.id, brandUpdated.id) ? _elm_lang$core$Native_Utils.update(
+							b,
+							{name: brandUpdated.name}) : b;
+					},
+					oldBrands));
+			var newBrandList = _elm_lang$core$Native_Utils.update(
+				_p5,
+				{brands: newBrands});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						brandList: _user$project$Model$Success(newBrandList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
+var _user$project$Update$updateUpdateType = F2(
+	function (model, typeUpdated) {
+		var _p6 = model.typeList;
+		if (_p6.ctor === 'Success') {
+			var _p7 = _p6._0;
+			var oldTypes = _p7.types;
 			var newTypes = A2(
 				_elm_lang$core$List$sortBy,
 				function (_) {
 					return _.name;
 				},
-				{ctor: '::', _0: newType, _1: oldTypes});
+				A2(
+					_elm_lang$core$List$map,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.id, typeUpdated.id) ? _elm_lang$core$Native_Utils.update(
+							t,
+							{name: typeUpdated.name}) : t;
+					},
+					oldTypes));
 			var newTypeList = _elm_lang$core$Native_Utils.update(
-				_p5,
+				_p7,
 				{types: newTypes});
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15277,10 +15584,98 @@ var _user$project$Update$updateCreateType = F2(
 				{ctor: '[]'});
 		}
 	});
+var _user$project$Update$updateCreateBrand = F2(
+	function (model, brandCreated) {
+		var _p8 = model.brandList;
+		if (_p8.ctor === 'Success') {
+			var _p9 = _p8._0;
+			var oldBrands = _p9.brands;
+			var newBrands = A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				{ctor: '::', _0: brandCreated, _1: oldBrands});
+			var newBrandList = _elm_lang$core$Native_Utils.update(
+				_p9,
+				{brands: newBrands});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						brandList: _user$project$Model$Success(newBrandList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
+var _user$project$Update$updateCreateType = F2(
+	function (model, typeCreated) {
+		var _p10 = model.typeList;
+		if (_p10.ctor === 'Success') {
+			var _p11 = _p10._0;
+			var oldTypes = _p11.types;
+			var newTypes = A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.name;
+				},
+				{ctor: '::', _0: typeCreated, _1: oldTypes});
+			var newTypeList = _elm_lang$core$Native_Utils.update(
+				_p11,
+				{types: newTypes});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						typeList: _user$project$Model$Success(newTypeList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
+var _user$project$Update$saveBrand = function (model) {
+	var _p12 = model.brandId;
+	if (_p12.ctor === 'Just') {
+		var editedBrand = {id: _p12._0, name: model.brandName};
+		return A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_elm_lang$core$Native_Utils.update(
+				model,
+				{brandName: '', brandId: _elm_lang$core$Maybe$Nothing}),
+			{
+				ctor: '::',
+				_0: _user$project$Commands$updateBrand(editedBrand),
+				_1: {ctor: '[]'}
+			});
+	} else {
+		var newBrand = {id: 0, name: model.brandName};
+		return A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_elm_lang$core$Native_Utils.update(
+				model,
+				{brandName: ''}),
+			{
+				ctor: '::',
+				_0: _user$project$Commands$createBrand(newBrand),
+				_1: {ctor: '[]'}
+			});
+	}
+};
 var _user$project$Update$saveType = function (model) {
-	var _p6 = model.typeId;
-	if (_p6.ctor === 'Just') {
-		var editedType = {id: _p6._0, name: model.typeName};
+	var _p13 = model.typeId;
+	if (_p13.ctor === 'Just') {
+		var editedType = {id: _p13._0, name: model.typeName};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -15306,8 +15701,8 @@ var _user$project$Update$saveType = function (model) {
 	}
 };
 var _user$project$Update$urlUpdate = function (model) {
-	var _p7 = model.route;
-	switch (_p7.ctor) {
+	var _p14 = model.route;
+	switch (_p14.ctor) {
 		case 'HomeIndexRoute':
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15340,16 +15735,16 @@ var _user$project$Update$urlUpdate = function (model) {
 };
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p8 = msg;
-		switch (_p8.ctor) {
+		var _p15 = msg;
+		switch (_p15.ctor) {
 			case 'FetchType':
-				if (_p8._0.ctor === 'Ok') {
+				if (_p15._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								typeList: _user$project$Model$Success(_p8._0._0)
+								typeList: _user$project$Model$Success(_p15._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -15363,8 +15758,8 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p8._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, model, _p8._0._0);
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, model, _p15._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15372,8 +15767,8 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
-				if (_p8._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, model, _p8._0._0);
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateType, model, _p15._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15381,8 +15776,8 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
-				if (_p8._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, model, _p8._0._0);
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, model, _p15._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15394,19 +15789,19 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{typeName: _p8._0}),
+						{typeName: _p15._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
 				return _user$project$Update$saveType(model);
 			case 'ClickEditType':
-				var _p9 = _p8._0;
+				var _p16 = _p15._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							typeName: _p9.name,
-							typeId: _elm_lang$core$Maybe$Just(_p9.id)
+							typeName: _p16.name,
+							typeId: _elm_lang$core$Maybe$Just(_p16.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteType':
@@ -15415,17 +15810,17 @@ var _user$project$Update$update = F2(
 					model,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteType(_p8._0),
+						_0: _user$project$Commands$deleteType(_p15._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':
-				if (_p8._0.ctor === 'Ok') {
+				if (_p15._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								brandList: _user$project$Model$Success(_p8._0._0)
+								brandList: _user$project$Model$Success(_p15._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
@@ -15438,8 +15833,64 @@ var _user$project$Update$update = F2(
 							}),
 						{ctor: '[]'});
 				}
+			case 'CreateBrand':
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateBrand, model, _p15._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'UpdateBrand':
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateBrand, model, _p15._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'DeleteBrand':
+				if (_p15._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteBrand, model, _p15._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
+			case 'SetBrandName':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{brandName: _p15._0}),
+					{ctor: '[]'});
+			case 'ClickSaveBrand':
+				return _user$project$Update$saveBrand(model);
+			case 'ClickEditBrand':
+				var _p17 = _p15._0;
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							brandName: _p17.name,
+							brandId: _elm_lang$core$Maybe$Just(_p17.id)
+						}),
+					{ctor: '[]'});
+			case 'ClickDeleteBrand':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$deleteBrand(_p15._0),
+						_1: {ctor: '[]'}
+					});
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p8._0);
+				var currentRoute = _user$project$Routing$parse(_p15._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
 						model,
@@ -15451,7 +15902,7 @@ var _user$project$Update$update = F2(
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p8._0)),
+							_user$project$Routing$toPath(_p15._0)),
 						_1: {ctor: '[]'}
 					});
 		}
@@ -15475,7 +15926,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"SetTypeName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

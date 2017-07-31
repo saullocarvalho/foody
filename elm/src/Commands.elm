@@ -49,6 +49,23 @@ createType newType =
         Http.send CreateType request
 
 
+createBrand : Brand -> Cmd Msg
+createBrand newBrand =
+    let
+        apiUrl =
+            "/api/brands"
+
+        body =
+            newBrand
+                |> brandEncoder
+                |> Http.jsonBody
+
+        request =
+            Http.post apiUrl body brandDecoder
+    in
+        Http.send CreateBrand request
+
+
 updateType : Type -> Cmd Msg
 updateType editedType =
     let
@@ -66,6 +83,23 @@ updateType editedType =
         Http.send UpdateType request
 
 
+updateBrand : Brand -> Cmd Msg
+updateBrand editedBrand =
+    let
+        apiUrl =
+            "/api/brands/" ++ toString editedBrand.id
+
+        body =
+            editedBrand
+                |> brandEncoder
+                |> Http.jsonBody
+
+        request =
+            httpPut apiUrl body brandDecoder
+    in
+        Http.send UpdateBrand request
+
+
 deleteType : Int -> Cmd Msg
 deleteType typeId =
     let
@@ -79,6 +113,21 @@ deleteType typeId =
             httpDelete apiUrl body typeDecoder
     in
         Http.send DeleteType request
+
+
+deleteBrand : Int -> Cmd Msg
+deleteBrand brandId =
+    let
+        apiUrl =
+            "/api/brands/" ++ toString brandId
+
+        body =
+            Http.emptyBody
+
+        request =
+            httpDelete apiUrl body brandDecoder
+    in
+        Http.send DeleteBrand request
 
 
 httpPut : String -> Body -> Decoder a -> Request a

@@ -1,6 +1,6 @@
-var _user$project$Model$Model = F5(
-	function (a, b, c, d, e) {
-		return {typeList: a, typeName: b, typeId: c, brandList: d, route: e};
+var _user$project$Model$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, route: g};
 	});
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
@@ -28,5 +28,5 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, brandList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, route: route};
+	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, route: route};
 };
