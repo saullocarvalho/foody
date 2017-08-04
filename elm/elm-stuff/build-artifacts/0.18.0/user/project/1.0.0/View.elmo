@@ -8,6 +8,8 @@ var _user$project$View$page = function (model) {
 			return _user$project$Type_Index$typeIndex(model);
 		case 'BrandIndexRoute':
 			return _user$project$Brand_Index$brandIndex(model);
+		case 'ProductIndexRoute':
+			return _user$project$Product_Index$productIndex(model);
 		default:
 			return _user$project$View$notFoundView;
 	}

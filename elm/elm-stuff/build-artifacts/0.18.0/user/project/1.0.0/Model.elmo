@@ -1,7 +1,26 @@
-var _user$project$Model$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, route: g};
-	});
+var _user$project$Model$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, route: k};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
 var _user$project$Model$TypeList = function (a) {
 	return {types: a};
 };
@@ -16,6 +35,13 @@ var _user$project$Model$Brand = F2(
 	function (a, b) {
 		return {id: a, name: b};
 	});
+var _user$project$Model$ProductList = function (a) {
+	return {products: a};
+};
+var _user$project$Model$Product = F4(
+	function (a, b, c, d) {
+		return {productType: a, productBrand: b, count: c, expiresAt: d};
+	});
 var _user$project$Model$Id = function (a) {
 	return {id: a};
 };
@@ -28,5 +54,5 @@ var _user$project$Model$Failure = function (a) {
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, route: route};
+	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, route: route};
 };

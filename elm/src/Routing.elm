@@ -8,6 +8,7 @@ type Route
     = HomeIndexRoute
     | TypeIndexRoute
     | BrandIndexRoute
+    | ProductIndexRoute
     | NotFoundRoute
 
 
@@ -23,6 +24,9 @@ toPath route =
         BrandIndexRoute ->
             "/brands"
 
+        ProductIndexRoute ->
+            "/products"
+
         NotFoundRoute ->
             "/not-found"
 
@@ -33,6 +37,7 @@ matchers =
         [ map HomeIndexRoute <| s ""
         , map TypeIndexRoute <| s "types"
         , map BrandIndexRoute <| s "brands"
+        , map ProductIndexRoute <| s "products"
         ]
 
 

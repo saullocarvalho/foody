@@ -32,6 +32,18 @@ fetchBrands =
         Http.send FetchBrand request
 
 
+fetchProducts : Cmd Msg
+fetchProducts =
+    let
+        apiUrl =
+            "/api/products"
+
+        request =
+            Http.get apiUrl productListDecoder
+    in
+        Http.send FetchProduct request
+
+
 createType : Type -> Cmd Msg
 createType newType =
     let

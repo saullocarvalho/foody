@@ -23,5 +23,6 @@ type Msg
     | ClickSaveBrand
     | ClickDeleteBrand Int
     | ClickEditBrand Brand
+    | FetchProduct (Result Http.Error ProductList)
     | UrlChange Navigation.Location
     | NavigateTo Route

@@ -76,6 +76,11 @@ var _user$project$Commands$createType = function (newType) {
 	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateType, request);
 };
+var _user$project$Commands$fetchProducts = function () {
+	var apiUrl = '/api/products';
+	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$productListDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$FetchProduct, request);
+}();
 var _user$project$Commands$fetchBrands = function () {
 	var apiUrl = '/api/brands';
 	var request = A2(_elm_lang$http$Http$get, apiUrl, _user$project$Decoders$brandListDecoder);

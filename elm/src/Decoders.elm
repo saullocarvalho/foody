@@ -1,7 +1,7 @@
 module Decoders exposing (..)
 
 import Json.Decode as JD exposing (..)
-import Json.Decode.Extra exposing ((|:))
+import Json.Decode.Extra exposing ((|:), date)
 import Model exposing (..)
 
 
@@ -33,6 +33,23 @@ brandDecoder =
         Brand
         |: (field "id" int)
         |: (field "name" string)
+
+
+productListDecoder : JD.Decoder ProductList
+productListDecoder =
+    succeed
+        ProductList
+        |: (field "products" (list productDecoder))
+
+
+productDecoder : JD.Decoder Product
+productDecoder =
+    succeed
+        Product
+        |: (field "productType" typeDecoder)
+        |: (field "productBrand" brandDecoder)
+        |: (field "count" int)
+        |: (field "expiresAt" date)
 
 
 idDecoder : JD.Decoder Id

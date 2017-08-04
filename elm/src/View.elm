@@ -6,6 +6,7 @@ import Model exposing (..)
 import Home.View exposing (homeView)
 import Type.Index exposing (typeIndex)
 import Brand.Index exposing (brandIndex)
+import Product.Index exposing (productIndex)
 import Navigation.View exposing (navigation)
 import Routing exposing (Route(..))
 
@@ -34,6 +35,9 @@ page model =
 
         BrandIndexRoute ->
             brandIndex model
+
+        ProductIndexRoute ->
+            productIndex model
 
         NotFoundRoute ->
             notFoundView

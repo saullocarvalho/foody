@@ -82,6 +82,12 @@ update msg model =
         ClickDeleteBrand brandId ->
             model ! [ deleteBrand brandId ]
 
+        FetchProduct (Ok productList) ->
+            { model | productList = Success productList } ! []
+
+        FetchProduct (Err error) ->
+            { model | productList = Failure "Something went wrong ..." } ! []
+
         UrlChange location ->
             let
                 currentRoute =
@@ -104,6 +110,9 @@ urlUpdate model =
 
         BrandIndexRoute ->
             model ! [ fetchBrands ]
+
+        ProductIndexRoute ->
+            model ! [ fetchProducts ]
 
         _ ->
             model ! []

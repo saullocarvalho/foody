@@ -10,7 +10,7 @@ defmodule Foody.ProductController do
                         join: t in assoc(p, :type),
                         group_by: [b.id, t.id, p.expires_at],
                         where: p.consumed == false,
-                        select: %{count: count(p.id), brand: b, type: t, expires_at: p.expires_at},
+                        select: %{productBrand: b, productType: t, count: count(p.id), expiresAt: p.expires_at},
                         order_by: p.expires_at)
 
     render(conn, "index.json", products: products)

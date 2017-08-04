@@ -274,6 +274,15 @@ var _user$project$Update$urlUpdate = function (model) {
 					_0: _user$project$Commands$fetchBrands,
 					_1: {ctor: '[]'}
 				});
+		case 'ProductIndexRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{
+					ctor: '::',
+					_0: _user$project$Commands$fetchProducts,
+					_1: {ctor: '[]'}
+				});
 		default:
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -437,6 +446,26 @@ var _user$project$Update$update = F2(
 						_0: _user$project$Commands$deleteBrand(_p15._0),
 						_1: {ctor: '[]'}
 					});
+			case 'FetchProduct':
+				if (_p15._0.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								productList: _user$project$Model$Success(_p15._0._0)
+							}),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								productList: _user$project$Model$Failure('Something went wrong ...')
+							}),
+						{ctor: '[]'});
+				}
 			case 'UrlChange':
 				var currentRoute = _user$project$Routing$parse(_p15._0);
 				return _user$project$Update$urlUpdate(

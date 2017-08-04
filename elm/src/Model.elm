@@ -1,6 +1,7 @@
 module Model exposing (..)
 
 import Routing exposing (Route)
+import Date exposing (..)
 
 
 type RemoteData e a
@@ -18,6 +19,10 @@ initialModel route =
     , brandList = NotRequested
     , brandName = ""
     , brandId = Nothing
+    , productList = NotRequested
+    , productBrandId = Nothing
+    , productTypeId = Nothing
+    , productExpiresAt = Nothing
     , route = route
     }
 
@@ -29,6 +34,10 @@ type alias Model =
     , brandList : RemoteData String BrandList
     , brandName : String
     , brandId : Maybe Int
+    , productList : RemoteData String ProductList
+    , productBrandId : Maybe Int
+    , productTypeId : Maybe Int
+    , productExpiresAt : Maybe Date
     , route : Route
     }
 
@@ -50,6 +59,18 @@ type alias BrandList =
 type alias Brand =
     { id : Int
     , name : String
+    }
+
+
+type alias ProductList =
+    { products : List Product }
+
+
+type alias Product =
+    { productType : Type
+    , productBrand : Brand
+    , count : Int
+    , expiresAt : Date
     }
 
 
