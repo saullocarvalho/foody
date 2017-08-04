@@ -5,6 +5,7 @@ defmodule Foody.Brand do
 
   schema "brands" do
     field :name, :string
+    has_many :products, Foody.Product
 
     timestamps()
   end
