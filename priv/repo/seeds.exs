@@ -13,6 +13,13 @@
 alias Foody.Repo
 alias Foody.Type
 alias Foody.Brand
+alias Foody.Product
+
+import Ecto.Query
+
+IO.puts "---- Deleting existing products"
+
+Repo.delete_all Product
 
 IO.puts "---- Deleting existing food types"
 
@@ -44,4 +51,19 @@ for name <- ["Parmalat", "Danone", "JBS", "Molico"] do
     |> Repo.insert
 
   IO.puts "---- Inserted food brand #{brand.id}"
+end
+
+IO.puts "---- Creating products"
+
+type = Repo.one(from t in Type, limit: 1)
+brand = Repo.one(from b in Brand, limit: 1)
+
+for expiration_date <- ["2018-01-01", "2018-01-01", "2018-01-02"] do
+  params = %{type_id: type.id, brand_id: brand.id, expires_at: expiration_date}
+
+  {:ok, product} = %Product{}
+    |> Product.changeset(params)
+    |> Repo.insert
+
+  IO.puts "---- Insert product #{product.id}"
 end
