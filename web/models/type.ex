@@ -1,7 +1,7 @@
 defmodule Foody.Type do
   use Foody.Web, :model
 
-  @derive {Poison.Encoder, except: [:__meta__, :inserted_at, :updated_at]}
+  @derive {Poison.Encoder, only: [:id, :name]}
 
   schema "types" do
     field :name, :string
@@ -15,7 +15,7 @@ defmodule Foody.Type do
   """
   @fields [:name]
   @required [:name]
-  def changeset(struct, params \\ :empty) do
+  def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @fields)
     |> validate_required(@required)

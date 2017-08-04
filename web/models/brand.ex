@@ -1,7 +1,7 @@
 defmodule Foody.Brand do
   use Foody.Web, :model
 
-  @derive {Poison.Encoder, except: [:__meta__, :inserted_at, :updated_at]}
+  @derive {Poison.Encoder, only: [:id, :name]}
 
   schema "brands" do
     field :name, :string

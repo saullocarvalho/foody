@@ -1,6 +1,8 @@
 defmodule Foody.Product do
   use Foody.Web, :model
 
+  @derive {Poison.Encoder, only: [:id, :type, :brand, :expires_at]}
+
   schema "products" do
     field :expires_at, Ecto.Date
     field :consumed, :boolean, default: false

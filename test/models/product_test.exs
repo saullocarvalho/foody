@@ -3,7 +3,7 @@ defmodule Foody.ProductTest do
 
   alias Foody.Product
 
-  @valid_attrs %{consumed: true, expires_at: %{day: 17, month: 4, year: 2010}}
+  @valid_attrs %{type_id: 1, brand_id: 2, expires_at: "2018-01-01"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

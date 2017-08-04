@@ -1,7 +1,6 @@
 defmodule Foody.TestHelpers do
   alias Foody.Repo
 
-# TODO: Use Type.changeset(%Type{}, attrs)
   def insert_type(attrs \\ %{}) do
     %Foody.Type{}
     |> Foody.Type.changeset(attrs)
@@ -11,6 +10,13 @@ defmodule Foody.TestHelpers do
   def insert_brand(attrs \\ %{}) do
     %Foody.Brand{}
     |> Foody.Brand.changeset(attrs)
+    |> Repo.insert!()
+  end
+
+  def insert_product(type, brand, attrs \\ %{}) do
+    type
+    |> Ecto.build_assoc(:products, brand_id: brand.id)
+    |> Foody.Product.changeset(attrs)
     |> Repo.insert!()
   end
 end
