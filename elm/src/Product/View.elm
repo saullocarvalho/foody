@@ -22,25 +22,12 @@ productView p =
                 [ button
                     [ type_ "button"
                     , class "btn btn-default btn-sm"
-                    , attribute "arial-label" "Edit"
+                    , attribute "arial-label" "Consume"
 
                     -- , onClick (ClickEditType t)
                     ]
                     [ span
-                        [ class "glyphicon glyphicon-pencil"
-                        , attribute "aria-hidden" "true"
-                        ]
-                        []
-                    ]
-                , button
-                    [ type_ "button"
-                    , class "btn btn-danger btn-sm"
-                    , attribute "arial-label" "Delete"
-
-                    -- , onClick (ClickDeleteType t.id)
-                    ]
-                    [ span
-                        [ class "glyphicon glyphicon-trash"
+                        [ class "glyphicon glyphicon-cutlery"
                         , attribute "aria-hidden" "true"
                         ]
                         []

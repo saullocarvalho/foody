@@ -17108,7 +17108,7 @@ var _user$project$Product_View$productView = function (p) {
 														_0: _elm_lang$html$Html_Attributes$class('btn btn-default btn-sm'),
 														_1: {
 															ctor: '::',
-															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Edit'),
+															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Consume'),
 															_1: {ctor: '[]'}
 														}
 													}
@@ -17119,7 +17119,7 @@ var _user$project$Product_View$productView = function (p) {
 														_elm_lang$html$Html$span,
 														{
 															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-pencil'),
+															_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-cutlery'),
 															_1: {
 																ctor: '::',
 																_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
@@ -17129,41 +17129,7 @@ var _user$project$Product_View$productView = function (p) {
 														{ctor: '[]'}),
 													_1: {ctor: '[]'}
 												}),
-											_1: {
-												ctor: '::',
-												_0: A2(
-													_elm_lang$html$Html$button,
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$type_('button'),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$class('btn btn-danger btn-sm'),
-															_1: {
-																ctor: '::',
-																_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Delete'),
-																_1: {ctor: '[]'}
-															}
-														}
-													},
-													{
-														ctor: '::',
-														_0: A2(
-															_elm_lang$html$Html$span,
-															{
-																ctor: '::',
-																_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-trash'),
-																_1: {
-																	ctor: '::',
-																	_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
-																	_1: {ctor: '[]'}
-																}
-															},
-															{ctor: '[]'}),
-														_1: {ctor: '[]'}
-													}),
-												_1: {ctor: '[]'}
-											}
+											_1: {ctor: '[]'}
 										}),
 									_1: {ctor: '[]'}
 								}),
@@ -17174,6 +17140,86 @@ var _user$project$Product_View$productView = function (p) {
 			}
 		});
 };
+
+var _user$project$Product_Form$productForm = F3(
+	function (productBrandId, productTypeId, productExpiresAt) {
+		return A2(
+			_elm_lang$html$Html$form,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('form-group'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$label,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('sr-only'),
+								_1: {
+									ctor: '::',
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'typeName'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Name'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$select,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('form-control'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('productTypeId'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$placeholder('Choose Type'),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('submit'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Save Product'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 
 var _user$project$Product_Index$productIndex = function (model) {
 	var _p0 = model.productList;
@@ -17264,7 +17310,11 @@ var _user$project$Product_Index$productIndex = function (model) {
 								_1: {ctor: '[]'}
 							}
 						}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Product_Form$productForm, model.productBrandId, model.productTypeId, model.productExpiresAt),
+						_1: {ctor: '[]'}
+					}
 				});
 		case 'Failure':
 			return A2(

@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Messages exposing (Msg)
 import Model exposing (..)
 import Product.View exposing (productView)
+import Product.Form exposing (productForm)
 
 
 productIndex : Model -> Html Msg
@@ -26,8 +27,7 @@ productIndex model =
                         |> List.map productView
                         |> tbody []
                     ]
-
-                -- , typeForm model.typeName
+                , productForm model.productBrandId model.productTypeId model.productExpiresAt
                 ]
 
         Failure error ->
