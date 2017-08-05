@@ -48,7 +48,12 @@ productForm ({ productTypeId, productBrandId, productExpiresAt, datePicker } as 
             [ type_ "submit"
             , class "btn btn-primary"
             ]
-            [ text "Save" ]
+            [ span
+                [ class "glyphicon glyphicon-plus"
+                , attribute "aria-hidden" "true"
+                ]
+                []
+            ]
         ]
 
 

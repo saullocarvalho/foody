@@ -17669,7 +17669,18 @@ var _user$project$Brand_Form$brandForm = function (brandName) {
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Save Brand'),
+						_0: A2(
+							_elm_lang$html$Html$span,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-plus'),
+								_1: {
+									ctor: '::',
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{ctor: '[]'}),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -18334,7 +18345,18 @@ var _user$project$Type_Form$typeForm = function (typeName) {
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Save Type'),
+						_0: A2(
+							_elm_lang$html$Html$span,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-plus'),
+								_1: {
+									ctor: '::',
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{ctor: '[]'}),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -18735,7 +18757,18 @@ var _user$project$Product_Form$productForm = function (_p0) {
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Save'),
+								_0: A2(
+									_elm_lang$html$Html$span,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-plus'),
+										_1: {
+											ctor: '::',
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+											_1: {ctor: '[]'}
+										}
+									},
+									{ctor: '[]'}),
 								_1: {ctor: '[]'}
 							}),
 						_1: {ctor: '[]'}

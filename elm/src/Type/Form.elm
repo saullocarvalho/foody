@@ -32,5 +32,10 @@ typeForm typeName =
             [ type_ "submit"
             , class "btn btn-primary"
             ]
-            [ text "Save Type" ]
+            [ span
+                [ class "glyphicon glyphicon-plus"
+                , attribute "aria-hidden" "true"
+                ]
+                []
+            ]
         ]

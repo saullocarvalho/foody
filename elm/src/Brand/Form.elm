@@ -32,5 +32,10 @@ brandForm brandName =
             [ type_ "submit"
             , class "btn btn-primary"
             ]
-            [ text "Save Brand" ]
+            [ span
+                [ class "glyphicon glyphicon-plus"
+                , attribute "aria-hidden" "true"
+                ]
+                []
+            ]
         ]
