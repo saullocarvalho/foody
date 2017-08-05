@@ -90,6 +90,30 @@ update msg ({ datePicker } as model) =
         FetchProduct (Err error) ->
             { model | productList = Failure "Something went wrong ..." } ! []
 
+        SetProductType typeId ->
+            let
+                result =
+                    String.toInt typeId
+            in
+                case result of
+                    Ok id ->
+                        { model | productTypeId = Just id } ! []
+
+                    Err message ->
+                        { model | productTypeId = Nothing } ! []
+
+        SetProductBrand brandId ->
+            let
+                result =
+                    String.toInt brandId
+            in
+                case result of
+                    Ok id ->
+                        { model | productBrandId = Just id } ! []
+
+                    Err message ->
+                        { model | productBrandId = Nothing } ! []
+
         ToDatePicker msg ->
             let
                 ( newDatePicker, datePickerFx, event ) =

@@ -17534,6 +17534,12 @@ var _user$project$Messages$UrlChange = function (a) {
 var _user$project$Messages$ToDatePicker = function (a) {
 	return {ctor: 'ToDatePicker', _0: a};
 };
+var _user$project$Messages$SetProductBrand = function (a) {
+	return {ctor: 'SetProductBrand', _0: a};
+};
+var _user$project$Messages$SetProductType = function (a) {
+	return {ctor: 'SetProductType', _0: a};
+};
 var _user$project$Messages$FetchProduct = function (a) {
 	return {ctor: 'FetchProduct', _0: a};
 };
@@ -18581,99 +18587,110 @@ var _user$project$Settings$settings = _elm_lang$core$Native_Utils.update(
 		placeholder: 'Pick Expiration Date'
 	});
 
-var _user$project$Product_Form$selectProductBrand = function (productBrandId) {
+var _user$project$Product_Form$brandOption = function (b) {
 	return A2(
-		_elm_lang$html$Html$select,
+		_elm_lang$html$Html$option,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('form-control'),
-			_1: {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$id('productBrandId'),
-				_1: {ctor: '[]'}
-			}
+			_0: _elm_lang$html$Html_Attributes$value(
+				_elm_lang$core$Basics$toString(b.id)),
+			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$option,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Choose Brand'),
-					_1: {ctor: '[]'}
-				}),
+			_0: _elm_lang$html$Html$text(b.name),
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$Product_Form$selectProductType = function (productTypeId) {
-	return A2(
-		_elm_lang$html$Html$select,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('form-control'),
-			_1: {
+var _user$project$Product_Form$selectProductBrand = F2(
+	function (productBrandId, _p0) {
+		var _p1 = _p0;
+		return A2(
+			_elm_lang$html$Html$select,
+			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$id('productTypeId'),
-				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$option,
-				{ctor: '[]'},
-				{
+				_0: _elm_lang$html$Html_Attributes$class('form-control'),
+				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html$text('Choose Type'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
-var _user$project$Product_Form$productForm = function (_p0) {
-	var _p1 = _p0;
-	return A2(
-		_elm_lang$html$Html$form,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('form-inline'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('form-group'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$label,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('sr-only'),
-							_1: {
-								ctor: '::',
-								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productTypeId'),
-								_1: {ctor: '[]'}
-							}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('Product Type'),
-							_1: {ctor: '[]'}
-						}),
+					_0: _elm_lang$html$Html_Attributes$id('productBrandId'),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Product_Form$selectProductType(_p1.productTypeId),
+						_0: _elm_lang$html$Html_Events$onInput(_user$project$Messages$SetProductBrand),
 						_1: {ctor: '[]'}
 					}
-				}),
-			_1: {
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$option,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Choose Brand'),
+						_1: {ctor: '[]'}
+					}),
+				_1: A2(_elm_lang$core$List$map, _user$project$Product_Form$brandOption, _p1.brands)
+			});
+	});
+var _user$project$Product_Form$typeOption = function (t) {
+	return A2(
+		_elm_lang$html$Html$option,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$value(
+				_elm_lang$core$Basics$toString(t.id)),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(t.name),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Product_Form$selectProductType = F2(
+	function (productTypeId, _p2) {
+		var _p3 = _p2;
+		return A2(
+			_elm_lang$html$Html$select,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('form-control'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id('productTypeId'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onInput(_user$project$Messages$SetProductType),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$option,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Choose Type'),
+						_1: {ctor: '[]'}
+					}),
+				_1: A2(_elm_lang$core$List$map, _user$project$Product_Form$typeOption, _p3.types)
+			});
+	});
+var _user$project$Product_Form$productForm = function (_p4) {
+	var _p5 = _p4;
+	var _p6 = {ctor: '_Tuple2', _0: _p5.typeList, _1: _p5.brandList};
+	if (((_p6.ctor === '_Tuple2') && (_p6._0.ctor === 'Success')) && (_p6._1.ctor === 'Success')) {
+		return A2(
+			_elm_lang$html$Html$form,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+				_1: {ctor: '[]'}
+			},
+			{
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
@@ -18691,18 +18708,18 @@ var _user$project$Product_Form$productForm = function (_p0) {
 								_0: _elm_lang$html$Html_Attributes$class('sr-only'),
 								_1: {
 									ctor: '::',
-									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productBrandId'),
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productTypeId'),
 									_1: {ctor: '[]'}
 								}
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Product Brand'),
+								_0: _elm_lang$html$Html$text('Product Type'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Product_Form$selectProductBrand(_p1.productBrandId),
+							_0: A2(_user$project$Product_Form$selectProductType, _p5.productTypeId, _p6._0._0),
 							_1: {ctor: '[]'}
 						}
 					}),
@@ -18724,58 +18741,94 @@ var _user$project$Product_Form$productForm = function (_p0) {
 									_0: _elm_lang$html$Html_Attributes$class('sr-only'),
 									_1: {
 										ctor: '::',
-										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productExpiresAt'),
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productBrandId'),
 										_1: {ctor: '[]'}
 									}
 								},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('Product Expiration Date'),
+									_0: _elm_lang$html$Html$text('Product Brand'),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
 								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$map,
-									_user$project$Messages$ToDatePicker,
-									A3(_elm_community$elm_datepicker$DatePicker$view, _p1.productExpiresAt, _user$project$Settings$settings, _p1.datePicker)),
+								_0: A2(_user$project$Product_Form$selectProductBrand, _p5.productBrandId, _p6._1._0),
 								_1: {ctor: '[]'}
 							}
 						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$button,
+							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$type_('submit'),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
-									_1: {ctor: '[]'}
-								}
+								_0: _elm_lang$html$Html_Attributes$class('form-group'),
+								_1: {ctor: '[]'}
 							},
 							{
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$span,
+									_elm_lang$html$Html$label,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-plus'),
+										_0: _elm_lang$html$Html_Attributes$class('sr-only'),
 										_1: {
 											ctor: '::',
-											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productExpiresAt'),
 											_1: {ctor: '[]'}
 										}
 									},
-									{ctor: '[]'}),
-								_1: {ctor: '[]'}
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Product Expiration Date'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$map,
+										_user$project$Messages$ToDatePicker,
+										A3(_elm_community$elm_datepicker$DatePicker$view, _p5.productExpiresAt, _user$project$Settings$settings, _p5.datePicker)),
+									_1: {ctor: '[]'}
+								}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('submit'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$span,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('glyphicon glyphicon-plus'),
+											_1: {
+												ctor: '::',
+												_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-hidden', 'true'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
-			}
-		});
+			});
+	} else {
+		return _elm_lang$html$Html$text('');
+	}
 };
 
 var _user$project$Product_Index$productIndex = function (model) {
@@ -19566,7 +19619,7 @@ var _user$project$Update$urlUpdate = function (model) {
 var _user$project$Update$update = F2(
 	function (msg, _p16) {
 		var _p17 = _p16;
-		var _p23 = _p17;
+		var _p25 = _p17;
 		var _p18 = msg;
 		switch (_p18.ctor) {
 			case 'FetchType':
@@ -19574,7 +19627,7 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								typeList: _user$project$Model$Success(_p18._0._0)
 							}),
@@ -19583,7 +19636,7 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
@@ -19591,46 +19644,46 @@ var _user$project$Update$update = F2(
 				}
 			case 'CreateType':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateCreateType, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateUpdateType, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateDeleteType, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{typeName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				return _user$project$Update$saveType(_p23);
+				return _user$project$Update$saveType(_p25);
 			case 'ClickEditType':
 				var _p19 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{
 							typeName: _p19.name,
 							typeId: _elm_lang$core$Maybe$Just(_p19.id)
@@ -19639,7 +19692,7 @@ var _user$project$Update$update = F2(
 			case 'ClickDeleteType':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p23,
+					_p25,
 					{
 						ctor: '::',
 						_0: _user$project$Commands$deleteType(_p18._0),
@@ -19650,7 +19703,7 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								brandList: _user$project$Model$Success(_p18._0._0)
 							}),
@@ -19659,7 +19712,7 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
@@ -19667,46 +19720,46 @@ var _user$project$Update$update = F2(
 				}
 			case 'CreateBrand':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateBrand, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateCreateBrand, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'UpdateBrand':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateBrand, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateUpdateBrand, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'DeleteBrand':
 				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteBrand, _p23, _p18._0._0);
+					return A2(_user$project$Update$updateDeleteBrand, _p25, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p23,
+						_p25,
 						{ctor: '[]'});
 				}
 			case 'SetBrandName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{brandName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveBrand':
-				return _user$project$Update$saveBrand(_p23);
+				return _user$project$Update$saveBrand(_p25);
 			case 'ClickEditBrand':
 				var _p20 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{
 							brandName: _p20.name,
 							brandId: _elm_lang$core$Maybe$Just(_p20.id)
@@ -19715,7 +19768,7 @@ var _user$project$Update$update = F2(
 			case 'ClickDeleteBrand':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p23,
+					_p25,
 					{
 						ctor: '::',
 						_0: _user$project$Commands$deleteBrand(_p18._0),
@@ -19726,7 +19779,7 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								productList: _user$project$Model$Success(_p18._0._0)
 							}),
@@ -19735,28 +19788,68 @@ var _user$project$Update$update = F2(
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p23,
+							_p25,
 							{
 								productList: _user$project$Model$Failure('Something went wrong ...')
 							}),
 						{ctor: '[]'});
 				}
+			case 'SetProductType':
+				var result = _elm_lang$core$String$toInt(_p18._0);
+				var _p21 = result;
+				if (_p21.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							_p25,
+							{
+								productTypeId: _elm_lang$core$Maybe$Just(_p21._0)
+							}),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							_p25,
+							{productTypeId: _elm_lang$core$Maybe$Nothing}),
+						{ctor: '[]'});
+				}
+			case 'SetProductBrand':
+				var result = _elm_lang$core$String$toInt(_p18._0);
+				var _p22 = result;
+				if (_p22.ctor === 'Ok') {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							_p25,
+							{
+								productBrandId: _elm_lang$core$Maybe$Just(_p22._0)
+							}),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							_p25,
+							{productBrandId: _elm_lang$core$Maybe$Nothing}),
+						{ctor: '[]'});
+				}
 			case 'ToDatePicker':
-				var _p21 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p18._0, _p17.datePicker);
-				var newDatePicker = _p21._0;
-				var datePickerFx = _p21._1;
-				var event = _p21._2;
+				var _p23 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p18._0, _p17.datePicker);
+				var newDatePicker = _p23._0;
+				var datePickerFx = _p23._1;
+				var event = _p23._2;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{
 							productExpiresAt: function () {
-								var _p22 = event;
-								if (_p22.ctor === 'Changed') {
-									return _p22._0;
+								var _p24 = event;
+								if (_p24.ctor === 'Changed') {
+									return _p24._0;
 								} else {
-									return _p23.productExpiresAt;
+									return _p25.productExpiresAt;
 								}
 							}(),
 							datePicker: newDatePicker
@@ -19770,12 +19863,12 @@ var _user$project$Update$update = F2(
 				var currentRoute = _user$project$Routing$parse(_p18._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
-						_p23,
+						_p25,
 						{route: currentRoute}));
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p23,
+					_p25,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
@@ -19806,7 +19899,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetProductBrand":["String"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"SetProductType":["String"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

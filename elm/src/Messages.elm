@@ -25,6 +25,8 @@ type Msg
     | ClickDeleteBrand Int
     | ClickEditBrand Brand
     | FetchProduct (Result Http.Error ProductList)
+    | SetProductType String
+    | SetProductBrand String
     | ToDatePicker DatePicker.Msg
     | UrlChange Navigation.Location
     | NavigateTo Route
