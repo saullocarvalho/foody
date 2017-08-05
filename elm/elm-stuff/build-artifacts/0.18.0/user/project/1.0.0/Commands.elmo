@@ -62,6 +62,13 @@ var _user$project$Commands$updateType = function (editedType) {
 	var request = A3(_user$project$Commands$httpPut, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$UpdateType, request);
 };
+var _user$project$Commands$createProduct = function (newProduct) {
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$productEncoder(newProduct));
+	var apiUrl = '/api/products';
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$productDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$CreateProduct, request);
+};
 var _user$project$Commands$createBrand = function (newBrand) {
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$brandEncoder(newBrand));

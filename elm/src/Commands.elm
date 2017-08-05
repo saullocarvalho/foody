@@ -78,6 +78,23 @@ createBrand newBrand =
         Http.send CreateBrand request
 
 
+createProduct : SendProduct -> Cmd Msg
+createProduct newProduct =
+    let
+        apiUrl =
+            "/api/products"
+
+        body =
+            newProduct
+                |> productEncoder
+                |> Http.jsonBody
+
+        request =
+            Http.post apiUrl body productDecoder
+    in
+        Http.send CreateProduct request
+
+
 updateType : Type -> Cmd Msg
 updateType editedType =
     let

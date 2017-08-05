@@ -192,10 +192,59 @@ var _user$project$Update$updateCreateType = F2(
 				{ctor: '[]'});
 		}
 	});
+var _user$project$Update$updateCreateProduct = F2(
+	function (model, productCreated) {
+		var _p12 = model.productList;
+		if (_p12.ctor === 'Success') {
+			var _p13 = _p12._0;
+			var oldProducts = _p13.products;
+			var newProducts = A2(
+				_elm_lang$core$List$sortBy,
+				_user$project$Util$compareProduct,
+				{
+					ctor: '::',
+					_0: productCreated,
+					_1: A2(
+						_elm_lang$core$List$filter,
+						function (p) {
+							return !_elm_lang$core$Native_Utils.eq(
+								{
+									ctor: '_Tuple3',
+									_0: p.productType,
+									_1: p.productBrand,
+									_2: _user$project$Util$toIsoString(p.expiresAt)
+								},
+								{
+									ctor: '_Tuple3',
+									_0: productCreated.productType,
+									_1: productCreated.productBrand,
+									_2: _user$project$Util$toIsoString(productCreated.expiresAt)
+								});
+						},
+						oldProducts)
+				});
+			var newProductList = _elm_lang$core$Native_Utils.update(
+				_p13,
+				{products: newProducts});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						productList: _user$project$Model$Success(newProductList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
 var _user$project$Update$saveBrand = function (model) {
-	var _p12 = model.brandId;
-	if (_p12.ctor === 'Just') {
-		var editedBrand = {id: _p12._0, name: model.brandName};
+	var _p14 = model.brandId;
+	if (_p14.ctor === 'Just') {
+		var editedBrand = {id: _p14._0, name: model.brandName};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -221,9 +270,9 @@ var _user$project$Update$saveBrand = function (model) {
 	}
 };
 var _user$project$Update$saveType = function (model) {
-	var _p13 = model.typeId;
-	if (_p13.ctor === 'Just') {
-		var editedType = {id: _p13._0, name: model.typeName};
+	var _p15 = model.typeId;
+	if (_p15.ctor === 'Just') {
+		var editedType = {id: _p15._0, name: model.typeName};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -248,9 +297,34 @@ var _user$project$Update$saveType = function (model) {
 			});
 	}
 };
+var _user$project$Update$saveProduct = function (_p16) {
+	var _p17 = _p16;
+	var _p19 = _p17;
+	var _p18 = {ctor: '_Tuple3', _0: _p17.productTypeId, _1: _p17.productBrandId, _2: _p17.productExpiresAt};
+	if ((((_p18.ctor === '_Tuple3') && (_p18._0.ctor === 'Just')) && (_p18._1.ctor === 'Just')) && (_p18._2.ctor === 'Just')) {
+		var newProduct = {
+			typeId: _p18._0._0,
+			brandId: _p18._1._0,
+			expiresAt: _user$project$Util$toIsoString(_p18._2._0)
+		};
+		return A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_p19,
+			{
+				ctor: '::',
+				_0: _user$project$Commands$createProduct(newProduct),
+				_1: {ctor: '[]'}
+			});
+	} else {
+		return A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_p19,
+			{ctor: '[]'});
+	}
+};
 var _user$project$Update$urlUpdate = function (model) {
-	var _p14 = model.route;
-	switch (_p14.ctor) {
+	var _p20 = model.route;
+	switch (_p20.ctor) {
 		case 'HomeIndexRoute':
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -275,9 +349,9 @@ var _user$project$Update$urlUpdate = function (model) {
 					_1: {ctor: '[]'}
 				});
 		case 'ProductIndexRoute':
-			var _p15 = _elm_community$elm_datepicker$DatePicker$init;
-			var datePicker = _p15._0;
-			var datePickerFx = _p15._1;
+			var _p21 = _elm_community$elm_datepicker$DatePicker$init;
+			var datePicker = _p21._0;
+			var datePickerFx = _p21._1;
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
@@ -306,239 +380,250 @@ var _user$project$Update$urlUpdate = function (model) {
 	}
 };
 var _user$project$Update$update = F2(
-	function (msg, _p16) {
-		var _p17 = _p16;
-		var _p25 = _p17;
-		var _p18 = msg;
-		switch (_p18.ctor) {
+	function (msg, _p22) {
+		var _p23 = _p22;
+		var _p31 = _p23;
+		var _p24 = msg;
+		switch (_p24.ctor) {
 			case 'FetchType':
-				if (_p18._0.ctor === 'Ok') {
+				if (_p24._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
-								typeList: _user$project$Model$Success(_p18._0._0)
+								typeList: _user$project$Model$Success(_p24._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateType, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p25,
-						{typeName: _p18._0}),
+						_p31,
+						{typeName: _p24._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				return _user$project$Update$saveType(_p25);
+				return _user$project$Update$saveType(_p31);
 			case 'ClickEditType':
-				var _p19 = _p18._0;
+				var _p25 = _p24._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p25,
+						_p31,
 						{
-							typeName: _p19.name,
-							typeId: _elm_lang$core$Maybe$Just(_p19.id)
+							typeName: _p25.name,
+							typeId: _elm_lang$core$Maybe$Just(_p25.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteType':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p25,
+					_p31,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteType(_p18._0),
+						_0: _user$project$Commands$deleteType(_p24._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':
-				if (_p18._0.ctor === 'Ok') {
+				if (_p24._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
-								brandList: _user$project$Model$Success(_p18._0._0)
+								brandList: _user$project$Model$Success(_p24._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
 								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateBrand':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateBrand, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateBrand, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'UpdateBrand':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateBrand, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateBrand, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'DeleteBrand':
-				if (_p18._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteBrand, _p25, _p18._0._0);
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteBrand, _p31, _p24._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p25,
+						_p31,
 						{ctor: '[]'});
 				}
 			case 'SetBrandName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p25,
-						{brandName: _p18._0}),
+						_p31,
+						{brandName: _p24._0}),
 					{ctor: '[]'});
 			case 'ClickSaveBrand':
-				return _user$project$Update$saveBrand(_p25);
+				return _user$project$Update$saveBrand(_p31);
 			case 'ClickEditBrand':
-				var _p20 = _p18._0;
+				var _p26 = _p24._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p25,
+						_p31,
 						{
-							brandName: _p20.name,
-							brandId: _elm_lang$core$Maybe$Just(_p20.id)
+							brandName: _p26.name,
+							brandId: _elm_lang$core$Maybe$Just(_p26.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteBrand':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p25,
+					_p31,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteBrand(_p18._0),
+						_0: _user$project$Commands$deleteBrand(_p24._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchProduct':
-				if (_p18._0.ctor === 'Ok') {
+				if (_p24._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
-								productList: _user$project$Model$Success(_p18._0._0)
+								productList: _user$project$Model$Success(_p24._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
 								productList: _user$project$Model$Failure('Something went wrong ...')
 							}),
 						{ctor: '[]'});
 				}
+			case 'CreateProduct':
+				if (_p24._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateProduct, _p31, _p24._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_p31,
+						{ctor: '[]'});
+				}
 			case 'SetProductType':
-				var result = _elm_lang$core$String$toInt(_p18._0);
-				var _p21 = result;
-				if (_p21.ctor === 'Ok') {
+				var result = _elm_lang$core$String$toInt(_p24._0);
+				var _p27 = result;
+				if (_p27.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
-								productTypeId: _elm_lang$core$Maybe$Just(_p21._0)
+								productTypeId: _elm_lang$core$Maybe$Just(_p27._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{productTypeId: _elm_lang$core$Maybe$Nothing}),
 						{ctor: '[]'});
 				}
 			case 'SetProductBrand':
-				var result = _elm_lang$core$String$toInt(_p18._0);
-				var _p22 = result;
-				if (_p22.ctor === 'Ok') {
+				var result = _elm_lang$core$String$toInt(_p24._0);
+				var _p28 = result;
+				if (_p28.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{
-								productBrandId: _elm_lang$core$Maybe$Just(_p22._0)
+								productBrandId: _elm_lang$core$Maybe$Just(_p28._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p25,
+							_p31,
 							{productBrandId: _elm_lang$core$Maybe$Nothing}),
 						{ctor: '[]'});
 				}
+			case 'ClickSaveProduct':
+				return _user$project$Update$saveProduct(_p31);
 			case 'ToDatePicker':
-				var _p23 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p18._0, _p17.datePicker);
-				var newDatePicker = _p23._0;
-				var datePickerFx = _p23._1;
-				var event = _p23._2;
+				var _p29 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p24._0, _p23.datePicker);
+				var newDatePicker = _p29._0;
+				var datePickerFx = _p29._1;
+				var event = _p29._2;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p25,
+						_p31,
 						{
 							productExpiresAt: function () {
-								var _p24 = event;
-								if (_p24.ctor === 'Changed') {
-									return _p24._0;
+								var _p30 = event;
+								if (_p30.ctor === 'Changed') {
+									return _p30._0;
 								} else {
-									return _p25.productExpiresAt;
+									return _p31.productExpiresAt;
 								}
 							}(),
 							datePicker: newDatePicker
@@ -549,19 +634,19 @@ var _user$project$Update$update = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p18._0);
+				var currentRoute = _user$project$Routing$parse(_p24._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
-						_p25,
+						_p31,
 						{route: currentRoute}));
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p25,
+					_p31,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p18._0)),
+							_user$project$Routing$toPath(_p24._0)),
 						_1: {ctor: '[]'}
 					});
 		}

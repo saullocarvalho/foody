@@ -77,5 +77,12 @@ type alias Product =
     }
 
 
+type alias SendProduct =
+    { typeId : Int
+    , brandId : Int
+    , expiresAt : String
+    }
+
+
 type alias Id =
     { id : Int }

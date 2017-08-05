@@ -16,6 +16,15 @@ brandEncoder b =
         [ ( "name", string b.name ) ]
 
 
+productEncoder : SendProduct -> JE.Value
+productEncoder p =
+    object
+        [ ( "type_id", int p.typeId )
+        , ( "brand_id", int p.brandId )
+        , ( "expires_at", string p.expiresAt )
+        ]
+
+
 idEncoder : Id -> JE.Value
 idEncoder id =
     object

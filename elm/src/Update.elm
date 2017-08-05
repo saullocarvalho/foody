@@ -6,6 +6,7 @@ import Messages exposing (..)
 import Commands exposing (..)
 import Settings exposing (settings)
 import Routing exposing (Route(..), parse, toPath)
+import Util exposing (..)
 import DatePicker exposing (DateEvent(..))
 
 
@@ -90,6 +91,12 @@ update msg ({ datePicker } as model) =
         FetchProduct (Err error) ->
             { model | productList = Failure "Something went wrong ..." } ! []
 
+        CreateProduct (Ok productCreated) ->
+            updateCreateProduct model productCreated
+
+        CreateProduct (Err error) ->
+            model ! []
+
         SetProductType typeId ->
             let
                 result =
@@ -113,6 +120,9 @@ update msg ({ datePicker } as model) =
 
                     Err message ->
                         { model | productBrandId = Nothing } ! []
+
+        ClickSaveProduct ->
+            saveProduct model
 
         ToDatePicker msg ->
             let
@@ -165,6 +175,23 @@ urlUpdate model =
             model ! []
 
 
+saveProduct : Model -> ( Model, Cmd Msg )
+saveProduct ({ productTypeId, productBrandId, productExpiresAt } as model) =
+    case ( productTypeId, productBrandId, productExpiresAt ) of
+        ( Just typeId, Just brandId, Just expiresAt ) ->
+            let
+                newProduct =
+                    { typeId = typeId
+                    , brandId = brandId
+                    , expiresAt = expiresAt |> toIsoString
+                    }
+            in
+                model ! [ createProduct newProduct ]
+
+        _ ->
+            model ! []
+
+
 saveType : Model -> ( Model, Cmd Msg )
 saveType model =
     case model.typeId of
@@ -207,6 +234,34 @@ saveBrand model =
                     }
             in
                 { model | brandName = "" } ! [ createBrand newBrand ]
+
+
+updateCreateProduct : Model -> Product -> ( Model, Cmd Msg )
+updateCreateProduct model productCreated =
+    case model.productList of
+        Success oldProductList ->
+            let
+                oldProducts =
+                    oldProductList.products
+
+                newProducts =
+                    List.sortBy compareProduct
+                        (productCreated
+                            :: (List.filter
+                                    (\p ->
+                                        ( p.productType, p.productBrand, toIsoString (p.expiresAt) ) /= ( productCreated.productType, productCreated.productBrand, toIsoString (productCreated.expiresAt) )
+                                    )
+                                    oldProducts
+                               )
+                        )
+
+                newProductList =
+                    { oldProductList | products = newProducts }
+            in
+                { model | productList = Success newProductList } ! []
+
+        _ ->
+            model ! []
 
 
 updateCreateType : Model -> Type -> ( Model, Cmd Msg )

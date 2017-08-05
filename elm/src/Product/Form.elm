@@ -15,8 +15,7 @@ productForm ({ typeList, productTypeId, brandList, productBrandId, productExpire
         ( Success types, Success brands ) ->
             Html.form
                 [ class "form-inline"
-
-                -- , onSubmit ClickSaveProduct
+                , onSubmit ClickSaveProduct
                 ]
                 [ div [ class "form-group" ]
                     [ label
