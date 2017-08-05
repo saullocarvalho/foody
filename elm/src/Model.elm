@@ -2,6 +2,7 @@ module Model exposing (..)
 
 import Routing exposing (Route)
 import Date exposing (..)
+import DatePicker exposing (..)
 
 
 type RemoteData e a
@@ -11,8 +12,8 @@ type RemoteData e a
     | Success a
 
 
-initialModel : Route -> Model
-initialModel route =
+initialModel : Route -> DatePicker.DatePicker -> Model
+initialModel route datePicker =
     { typeList = NotRequested
     , typeName = ""
     , typeId = Nothing
@@ -23,6 +24,7 @@ initialModel route =
     , productBrandId = Nothing
     , productTypeId = Nothing
     , productExpiresAt = Nothing
+    , datePicker = datePicker
     , route = route
     }
 
@@ -38,6 +40,7 @@ type alias Model =
     , productBrandId : Maybe Int
     , productTypeId : Maybe Int
     , productExpiresAt : Maybe Date
+    , datePicker : DatePicker.DatePicker
     , route : Route
     }
 

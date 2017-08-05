@@ -12821,6 +12821,10 @@ return {
 var _elm_lang$dom$Dom_LowLevel$onWindow = _elm_lang$dom$Native_Dom.onWindow;
 var _elm_lang$dom$Dom_LowLevel$onDocument = _elm_lang$dom$Native_Dom.onDocument;
 
+var _elm_lang$html$Html_Keyed$node = _elm_lang$virtual_dom$VirtualDom$keyedNode;
+var _elm_lang$html$Html_Keyed$ol = _elm_lang$html$Html_Keyed$node('ol');
+var _elm_lang$html$Html_Keyed$ul = _elm_lang$html$Html_Keyed$node('ul');
+
 //import Maybe, Native.List //
 
 var _elm_lang$core$Native_Regex = function() {
@@ -13023,6 +13027,1401 @@ var _elm_lang$core$Date$Apr = {ctor: 'Apr'};
 var _elm_lang$core$Date$Mar = {ctor: 'Mar'};
 var _elm_lang$core$Date$Feb = {ctor: 'Feb'};
 var _elm_lang$core$Date$Jan = {ctor: 'Jan'};
+
+var _elm_community$elm_datepicker$DatePicker_Date$yearRange = F2(
+	function (_p0, range) {
+		var _p1 = _p0;
+		var _p5 = _p1.focused;
+		var _p4 = _p1.currentMonth;
+		var _p2 = range;
+		switch (_p2.ctor) {
+			case 'MoreOrLess':
+				var _p3 = _p2._0;
+				return A2(
+					_elm_lang$core$List$range,
+					_elm_lang$core$Date$year(_p4) - _p3,
+					_elm_lang$core$Date$year(_p4) + _p3);
+			case 'Between':
+				return A2(_elm_lang$core$List$range, _p2._0, _p2._1);
+			case 'From':
+				return A2(
+					_elm_lang$core$List$range,
+					_p2._0,
+					_elm_lang$core$Date$year(_p5));
+			case 'To':
+				return A2(
+					_elm_lang$core$List$range,
+					_elm_lang$core$Date$year(_p5),
+					_p2._0);
+			default:
+				return {ctor: '[]'};
+		}
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$unsafeDate = function (date) {
+	var _p6 = _elm_lang$core$Date$fromString(date);
+	if (_p6.ctor === 'Err') {
+		return _elm_lang$core$Native_Utils.crashCase(
+			'DatePicker.Date',
+			{
+				start: {line: 552, column: 5},
+				end: {line: 557, column: 17}
+			},
+			_p6)(
+			A2(_elm_lang$core$Basics_ops['++'], 'unsafeDate: failed to parse date:', _p6._0));
+	} else {
+		return _p6._0;
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$isLeapYear = function (y) {
+	return _elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$Basics_ops['%'], y, 400),
+		0) || ((!_elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$Basics_ops['%'], y, 100),
+		0)) && _elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$Basics_ops['%'], y, 4),
+		0));
+};
+var _elm_community$elm_datepicker$DatePicker_Date$daysInMonth = F2(
+	function (year, month) {
+		var _p8 = month;
+		switch (_p8.ctor) {
+			case 'Jan':
+				return 31;
+			case 'Feb':
+				return _elm_community$elm_datepicker$DatePicker_Date$isLeapYear(year) ? 29 : 28;
+			case 'Mar':
+				return 31;
+			case 'Apr':
+				return 30;
+			case 'May':
+				return 31;
+			case 'Jun':
+				return 30;
+			case 'Jul':
+				return 31;
+			case 'Aug':
+				return 31;
+			case 'Sep':
+				return 30;
+			case 'Oct':
+				return 31;
+			case 'Nov':
+				return 30;
+			default:
+				return 31;
+		}
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$monthFromInt = function (month) {
+	var _p9 = month;
+	switch (_p9) {
+		case 1:
+			return _elm_lang$core$Date$Jan;
+		case 2:
+			return _elm_lang$core$Date$Feb;
+		case 3:
+			return _elm_lang$core$Date$Mar;
+		case 4:
+			return _elm_lang$core$Date$Apr;
+		case 5:
+			return _elm_lang$core$Date$May;
+		case 6:
+			return _elm_lang$core$Date$Jun;
+		case 7:
+			return _elm_lang$core$Date$Jul;
+		case 8:
+			return _elm_lang$core$Date$Aug;
+		case 9:
+			return _elm_lang$core$Date$Sep;
+		case 10:
+			return _elm_lang$core$Date$Oct;
+		case 11:
+			return _elm_lang$core$Date$Nov;
+		case 12:
+			return _elm_lang$core$Date$Dec;
+		default:
+			return _elm_lang$core$Native_Utils.crashCase(
+				'DatePicker.Date',
+				{
+					start: {line: 451, column: 5},
+					end: {line: 489, column: 72}
+				},
+				_p9)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'monthFromInt: invalid month: ',
+					_elm_lang$core$Basics$toString(_p9)));
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$monthToInt = function (month) {
+	var _p11 = month;
+	switch (_p11.ctor) {
+		case 'Jan':
+			return 1;
+		case 'Feb':
+			return 2;
+		case 'Mar':
+			return 3;
+		case 'Apr':
+			return 4;
+		case 'May':
+			return 5;
+		case 'Jun':
+			return 6;
+		case 'Jul':
+			return 7;
+		case 'Aug':
+			return 8;
+		case 'Sep':
+			return 9;
+		case 'Oct':
+			return 10;
+		case 'Nov':
+			return 11;
+		default:
+			return 12;
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$succMonth = function (month) {
+	return _elm_community$elm_datepicker$DatePicker_Date$monthFromInt(
+		A2(
+			F2(
+				function (x, y) {
+					return x + y;
+				}),
+			1,
+			A3(
+				_elm_lang$core$Basics$flip,
+				_elm_lang$core$Basics$rem,
+				12,
+				_elm_community$elm_datepicker$DatePicker_Date$monthToInt(month))));
+};
+var _elm_community$elm_datepicker$DatePicker_Date$predMonth = function (month) {
+	var prev = A3(
+		_elm_lang$core$Basics$flip,
+		_elm_lang$core$Basics$rem,
+		12,
+		_elm_community$elm_datepicker$DatePicker_Date$monthToInt(month) - 1);
+	return _elm_lang$core$Native_Utils.eq(prev, 0) ? _elm_lang$core$Date$Dec : _elm_community$elm_datepicker$DatePicker_Date$monthFromInt(prev);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$monthToString = function (month) {
+	var $int = _elm_community$elm_datepicker$DatePicker_Date$monthToInt(month);
+	return (_elm_lang$core$Native_Utils.cmp($int, 10) < 0) ? A2(
+		_elm_lang$core$Basics_ops['++'],
+		'0',
+		_elm_lang$core$Basics$toString($int)) : _elm_lang$core$Basics$toString($int);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$dayFromInt = function (day) {
+	var _p12 = day;
+	switch (_p12) {
+		case 1:
+			return _elm_lang$core$Date$Mon;
+		case 2:
+			return _elm_lang$core$Date$Tue;
+		case 3:
+			return _elm_lang$core$Date$Wed;
+		case 4:
+			return _elm_lang$core$Date$Thu;
+		case 5:
+			return _elm_lang$core$Date$Fri;
+		case 6:
+			return _elm_lang$core$Date$Sat;
+		case 7:
+			return _elm_lang$core$Date$Sun;
+		default:
+			return _elm_lang$core$Native_Utils.crashCase(
+				'DatePicker.Date',
+				{
+					start: {line: 350, column: 5},
+					end: {line: 373, column: 70}
+				},
+				_p12)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'dayFromInt: invalid day: ',
+					_elm_lang$core$Basics$toString(day)));
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$dayToInt = function (day) {
+	var _p14 = day;
+	switch (_p14.ctor) {
+		case 'Mon':
+			return 1;
+		case 'Tue':
+			return 2;
+		case 'Wed':
+			return 3;
+		case 'Thu':
+			return 4;
+		case 'Fri':
+			return 5;
+		case 'Sat':
+			return 6;
+		default:
+			return 7;
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$dayToString = function (day) {
+	return (_elm_lang$core$Native_Utils.cmp(day, 10) < 0) ? A2(
+		_elm_lang$core$Basics_ops['++'],
+		'0',
+		_elm_lang$core$Basics$toString(day)) : _elm_lang$core$Basics$toString(day);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$mkDate = F3(
+	function (year, month, day) {
+		return _elm_community$elm_datepicker$DatePicker_Date$unsafeDate(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(year),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'/',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_community$elm_datepicker$DatePicker_Date$monthToString(month),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'/',
+							_elm_community$elm_datepicker$DatePicker_Date$dayToString(day))))));
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$newYear = F2(
+	function (currentMonth, newYear) {
+		var _p15 = _elm_lang$core$String$toInt(newYear);
+		if (_p15.ctor === 'Ok') {
+			return A3(
+				_elm_community$elm_datepicker$DatePicker_Date$mkDate,
+				_p15._0,
+				_elm_lang$core$Date$month(currentMonth),
+				_elm_lang$core$Date$day(currentMonth));
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'DatePicker.Date',
+				{
+					start: {line: 562, column: 5},
+					end: {line: 567, column: 70}
+				},
+				_p15)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Unknown Month ',
+					_elm_lang$core$Basics$toString(currentMonth)));
+		}
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$predDow = function (day) {
+	var prev = A3(
+		_elm_lang$core$Basics$flip,
+		_elm_lang$core$Basics$rem,
+		7,
+		_elm_community$elm_datepicker$DatePicker_Date$dayToInt(day) - 1);
+	return _elm_lang$core$Native_Utils.eq(prev, 0) ? _elm_lang$core$Date$Sun : _elm_community$elm_datepicker$DatePicker_Date$dayFromInt(prev);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$succDow = function (day) {
+	return _elm_community$elm_datepicker$DatePicker_Date$dayFromInt(
+		A2(
+			F2(
+				function (x, y) {
+					return x + y;
+				}),
+			1,
+			A3(
+				_elm_lang$core$Basics$flip,
+				_elm_lang$core$Basics$rem,
+				7,
+				_elm_community$elm_datepicker$DatePicker_Date$dayToInt(day))));
+};
+var _elm_community$elm_datepicker$DatePicker_Date$subDay = function (date) {
+	var day = _elm_lang$core$Date$day(date) - 1;
+	var year = _elm_lang$core$Date$year(date);
+	var month = _elm_lang$core$Date$month(date);
+	var pred = _elm_community$elm_datepicker$DatePicker_Date$predMonth(month);
+	var predYear = _elm_lang$core$Native_Utils.eq(pred, _elm_lang$core$Date$Dec) ? (year - 1) : year;
+	return (_elm_lang$core$Native_Utils.cmp(day, 1) < 0) ? A3(
+		_elm_community$elm_datepicker$DatePicker_Date$mkDate,
+		predYear,
+		pred,
+		A2(_elm_community$elm_datepicker$DatePicker_Date$daysInMonth, predYear, pred)) : A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, year, month, day);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$addDay = function (date) {
+	var day = _elm_lang$core$Date$day(date) + 1;
+	var year = _elm_lang$core$Date$year(date);
+	var month = _elm_lang$core$Date$month(date);
+	var dim = A2(_elm_community$elm_datepicker$DatePicker_Date$daysInMonth, year, month);
+	var succ = _elm_community$elm_datepicker$DatePicker_Date$succMonth(month);
+	var succYear = _elm_lang$core$Native_Utils.eq(succ, _elm_lang$core$Date$Jan) ? (year + 1) : year;
+	return (_elm_lang$core$Native_Utils.cmp(day, dim) > 0) ? A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, succYear, succ, 1) : A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, year, month, day);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$prevMonth = function (date) {
+	var prevMonth = _elm_community$elm_datepicker$DatePicker_Date$predMonth(
+		_elm_lang$core$Date$month(date));
+	var prevYear = _elm_lang$core$Native_Utils.eq(prevMonth, _elm_lang$core$Date$Dec) ? (_elm_lang$core$Date$year(date) - 1) : _elm_lang$core$Date$year(date);
+	return A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, prevYear, prevMonth, 1);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$nextMonth = function (date) {
+	var nextMonth = _elm_community$elm_datepicker$DatePicker_Date$succMonth(
+		_elm_lang$core$Date$month(date));
+	var nextYear = _elm_lang$core$Native_Utils.eq(nextMonth, _elm_lang$core$Date$Jan) ? (_elm_lang$core$Date$year(date) + 1) : _elm_lang$core$Date$year(date);
+	return A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, nextYear, nextMonth, 1);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$firstOfMonth = function (date) {
+	return A3(
+		_elm_community$elm_datepicker$DatePicker_Date$mkDate,
+		_elm_lang$core$Date$year(date),
+		_elm_lang$core$Date$month(date),
+		1);
+};
+var _elm_community$elm_datepicker$DatePicker_Date$repeat = function (f) {
+	var go = F2(
+		function (n, x) {
+			go:
+			while (true) {
+				if (_elm_lang$core$Native_Utils.eq(n, 0)) {
+					return x;
+				} else {
+					var _v9 = n - 1,
+						_v10 = f(x);
+					n = _v9;
+					x = _v10;
+					continue go;
+				}
+			}
+		});
+	return go;
+};
+var _elm_community$elm_datepicker$DatePicker_Date$addDays = _elm_community$elm_datepicker$DatePicker_Date$repeat(_elm_community$elm_datepicker$DatePicker_Date$addDay);
+var _elm_community$elm_datepicker$DatePicker_Date$subDays = _elm_community$elm_datepicker$DatePicker_Date$repeat(_elm_community$elm_datepicker$DatePicker_Date$subDay);
+var _elm_community$elm_datepicker$DatePicker_Date$addDows = _elm_community$elm_datepicker$DatePicker_Date$repeat(_elm_community$elm_datepicker$DatePicker_Date$succDow);
+var _elm_community$elm_datepicker$DatePicker_Date$subDows = _elm_community$elm_datepicker$DatePicker_Date$repeat(_elm_community$elm_datepicker$DatePicker_Date$succDow);
+var _elm_community$elm_datepicker$DatePicker_Date$dateTuple = function (date) {
+	return {
+		ctor: '_Tuple3',
+		_0: _elm_lang$core$Date$year(date),
+		_1: _elm_community$elm_datepicker$DatePicker_Date$monthToInt(
+			_elm_lang$core$Date$month(date)),
+		_2: _elm_lang$core$Date$day(date)
+	};
+};
+var _elm_community$elm_datepicker$DatePicker_Date$trimDates = F2(
+	function (firstDay, dates) {
+		var dl = function (dates) {
+			dl:
+			while (true) {
+				var _p17 = dates;
+				if (_p17.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					if (_elm_lang$core$Native_Utils.eq(
+						_elm_lang$core$Date$dayOfWeek(_p17._0),
+						firstDay)) {
+						return dates;
+					} else {
+						var _v12 = _p17._1;
+						dates = _v12;
+						continue dl;
+					}
+				}
+			}
+		};
+		var lastDay = _elm_community$elm_datepicker$DatePicker_Date$predDow(firstDay);
+		var dr = function (dates) {
+			dr:
+			while (true) {
+				var _p18 = dates;
+				if (_p18.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					if (_elm_lang$core$Native_Utils.eq(
+						_elm_lang$core$Date$dayOfWeek(_p18._0),
+						lastDay)) {
+						return dates;
+					} else {
+						var _v14 = _p18._1;
+						dates = _v14;
+						continue dr;
+					}
+				}
+			}
+		};
+		return _elm_lang$core$List$reverse(
+			dr(
+				_elm_lang$core$List$reverse(
+					dl(dates))));
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$datesInRange = F3(
+	function (firstDay, min, max) {
+		var go = F2(
+			function (x, acc) {
+				go:
+				while (true) {
+					var y = _elm_community$elm_datepicker$DatePicker_Date$subDay(x);
+					if (_elm_lang$core$Native_Utils.eq(
+						_elm_community$elm_datepicker$DatePicker_Date$dateTuple(y),
+						_elm_community$elm_datepicker$DatePicker_Date$dateTuple(min))) {
+						return {ctor: '::', _0: y, _1: acc};
+					} else {
+						var _v15 = y,
+							_v16 = {ctor: '::', _0: y, _1: acc};
+						x = _v15;
+						acc = _v16;
+						continue go;
+					}
+				}
+			});
+		return A2(
+			_elm_community$elm_datepicker$DatePicker_Date$trimDates,
+			firstDay,
+			A2(
+				go,
+				max,
+				{ctor: '[]'}));
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$formatMonth = function (month) {
+	var _p19 = month;
+	switch (_p19.ctor) {
+		case 'Jan':
+			return 'January';
+		case 'Feb':
+			return 'February';
+		case 'Mar':
+			return 'March';
+		case 'Apr':
+			return 'April';
+		case 'May':
+			return 'May';
+		case 'Jun':
+			return 'June';
+		case 'Jul':
+			return 'July';
+		case 'Aug':
+			return 'August';
+		case 'Sep':
+			return 'September';
+		case 'Oct':
+			return 'October';
+		case 'Nov':
+			return 'November';
+		default:
+			return 'December';
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$formatDay = function (day) {
+	var _p20 = day;
+	switch (_p20.ctor) {
+		case 'Mon':
+			return 'Mo';
+		case 'Tue':
+			return 'Tu';
+		case 'Wed':
+			return 'We';
+		case 'Thu':
+			return 'Th';
+		case 'Fri':
+			return 'Fr';
+		case 'Sat':
+			return 'Sa';
+		default:
+			return 'Su';
+	}
+};
+var _elm_community$elm_datepicker$DatePicker_Date$formatDate = function (date) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(
+			_elm_lang$core$Date$year(date)),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'/',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_community$elm_datepicker$DatePicker_Date$monthToString(
+					_elm_lang$core$Date$month(date)),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'/',
+					_elm_community$elm_datepicker$DatePicker_Date$dayToString(
+						_elm_lang$core$Date$day(date))))));
+};
+var _elm_community$elm_datepicker$DatePicker_Date$initDate = A3(_elm_community$elm_datepicker$DatePicker_Date$mkDate, 1992, _elm_lang$core$Date$May, 29);
+var _elm_community$elm_datepicker$DatePicker_Date$To = function (a) {
+	return {ctor: 'To', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker_Date$From = function (a) {
+	return {ctor: 'From', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker_Date$Between = F2(
+	function (a, b) {
+		return {ctor: 'Between', _0: a, _1: b};
+	});
+var _elm_community$elm_datepicker$DatePicker_Date$MoreOrLess = function (a) {
+	return {ctor: 'MoreOrLess', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker_Date$Off = {ctor: 'Off'};
+
+var _elm_community$elm_datepicker$DatePicker_ops = _elm_community$elm_datepicker$DatePicker_ops || {};
+_elm_community$elm_datepicker$DatePicker_ops['??>'] = F2(
+	function (first, $default) {
+		var _p0 = first;
+		if (_p0.ctor === 'Just') {
+			return _elm_lang$core$Maybe$Just(_p0._0);
+		} else {
+			return $default;
+		}
+	});
+var _elm_community$elm_datepicker$DatePicker_ops = _elm_community$elm_datepicker$DatePicker_ops || {};
+_elm_community$elm_datepicker$DatePicker_ops['?>'] = _elm_lang$core$Basics$flip(_elm_lang$core$Maybe$withDefault);
+var _elm_community$elm_datepicker$DatePicker$mkClassList = F2(
+	function (_p1, cs) {
+		var _p2 = _p1;
+		return _elm_lang$html$Html_Attributes$classList(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p3) {
+					var _p4 = _p3;
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_elm_lang$core$Basics_ops['++'], _p2.classNamespace, _p4._0),
+						_1: _p4._1
+					};
+				},
+				cs));
+	});
+var _elm_community$elm_datepicker$DatePicker$mkClass = F2(
+	function (_p5, c) {
+		var _p6 = _p5;
+		return _elm_lang$html$Html_Attributes$class(
+			A2(_elm_lang$core$Basics_ops['++'], _p6.classNamespace, c));
+	});
+var _elm_community$elm_datepicker$DatePicker$groupDates = function (dates) {
+	var go = F4(
+		function (i, xs, racc, acc) {
+			go:
+			while (true) {
+				var _p7 = xs;
+				if (_p7.ctor === '[]') {
+					return _elm_lang$core$List$reverse(acc);
+				} else {
+					var _p9 = _p7._1;
+					var _p8 = _p7._0;
+					if (_elm_lang$core$Native_Utils.eq(i, 6)) {
+						var _v5 = 0,
+							_v6 = _p9,
+							_v7 = {ctor: '[]'},
+							_v8 = {
+							ctor: '::',
+							_0: _elm_lang$core$List$reverse(
+								{ctor: '::', _0: _p8, _1: racc}),
+							_1: acc
+						};
+						i = _v5;
+						xs = _v6;
+						racc = _v7;
+						acc = _v8;
+						continue go;
+					} else {
+						var _v9 = i + 1,
+							_v10 = _p9,
+							_v11 = {ctor: '::', _0: _p8, _1: racc},
+							_v12 = acc;
+						i = _v9;
+						xs = _v10;
+						racc = _v11;
+						acc = _v12;
+						continue go;
+					}
+				}
+			}
+		});
+	return A4(
+		go,
+		0,
+		dates,
+		{ctor: '[]'},
+		{ctor: '[]'});
+};
+var _elm_community$elm_datepicker$DatePicker$focusedDate = function (_p10) {
+	var _p11 = _p10;
+	return _p11._0.focused;
+};
+var _elm_community$elm_datepicker$DatePicker$isOpen = function (_p12) {
+	var _p13 = _p12;
+	return _p13._0.open;
+};
+var _elm_community$elm_datepicker$DatePicker$prepareDates = F2(
+	function (date, firstDayOfWeek) {
+		var end = A2(
+			_elm_community$elm_datepicker$DatePicker_Date$addDays,
+			6,
+			_elm_community$elm_datepicker$DatePicker_Date$nextMonth(date));
+		var start = A2(
+			_elm_community$elm_datepicker$DatePicker_Date$subDays,
+			6,
+			_elm_community$elm_datepicker$DatePicker_Date$firstOfMonth(date));
+		return {
+			currentMonth: date,
+			currentDates: A3(_elm_community$elm_datepicker$DatePicker_Date$datesInRange, firstDayOfWeek, start, end)
+		};
+	});
+var _elm_community$elm_datepicker$DatePicker$formatCell = function (day) {
+	return _elm_lang$html$Html$text(day);
+};
+var _elm_community$elm_datepicker$DatePicker$off = _elm_community$elm_datepicker$DatePicker_Date$Off;
+var _elm_community$elm_datepicker$DatePicker$to = function (year) {
+	return _elm_community$elm_datepicker$DatePicker_Date$To(year);
+};
+var _elm_community$elm_datepicker$DatePicker$from = function (year) {
+	return _elm_community$elm_datepicker$DatePicker_Date$From(year);
+};
+var _elm_community$elm_datepicker$DatePicker$moreOrLess = function (range) {
+	return _elm_community$elm_datepicker$DatePicker_Date$MoreOrLess(range);
+};
+var _elm_community$elm_datepicker$DatePicker$between = F2(
+	function (start, end) {
+		return (_elm_lang$core$Native_Utils.cmp(start, end) > 0) ? A2(_elm_community$elm_datepicker$DatePicker_Date$Between, end, start) : A2(_elm_community$elm_datepicker$DatePicker_Date$Between, start, end);
+	});
+var _elm_community$elm_datepicker$DatePicker$yearRangeActive = function (yearRange) {
+	return !_elm_lang$core$Native_Utils.eq(yearRange, _elm_community$elm_datepicker$DatePicker_Date$Off);
+};
+var _elm_community$elm_datepicker$DatePicker$defaultSettings = {
+	placeholder: 'Please pick a date...',
+	classNamespace: 'elm-datepicker--',
+	inputClassList: {ctor: '[]'},
+	inputName: _elm_lang$core$Maybe$Nothing,
+	inputId: _elm_lang$core$Maybe$Nothing,
+	inputAttributes: {
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$required(false),
+		_1: {ctor: '[]'}
+	},
+	isDisabled: _elm_lang$core$Basics$always(false),
+	parser: _elm_lang$core$Date$fromString,
+	dateFormatter: _elm_community$elm_datepicker$DatePicker_Date$formatDate,
+	dayFormatter: _elm_community$elm_datepicker$DatePicker_Date$formatDay,
+	monthFormatter: _elm_community$elm_datepicker$DatePicker_Date$formatMonth,
+	yearFormatter: _elm_lang$core$Basics$toString,
+	cellFormatter: _elm_community$elm_datepicker$DatePicker$formatCell,
+	firstDayOfWeek: _elm_lang$core$Date$Sun,
+	changeYear: _elm_community$elm_datepicker$DatePicker$off
+};
+var _elm_community$elm_datepicker$DatePicker$Settings = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return function (m) {
+													return function (n) {
+														return function (o) {
+															return {placeholder: a, classNamespace: b, inputClassList: c, inputName: d, inputId: e, inputAttributes: f, isDisabled: g, parser: h, dateFormatter: i, dayFormatter: j, monthFormatter: k, yearFormatter: l, cellFormatter: m, firstDayOfWeek: n, changeYear: o};
+														};
+													};
+												};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _elm_community$elm_datepicker$DatePicker$Model = F5(
+	function (a, b, c, d, e) {
+		return {open: a, forceOpen: b, focused: c, inputText: d, today: e};
+	});
+var _elm_community$elm_datepicker$DatePicker$MouseUp = {ctor: 'MouseUp'};
+var _elm_community$elm_datepicker$DatePicker$MouseDown = {ctor: 'MouseDown'};
+var _elm_community$elm_datepicker$DatePicker$Blur = {ctor: 'Blur'};
+var _elm_community$elm_datepicker$DatePicker$Focus = {ctor: 'Focus'};
+var _elm_community$elm_datepicker$DatePicker$SubmitText = {ctor: 'SubmitText'};
+var _elm_community$elm_datepicker$DatePicker$Text = function (a) {
+	return {ctor: 'Text', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$Pick = function (a) {
+	return {ctor: 'Pick', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$pick = _elm_community$elm_datepicker$DatePicker$Pick;
+var _elm_community$elm_datepicker$DatePicker$ChangeFocus = function (a) {
+	return {ctor: 'ChangeFocus', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$datePicker = F3(
+	function (pickedDate, settings, _p14) {
+		var _p15 = _p14;
+		var onChange = function (handler) {
+			return A2(
+				_elm_lang$html$Html_Events$on,
+				'change',
+				A2(_elm_lang$core$Json_Decode$map, handler, _elm_lang$html$Html_Events$targetValue));
+		};
+		var onPicker = function (ev) {
+			return function (_p16) {
+				return A3(
+					_elm_lang$html$Html_Events$onWithOptions,
+					ev,
+					{preventDefault: false, stopPropagation: true},
+					_elm_lang$core$Json_Decode$succeed(_p16));
+			};
+		};
+		var picked = function (d) {
+			return A2(
+				_elm_lang$core$Maybe$withDefault,
+				false,
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (_p17) {
+						return A2(
+							F2(
+								function (x, y) {
+									return _elm_lang$core$Native_Utils.eq(x, y);
+								}),
+							_elm_community$elm_datepicker$DatePicker_Date$dateTuple(d),
+							_elm_community$elm_datepicker$DatePicker_Date$dateTuple(_p17));
+					},
+					pickedDate));
+		};
+		var firstDay = settings.firstDayOfWeek;
+		var classList = _elm_community$elm_datepicker$DatePicker$mkClassList(settings);
+		var $class = _elm_community$elm_datepicker$DatePicker$mkClass(settings);
+		var arrow = F2(
+			function (className, message) {
+				return A2(
+					_elm_lang$html$Html$a,
+					{
+						ctor: '::',
+						_0: $class(className),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$href('javascript:;'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(message),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$tabindex(-1),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{ctor: '[]'});
+			});
+		var dow = function (d) {
+			return A2(
+				_elm_lang$html$Html$td,
+				{
+					ctor: '::',
+					_0: $class('dow'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						settings.dayFormatter(d)),
+					_1: {ctor: '[]'}
+				});
+		};
+		var currentDate = A2(
+			_elm_community$elm_datepicker$DatePicker_ops['?>'],
+			A2(_elm_community$elm_datepicker$DatePicker_ops['??>'], _p15.focused, pickedDate),
+			_p15.today);
+		var _p18 = A2(_elm_community$elm_datepicker$DatePicker$prepareDates, currentDate, settings.firstDayOfWeek);
+		var currentMonth = _p18.currentMonth;
+		var currentDates = _p18.currentDates;
+		var isCurrentYear = function (selectedYear) {
+			return _elm_lang$core$Native_Utils.eq(
+				_elm_lang$core$Date$year(currentMonth),
+				selectedYear);
+		};
+		var yearOption = F2(
+			function (index, selectedYear) {
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Basics$toString(index),
+					_1: A2(
+						_elm_lang$html$Html$option,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(selectedYear)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$selected(
+									isCurrentYear(selectedYear)),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(selectedYear)),
+							_1: {ctor: '[]'}
+						})
+				};
+			});
+		var day = function (d) {
+			var disabled = settings.isDisabled(d);
+			var props = (!disabled) ? {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					_elm_community$elm_datepicker$DatePicker$Pick(
+						_elm_lang$core$Maybe$Just(d))),
+				_1: {ctor: '[]'}
+			} : {ctor: '[]'};
+			return A2(
+				_elm_lang$html$Html$td,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'day', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'disabled', _1: disabled},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'picked',
+											_1: picked(d)
+										},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'today',
+												_1: _elm_lang$core$Native_Utils.eq(
+													_elm_community$elm_datepicker$DatePicker_Date$dateTuple(d),
+													_elm_community$elm_datepicker$DatePicker_Date$dateTuple(currentDate))
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'other-month',
+													_1: !_elm_lang$core$Native_Utils.eq(
+														_elm_lang$core$Date$month(currentMonth),
+														_elm_lang$core$Date$month(d))
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					},
+					props),
+				{
+					ctor: '::',
+					_0: settings.cellFormatter(
+						_elm_lang$core$Basics$toString(
+							_elm_lang$core$Date$day(d))),
+					_1: {ctor: '[]'}
+				});
+		};
+		var row = function (days) {
+			return A2(
+				_elm_lang$html$Html$tr,
+				{
+					ctor: '::',
+					_0: $class('row'),
+					_1: {ctor: '[]'}
+				},
+				A2(_elm_lang$core$List$map, day, days));
+		};
+		var days = A2(
+			_elm_lang$core$List$map,
+			row,
+			_elm_community$elm_datepicker$DatePicker$groupDates(currentDates));
+		var dropdownYear = A3(
+			_elm_lang$html$Html_Keyed$node,
+			'select',
+			{
+				ctor: '::',
+				_0: onChange(
+					function (_p19) {
+						return _elm_community$elm_datepicker$DatePicker$ChangeFocus(
+							A2(_elm_community$elm_datepicker$DatePicker_Date$newYear, currentDate, _p19));
+					}),
+				_1: {
+					ctor: '::',
+					_0: $class('year-menu'),
+					_1: {ctor: '[]'}
+				}
+			},
+			A2(
+				_elm_lang$core$List$indexedMap,
+				yearOption,
+				A2(
+					_elm_community$elm_datepicker$DatePicker_Date$yearRange,
+					{focused: currentDate, currentMonth: currentMonth},
+					settings.changeYear)));
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: $class('picker'),
+				_1: {
+					ctor: '::',
+					_0: A2(onPicker, 'mousedown', _elm_community$elm_datepicker$DatePicker$MouseDown),
+					_1: {
+						ctor: '::',
+						_0: A2(onPicker, 'mouseup', _elm_community$elm_datepicker$DatePicker$MouseUp),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: $class('picker-header'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: $class('prev-container'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									arrow,
+									'prev',
+									_elm_community$elm_datepicker$DatePicker$ChangeFocus(
+										_elm_community$elm_datepicker$DatePicker_Date$prevMonth(currentDate))),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: $class('month-container'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$span,
+										{
+											ctor: '::',
+											_0: $class('month'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												settings.monthFormatter(
+													_elm_lang$core$Date$month(currentMonth))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$span,
+											{
+												ctor: '::',
+												_0: $class('year'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: (!_elm_community$elm_datepicker$DatePicker$yearRangeActive(settings.changeYear)) ? _elm_lang$html$Html$text(
+													settings.yearFormatter(
+														_elm_lang$core$Date$year(currentMonth))) : A3(
+													_elm_lang$html$Html_Keyed$node,
+													'span',
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: {
+															ctor: '_Tuple2',
+															_0: _elm_lang$core$Basics$toString(
+																_elm_lang$core$Date$year(currentMonth)),
+															_1: dropdownYear
+														},
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: $class('next-container'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											arrow,
+											'next',
+											_elm_community$elm_datepicker$DatePicker$ChangeFocus(
+												_elm_community$elm_datepicker$DatePicker_Date$nextMonth(currentDate))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$table,
+						{
+							ctor: '::',
+							_0: $class('table'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$thead,
+								{
+									ctor: '::',
+									_0: $class('weekdays'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$tr,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: dow(firstDay),
+											_1: {
+												ctor: '::',
+												_0: dow(
+													A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 1, firstDay)),
+												_1: {
+													ctor: '::',
+													_0: dow(
+														A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 2, firstDay)),
+													_1: {
+														ctor: '::',
+														_0: dow(
+															A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 3, firstDay)),
+														_1: {
+															ctor: '::',
+															_0: dow(
+																A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 4, firstDay)),
+															_1: {
+																ctor: '::',
+																_0: dow(
+																	A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 5, firstDay)),
+																_1: {
+																	ctor: '::',
+																	_0: dow(
+																		A2(_elm_community$elm_datepicker$DatePicker_Date$addDows, 6, firstDay)),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$tbody,
+									{
+										ctor: '::',
+										_0: $class('days'),
+										_1: {ctor: '[]'}
+									},
+									days),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _elm_community$elm_datepicker$DatePicker$view = F3(
+	function (pickedDate, settings, _p20) {
+		var _p21 = _p20;
+		var _p23 = _p21._0;
+		var inputClasses = A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: A2(_elm_lang$core$Basics_ops['++'], settings.classNamespace, 'input'),
+					_1: true
+				},
+				_1: {ctor: '[]'}
+			},
+			settings.inputClassList);
+		var potentialInputId = function (_p22) {
+			return A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				_elm_lang$core$List$singleton(_p22));
+		}(
+			A2(_elm_lang$core$Maybe$map, _elm_lang$html$Html_Attributes$id, settings.inputId));
+		var inputCommon = function (xs) {
+			return A2(
+				_elm_lang$html$Html$input,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(inputClasses),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$name(
+								A2(_elm_community$elm_datepicker$DatePicker_ops['?>'], settings.inputName, '')),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$type_('text'),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html_Events$on,
+										'change',
+										_elm_lang$core$Json_Decode$succeed(_elm_community$elm_datepicker$DatePicker$SubmitText)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onInput(_elm_community$elm_datepicker$DatePicker$Text),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onBlur(_elm_community$elm_datepicker$DatePicker$Blur),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(_elm_community$elm_datepicker$DatePicker$Focus),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onFocus(_elm_community$elm_datepicker$DatePicker$Focus),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						settings.inputAttributes,
+						A2(_elm_lang$core$Basics_ops['++'], potentialInputId, xs))),
+				{ctor: '[]'});
+		};
+		var dateInput = inputCommon(
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$placeholder(settings.placeholder),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$value(
+						A2(
+							_elm_lang$core$Maybe$withDefault,
+							A2(
+								_elm_lang$core$Maybe$withDefault,
+								'',
+								A2(_elm_lang$core$Maybe$map, settings.dateFormatter, pickedDate)),
+							_p23.inputText)),
+					_1: {ctor: '[]'}
+				}
+			});
+		var $class = _elm_community$elm_datepicker$DatePicker$mkClass(settings);
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: $class('container'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: dateInput,
+				_1: {
+					ctor: '::',
+					_0: _p21._0.open ? A3(_elm_community$elm_datepicker$DatePicker$datePicker, pickedDate, settings, _p23) : _elm_lang$html$Html$text(''),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _elm_community$elm_datepicker$DatePicker$CurrentDate = function (a) {
+	return {ctor: 'CurrentDate', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$DatePicker = function (a) {
+	return {ctor: 'DatePicker', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$init = {
+	ctor: '_Tuple2',
+	_0: _elm_community$elm_datepicker$DatePicker$DatePicker(
+		{
+			open: false,
+			forceOpen: false,
+			focused: _elm_lang$core$Maybe$Just(_elm_community$elm_datepicker$DatePicker_Date$initDate),
+			inputText: _elm_lang$core$Maybe$Nothing,
+			today: _elm_community$elm_datepicker$DatePicker_Date$initDate
+		}),
+	_1: A2(_elm_lang$core$Task$perform, _elm_community$elm_datepicker$DatePicker$CurrentDate, _elm_lang$core$Date$now)
+};
+var _elm_community$elm_datepicker$DatePicker$Changed = function (a) {
+	return {ctor: 'Changed', _0: a};
+};
+var _elm_community$elm_datepicker$DatePicker$NoChange = {ctor: 'NoChange'};
+var _elm_community$elm_datepicker$DatePicker_ops = _elm_community$elm_datepicker$DatePicker_ops || {};
+_elm_community$elm_datepicker$DatePicker_ops['!'] = F2(
+	function (m, cs) {
+		return {
+			ctor: '_Tuple3',
+			_0: _elm_community$elm_datepicker$DatePicker$DatePicker(m),
+			_1: _elm_lang$core$Platform_Cmd$batch(cs),
+			_2: _elm_community$elm_datepicker$DatePicker$NoChange
+		};
+	});
+var _elm_community$elm_datepicker$DatePicker$update = F3(
+	function (settings, msg, _p24) {
+		var _p25 = _p24;
+		var _p32 = _p25._0;
+		var _p26 = msg;
+		switch (_p26.ctor) {
+			case 'CurrentDate':
+				var _p27 = _p26._0;
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{
+							focused: _elm_lang$core$Maybe$Just(_p27),
+							today: _p27
+						}),
+					{ctor: '[]'});
+			case 'ChangeFocus':
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{
+							focused: _elm_lang$core$Maybe$Just(_p26._0)
+						}),
+					{ctor: '[]'});
+			case 'Pick':
+				return {
+					ctor: '_Tuple3',
+					_0: _elm_community$elm_datepicker$DatePicker$DatePicker(
+						_elm_lang$core$Native_Utils.update(
+							_p32,
+							{open: false, inputText: _elm_lang$core$Maybe$Nothing, focused: _elm_lang$core$Maybe$Nothing})),
+					_1: _elm_lang$core$Platform_Cmd$none,
+					_2: _elm_community$elm_datepicker$DatePicker$Changed(_p26._0)
+				};
+			case 'Text':
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{
+							inputText: _elm_lang$core$Maybe$Just(_p26._0)
+						}),
+					{ctor: '[]'});
+			case 'SubmitText':
+				var isWhitespace = function (_p28) {
+					return _elm_lang$core$String$isEmpty(
+						_elm_lang$core$String$trim(_p28));
+				};
+				var dateEvent = function () {
+					var text = A2(_elm_community$elm_datepicker$DatePicker_ops['?>'], _p32.inputText, '');
+					return isWhitespace(text) ? _elm_community$elm_datepicker$DatePicker$Changed(_elm_lang$core$Maybe$Nothing) : A2(
+						_elm_lang$core$Result$withDefault,
+						_elm_community$elm_datepicker$DatePicker$NoChange,
+						A2(
+							_elm_lang$core$Result$map,
+							function (_p29) {
+								return _elm_community$elm_datepicker$DatePicker$Changed(
+									function (date) {
+										return settings.isDisabled(date) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(date);
+									}(_p29));
+							},
+							settings.parser(text)));
+				}();
+				return {
+					ctor: '_Tuple3',
+					_0: _elm_community$elm_datepicker$DatePicker$DatePicker(
+						_elm_lang$core$Native_Utils.update(
+							_p32,
+							{
+								inputText: function () {
+									var _p30 = dateEvent;
+									if (_p30.ctor === 'Changed') {
+										return _elm_lang$core$Maybe$Nothing;
+									} else {
+										return _p32.inputText;
+									}
+								}(),
+								focused: function () {
+									var _p31 = dateEvent;
+									if (_p31.ctor === 'Changed') {
+										return _elm_lang$core$Maybe$Nothing;
+									} else {
+										return _p32.focused;
+									}
+								}()
+							})),
+					_1: _elm_lang$core$Platform_Cmd$none,
+					_2: dateEvent
+				};
+			case 'Focus':
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{open: true, forceOpen: false}),
+					{ctor: '[]'});
+			case 'Blur':
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{open: _p25._0.forceOpen}),
+					{ctor: '[]'});
+			case 'MouseDown':
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{forceOpen: true}),
+					{ctor: '[]'});
+			default:
+				return A2(
+					_elm_community$elm_datepicker$DatePicker_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p32,
+						{forceOpen: false}),
+					{ctor: '[]'});
+		}
+	});
 
 var _elm_lang$core$Set$foldr = F3(
 	function (f, b, _p0) {
@@ -16075,7 +17474,9 @@ var _user$project$Model$Model = function (a) {
 								return function (i) {
 									return function (j) {
 										return function (k) {
-											return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, route: k};
+											return function (l) {
+												return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, datePicker: k, route: l};
+											};
 										};
 									};
 								};
@@ -16119,15 +17520,19 @@ var _user$project$Model$Failure = function (a) {
 };
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
-var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, route: route};
-};
+var _user$project$Model$initialModel = F2(
+	function (route, datePicker) {
+		return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, datePicker: datePicker, route: route};
+	});
 
 var _user$project$Messages$NavigateTo = function (a) {
 	return {ctor: 'NavigateTo', _0: a};
 };
 var _user$project$Messages$UrlChange = function (a) {
 	return {ctor: 'UrlChange', _0: a};
+};
+var _user$project$Messages$ToDatePicker = function (a) {
+	return {ctor: 'ToDatePicker', _0: a};
 };
 var _user$project$Messages$FetchProduct = function (a) {
 	return {ctor: 'FetchProduct', _0: a};
@@ -17141,16 +18546,112 @@ var _user$project$Product_View$productView = function (p) {
 		});
 };
 
-var _user$project$Product_Form$productForm = F3(
-	function (productBrandId, productTypeId, productExpiresAt) {
-		return A2(
-			_elm_lang$html$Html$form,
-			{
+var _user$project$Settings$settings = _elm_lang$core$Native_Utils.update(
+	_elm_community$elm_datepicker$DatePicker$defaultSettings,
+	{
+		inputClassList: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'form-control', _1: true},
+			_1: {ctor: '[]'}
+		},
+		inputName: _elm_lang$core$Maybe$Just('productExpiresAt'),
+		inputId: _elm_lang$core$Maybe$Just('productExpiresAt'),
+		placeholder: 'Pick Expiration Date'
+	});
+
+var _user$project$Product_Form$selectProductBrand = function (productBrandId) {
+	return A2(
+		_elm_lang$html$Html$select,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-control'),
+			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+				_0: _elm_lang$html$Html_Attributes$id('productBrandId'),
 				_1: {ctor: '[]'}
-			},
-			{
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$option,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Choose Brand'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Product_Form$selectProductType = function (productTypeId) {
+	return A2(
+		_elm_lang$html$Html$select,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-control'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$id('productTypeId'),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$option,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Choose Type'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Product_Form$productForm = function (_p0) {
+	var _p1 = _p0;
+	return A2(
+		_elm_lang$html$Html$form,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-inline'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('form-group'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$label,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('sr-only'),
+							_1: {
+								ctor: '::',
+								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productTypeId'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Product Type'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Product_Form$selectProductType(_p1.productTypeId),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
@@ -17168,58 +18669,81 @@ var _user$project$Product_Form$productForm = F3(
 								_0: _elm_lang$html$Html_Attributes$class('sr-only'),
 								_1: {
 									ctor: '::',
-									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'typeName'),
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productBrandId'),
 									_1: {ctor: '[]'}
 								}
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Name'),
+								_0: _elm_lang$html$Html$text('Product Brand'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$select,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('form-control'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$id('productTypeId'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$placeholder('Choose Type'),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{ctor: '[]'}),
+							_0: _user$project$Product_Form$selectProductBrand(_p1.productBrandId),
 							_1: {ctor: '[]'}
 						}
 					}),
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$button,
+						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('submit'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
-								_1: {ctor: '[]'}
-							}
+							_0: _elm_lang$html$Html_Attributes$class('form-group'),
+							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text('Save Product'),
-							_1: {ctor: '[]'}
+							_0: A2(
+								_elm_lang$html$Html$label,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('sr-only'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'for', 'productExpiresAt'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Product Expiration Date'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$map,
+									_user$project$Messages$ToDatePicker,
+									A3(_elm_community$elm_datepicker$DatePicker$view, _p1.productExpiresAt, _user$project$Settings$settings, _p1.datePicker)),
+								_1: {ctor: '[]'}
+							}
 						}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$type_('submit'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Save'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
-			});
-	});
+			}
+		});
+};
 
 var _user$project$Product_Index$productIndex = function (model) {
 	var _p0 = model.productList;
@@ -17312,7 +18836,7 @@ var _user$project$Product_Index$productIndex = function (model) {
 						}),
 					_1: {
 						ctor: '::',
-						_0: A3(_user$project$Product_Form$productForm, model.productBrandId, model.productTypeId, model.productExpiresAt),
+						_0: _user$project$Product_Form$productForm(model),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -17668,7 +19192,29 @@ var _user$project$View$layout = function (model) {
 			_0: _user$project$Navigation_View$navigation,
 			_1: {
 				ctor: '::',
-				_0: _user$project$View$page(model),
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('row'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('col-sm-10 col-sm-offset-1'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _user$project$View$page(model),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -17954,13 +19500,28 @@ var _user$project$Update$urlUpdate = function (model) {
 					_1: {ctor: '[]'}
 				});
 		case 'ProductIndexRoute':
+			var _p15 = _elm_community$elm_datepicker$DatePicker$init;
+			var datePicker = _p15._0;
+			var datePickerFx = _p15._1;
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
 				{
 					ctor: '::',
-					_0: _user$project$Commands$fetchProducts,
-					_1: {ctor: '[]'}
+					_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Messages$ToDatePicker, datePickerFx),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Commands$fetchTypes,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Commands$fetchBrands,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Commands$fetchProducts,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
 				});
 		default:
 			return A2(
@@ -17970,203 +19531,233 @@ var _user$project$Update$urlUpdate = function (model) {
 	}
 };
 var _user$project$Update$update = F2(
-	function (msg, model) {
-		var _p15 = msg;
-		switch (_p15.ctor) {
+	function (msg, _p16) {
+		var _p17 = _p16;
+		var _p23 = _p17;
+		var _p18 = msg;
+		switch (_p18.ctor) {
 			case 'FetchType':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								typeList: _user$project$Model$Success(_p15._0._0)
+								typeList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
-						{typeName: _p15._0}),
+						_p23,
+						{typeName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				return _user$project$Update$saveType(model);
+				return _user$project$Update$saveType(_p23);
 			case 'ClickEditType':
-				var _p16 = _p15._0;
+				var _p19 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{
-							typeName: _p16.name,
-							typeId: _elm_lang$core$Maybe$Just(_p16.id)
+							typeName: _p19.name,
+							typeId: _elm_lang$core$Maybe$Just(_p19.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteType':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteType(_p15._0),
+						_0: _user$project$Commands$deleteType(_p18._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								brandList: _user$project$Model$Success(_p15._0._0)
+								brandList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'UpdateBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'DeleteBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'SetBrandName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
-						{brandName: _p15._0}),
+						_p23,
+						{brandName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveBrand':
-				return _user$project$Update$saveBrand(model);
+				return _user$project$Update$saveBrand(_p23);
 			case 'ClickEditBrand':
-				var _p17 = _p15._0;
+				var _p20 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{
-							brandName: _p17.name,
-							brandId: _elm_lang$core$Maybe$Just(_p17.id)
+							brandName: _p20.name,
+							brandId: _elm_lang$core$Maybe$Just(_p20.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteBrand':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteBrand(_p15._0),
+						_0: _user$project$Commands$deleteBrand(_p18._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchProduct':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								productList: _user$project$Model$Success(_p15._0._0)
+								productList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								productList: _user$project$Model$Failure('Something went wrong ...')
 							}),
 						{ctor: '[]'});
 				}
+			case 'ToDatePicker':
+				var _p21 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p18._0, _p17.datePicker);
+				var newDatePicker = _p21._0;
+				var datePickerFx = _p21._1;
+				var event = _p21._2;
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p23,
+						{
+							productExpiresAt: function () {
+								var _p22 = event;
+								if (_p22.ctor === 'Changed') {
+									return _p22._0;
+								} else {
+									return _p23.productExpiresAt;
+								}
+							}(),
+							datePicker: newDatePicker
+						}),
+					{
+						ctor: '::',
+						_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Messages$ToDatePicker, datePickerFx),
+						_1: {ctor: '[]'}
+					});
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p15._0);
+				var currentRoute = _user$project$Routing$parse(_p18._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{route: currentRoute}));
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p15._0)),
+							_user$project$Routing$toPath(_p18._0)),
 						_1: {ctor: '[]'}
 					});
 		}
 	});
 
 var _user$project$Main$init = function (location) {
+	var _p0 = _elm_community$elm_datepicker$DatePicker$init;
+	var datePicker = _p0._0;
+	var datePickerFx = _p0._1;
 	var currentRoute = _user$project$Routing$parse(location);
-	var model = _user$project$Model$initialModel(currentRoute);
+	var model = A2(_user$project$Model$initialModel, currentRoute, datePicker);
 	return _user$project$Update$urlUpdate(model);
 };
 var _user$project$Main$main = A2(
@@ -18182,7 +19773,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

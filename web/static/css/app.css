@@ -2,3 +2,7 @@
 a {
   cursor: pointer;
 }
+
+div.form-group {
+  margin-right: 5px;
+}

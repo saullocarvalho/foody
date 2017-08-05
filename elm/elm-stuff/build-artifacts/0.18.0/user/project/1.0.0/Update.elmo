@@ -275,13 +275,28 @@ var _user$project$Update$urlUpdate = function (model) {
 					_1: {ctor: '[]'}
 				});
 		case 'ProductIndexRoute':
+			var _p15 = _elm_community$elm_datepicker$DatePicker$init;
+			var datePicker = _p15._0;
+			var datePickerFx = _p15._1;
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
 				{
 					ctor: '::',
-					_0: _user$project$Commands$fetchProducts,
-					_1: {ctor: '[]'}
+					_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Messages$ToDatePicker, datePickerFx),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Commands$fetchTypes,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Commands$fetchBrands,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Commands$fetchProducts,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
 				});
 		default:
 			return A2(
@@ -291,195 +306,222 @@ var _user$project$Update$urlUpdate = function (model) {
 	}
 };
 var _user$project$Update$update = F2(
-	function (msg, model) {
-		var _p15 = msg;
-		switch (_p15.ctor) {
+	function (msg, _p16) {
+		var _p17 = _p16;
+		var _p23 = _p17;
+		var _p18 = msg;
+		switch (_p18.ctor) {
 			case 'FetchType':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								typeList: _user$project$Model$Success(_p15._0._0)
+								typeList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
-						{typeName: _p15._0}),
+						_p23,
+						{typeName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				return _user$project$Update$saveType(model);
+				return _user$project$Update$saveType(_p23);
 			case 'ClickEditType':
-				var _p16 = _p15._0;
+				var _p19 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{
-							typeName: _p16.name,
-							typeId: _elm_lang$core$Maybe$Just(_p16.id)
+							typeName: _p19.name,
+							typeId: _elm_lang$core$Maybe$Just(_p19.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteType':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteType(_p15._0),
+						_0: _user$project$Commands$deleteType(_p18._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								brandList: _user$project$Model$Success(_p15._0._0)
+								brandList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'UpdateBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'DeleteBrand':
-				if (_p15._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteBrand, model, _p15._0._0);
+				if (_p18._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteBrand, _p23, _p18._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_p23,
 						{ctor: '[]'});
 				}
 			case 'SetBrandName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
-						{brandName: _p15._0}),
+						_p23,
+						{brandName: _p18._0}),
 					{ctor: '[]'});
 			case 'ClickSaveBrand':
-				return _user$project$Update$saveBrand(model);
+				return _user$project$Update$saveBrand(_p23);
 			case 'ClickEditBrand':
-				var _p17 = _p15._0;
+				var _p20 = _p18._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{
-							brandName: _p17.name,
-							brandId: _elm_lang$core$Maybe$Just(_p17.id)
+							brandName: _p20.name,
+							brandId: _elm_lang$core$Maybe$Just(_p20.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteBrand':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteBrand(_p15._0),
+						_0: _user$project$Commands$deleteBrand(_p18._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchProduct':
-				if (_p15._0.ctor === 'Ok') {
+				if (_p18._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
-								productList: _user$project$Model$Success(_p15._0._0)
+								productList: _user$project$Model$Success(_p18._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							_p23,
 							{
 								productList: _user$project$Model$Failure('Something went wrong ...')
 							}),
 						{ctor: '[]'});
 				}
+			case 'ToDatePicker':
+				var _p21 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p18._0, _p17.datePicker);
+				var newDatePicker = _p21._0;
+				var datePickerFx = _p21._1;
+				var event = _p21._2;
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p23,
+						{
+							productExpiresAt: function () {
+								var _p22 = event;
+								if (_p22.ctor === 'Changed') {
+									return _p22._0;
+								} else {
+									return _p23.productExpiresAt;
+								}
+							}(),
+							datePicker: newDatePicker
+						}),
+					{
+						ctor: '::',
+						_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Messages$ToDatePicker, datePickerFx),
+						_1: {ctor: '[]'}
+					});
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p15._0);
+				var currentRoute = _user$project$Routing$parse(_p18._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
-						model,
+						_p23,
 						{route: currentRoute}));
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
+					_p23,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p15._0)),
+							_user$project$Routing$toPath(_p18._0)),
 						_1: {ctor: '[]'}
 					});
 		}

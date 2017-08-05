@@ -4,11 +4,13 @@ import Navigation
 import Model exposing (..)
 import Messages exposing (..)
 import Commands exposing (..)
+import Settings exposing (settings)
 import Routing exposing (Route(..), parse, toPath)
+import DatePicker exposing (DateEvent(..))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg ({ datePicker } as model) =
     case msg of
         FetchType (Ok typeList) ->
             { model | typeList = Success typeList } ! []
@@ -88,6 +90,23 @@ update msg model =
         FetchProduct (Err error) ->
             { model | productList = Failure "Something went wrong ..." } ! []
 
+        ToDatePicker msg ->
+            let
+                ( newDatePicker, datePickerFx, event ) =
+                    DatePicker.update settings msg datePicker
+            in
+                { model
+                    | productExpiresAt =
+                        case event of
+                            Changed date ->
+                                date
+
+                            NoChange ->
+                                model.productExpiresAt
+                    , datePicker = newDatePicker
+                }
+                    ! [ Cmd.map ToDatePicker datePickerFx ]
+
         UrlChange location ->
             let
                 currentRoute =
@@ -99,7 +118,7 @@ update msg model =
             model ! [ Navigation.newUrl <| toPath route ]
 
 
-urlUpdate : Model -> ( Model, Cmd Msg )
+urlUpdate : Model -> ( Model, Cmd Messages.Msg )
 urlUpdate model =
     case model.route of
         HomeIndexRoute ->
@@ -112,7 +131,11 @@ urlUpdate model =
             model ! [ fetchBrands ]
 
         ProductIndexRoute ->
-            model ! [ fetchProducts ]
+            let
+                ( datePicker, datePickerFx ) =
+                    DatePicker.init
+            in
+                model ! [ Cmd.map ToDatePicker datePickerFx, fetchTypes, fetchBrands, fetchProducts ]
 
         _ ->
             model ! []

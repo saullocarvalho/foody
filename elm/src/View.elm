@@ -1,6 +1,7 @@
 module View exposing (..)
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Messages exposing (Msg(..))
 import Model exposing (..)
 import Home.View exposing (homeView)
@@ -20,7 +21,10 @@ layout : Model -> Html Msg
 layout model =
     div []
         [ navigation
-        , page model
+        , div [ class "row" ]
+            [ div [ class "col-sm-10 col-sm-offset-1" ]
+                [ page model ]
+            ]
         ]
 
 

@@ -9,7 +9,9 @@ var _user$project$Model$Model = function (a) {
 								return function (i) {
 									return function (j) {
 										return function (k) {
-											return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, route: k};
+											return function (l) {
+												return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, datePicker: k, route: l};
+											};
 										};
 									};
 								};
@@ -53,6 +55,7 @@ var _user$project$Model$Failure = function (a) {
 };
 var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
-var _user$project$Model$initialModel = function (route) {
-	return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, route: route};
-};
+var _user$project$Model$initialModel = F2(
+	function (route, datePicker) {
+		return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, datePicker: datePicker, route: route};
+	});

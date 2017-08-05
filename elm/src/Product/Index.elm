@@ -27,7 +27,7 @@ productIndex model =
                         |> List.map productView
                         |> tbody []
                     ]
-                , productForm model.productBrandId model.productTypeId model.productExpiresAt
+                , productForm model
                 ]
 
         Failure error ->

@@ -4,6 +4,7 @@ import Http
 import Navigation
 import Model exposing (..)
 import Routing exposing (Route)
+import DatePicker exposing (..)
 
 
 type Msg
@@ -24,5 +25,6 @@ type Msg
     | ClickDeleteBrand Int
     | ClickEditBrand Brand
     | FetchProduct (Result Http.Error ProductList)
+    | ToDatePicker DatePicker.Msg
     | UrlChange Navigation.Location
     | NavigateTo Route
