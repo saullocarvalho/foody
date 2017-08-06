@@ -48,7 +48,7 @@ var _user$project$Commands$consumeProduct = function (product) {
 		typeId: product.productType.id,
 		brandId: product.productBrand.id,
 		expiresAt: _user$project$Util$toIsoString(product.expiresAt),
-		consume: true
+		consumed: true
 	};
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$consumeEncoder(consumeProduct));

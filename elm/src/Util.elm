@@ -16,8 +16,7 @@ toIsoString date =
 
         dayString =
             date
-                |> day
-                |> toString
+                |> DE.toUtcFormattedString "d"
                 |> String.padLeft 2 '0'
 
         yearString =

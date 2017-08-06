@@ -137,7 +137,7 @@ consumeProduct product =
             { typeId = product.productType.id
             , brandId = product.productBrand.id
             , expiresAt = product.expiresAt |> toIsoString
-            , consume = True
+            , consumed = True
             }
 
         apiUrl =

@@ -24,4 +24,10 @@ defmodule Foody.Product do
     |> assoc_constraint(:type)
     |> assoc_constraint(:brand)
   end
+
+  def consume_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:consumed])
+    |> validate_required([:consumed])
+  end
 end

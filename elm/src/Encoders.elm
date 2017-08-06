@@ -31,7 +31,7 @@ consumeEncoder p =
         [ ( "type_id", int p.typeId )
         , ( "brand_id", int p.brandId )
         , ( "expires_at", string p.expiresAt )
-        , ( "consume", bool p.consume )
+        , ( "consumed", bool p.consumed )
         ]
 
 

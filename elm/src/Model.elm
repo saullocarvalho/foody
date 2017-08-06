@@ -88,7 +88,7 @@ type alias ConsumeProduct =
     { typeId : Int
     , brandId : Int
     , expiresAt : String
-    , consume : Bool
+    , consumed : Bool
     }
 
 

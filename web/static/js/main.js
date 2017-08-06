@@ -17515,7 +17515,7 @@ var _user$project$Model$SendProduct = F3(
 	});
 var _user$project$Model$ConsumeProduct = F4(
 	function (a, b, c, d) {
-		return {typeId: a, brandId: b, expiresAt: c, consume: d};
+		return {typeId: a, brandId: b, expiresAt: c, consumed: d};
 	});
 var _user$project$Model$Id = function (a) {
 	return {id: a};
@@ -18029,8 +18029,8 @@ var _user$project$Encoders$consumeEncoder = function (p) {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: 'consume',
-							_1: _elm_lang$core$Json_Encode$bool(p.consume)
+							_0: 'consumed',
+							_1: _elm_lang$core$Json_Encode$bool(p.consumed)
 						},
 						_1: {ctor: '[]'}
 					}
@@ -18102,8 +18102,7 @@ var _user$project$Util$toIsoString = function (date) {
 		_elm_lang$core$String$padLeft,
 		2,
 		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(
-			_elm_lang$core$Date$day(date)));
+		A2(_justinmimbs$elm_date_extra$Date_Extra$toUtcFormattedString, 'd', date));
 	var monthString = A3(
 		_elm_lang$core$String$padLeft,
 		2,
@@ -18175,7 +18174,7 @@ var _user$project$Commands$consumeProduct = function (product) {
 		typeId: product.productType.id,
 		brandId: product.productBrand.id,
 		expiresAt: _user$project$Util$toIsoString(product.expiresAt),
-		consume: true
+		consumed: true
 	};
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$consumeEncoder(consumeProduct));
