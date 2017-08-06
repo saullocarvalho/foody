@@ -18,7 +18,7 @@ defmodule Foody.Router do
 
     resources "/types", TypeController, except: [:new, :edit]
     resources "/brands", BrandController, except: [:new, :edit]
-    resources "/products", ProductController, only: [:index]
+    resources "/products", ProductController, only: [:index, :create]
   end
 
   scope "/", Foody do

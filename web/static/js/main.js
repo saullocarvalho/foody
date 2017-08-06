@@ -19384,7 +19384,7 @@ var _user$project$Util$toIsoString = function (date) {
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				monthString,
-				A2(_elm_lang$core$Basics_ops['++'], '-', yearString))));
+				A2(_elm_lang$core$Basics_ops['++'], '-', dayString))));
 };
 var _user$project$Util$compareProduct = function (p) {
 	return _user$project$Util$toIsoString(p.expiresAt);

@@ -26,7 +26,7 @@ toIsoString date =
                 |> toString
                 |> String.padLeft 2 '0'
     in
-        yearString ++ "-" ++ monthString ++ "-" ++ yearString
+        yearString ++ "-" ++ monthString ++ "-" ++ dayString
 
 
 compareProduct : Product -> String
