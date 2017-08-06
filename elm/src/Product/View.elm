@@ -12,7 +12,7 @@ productView p =
     tr []
         [ td [] [ text p.productBrand.name ]
         , td [] [ text p.productType.name ]
-        , td [] [ p.expiresAt |> Date.toFormattedString "MMMM d, y" |> text ]
+        , td [] [ p.expiresAt |> Date.toUtcFormattedString "MMMM d, y" |> text ]
         , td [] [ p.count |> toString |> text ]
         , td []
             [ div

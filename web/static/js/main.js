@@ -18540,7 +18540,7 @@ var _user$project$Product_View$productView = function (p) {
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text(
-								A2(_justinmimbs$elm_date_extra$Date_Extra$toFormattedString, 'MMMM d, y', p.expiresAt)),
+								A2(_justinmimbs$elm_date_extra$Date_Extra$toUtcFormattedString, 'MMMM d, y', p.expiresAt)),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
