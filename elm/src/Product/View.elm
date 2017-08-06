@@ -2,6 +2,7 @@ module Product.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Model exposing (Product)
 import Messages exposing (Msg(..))
 import Date.Extra as Date
@@ -23,8 +24,7 @@ productView p =
                     [ type_ "button"
                     , class "btn btn-default btn-sm"
                     , attribute "arial-label" "Consume"
-
-                    -- , onClick (ClickEditType t)
+                    , onClick (ClickConsumeProduct p)
                     ]
                     [ span
                         [ class "glyphicon glyphicon-cutlery"

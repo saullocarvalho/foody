@@ -25,6 +25,16 @@ productEncoder p =
         ]
 
 
+consumeEncoder : ConsumeProduct -> JE.Value
+consumeEncoder p =
+    object
+        [ ( "type_id", int p.typeId )
+        , ( "brand_id", int p.brandId )
+        , ( "expires_at", string p.expiresAt )
+        , ( "consume", bool p.consume )
+        ]
+
+
 idEncoder : Id -> JE.Value
 idEncoder id =
     object

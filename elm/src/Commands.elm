@@ -6,6 +6,7 @@ import Http exposing (..)
 import Messages exposing (Msg(..))
 import Model exposing (..)
 import Json.Decode exposing (..)
+import Util exposing (..)
 
 
 fetchTypes : Cmd Msg
@@ -127,6 +128,30 @@ updateBrand editedBrand =
             httpPut apiUrl body brandDecoder
     in
         Http.send UpdateBrand request
+
+
+consumeProduct : Product -> Cmd Msg
+consumeProduct product =
+    let
+        consumeProduct =
+            { typeId = product.productType.id
+            , brandId = product.productBrand.id
+            , expiresAt = product.expiresAt |> toIsoString
+            , consume = True
+            }
+
+        apiUrl =
+            "/api/products"
+
+        body =
+            consumeProduct
+                |> consumeEncoder
+                |> Http.jsonBody
+
+        request =
+            Http.post apiUrl body productDecoder
+    in
+        Http.send Messages.ConsumeProduct request
 
 
 deleteType : Int -> Cmd Msg

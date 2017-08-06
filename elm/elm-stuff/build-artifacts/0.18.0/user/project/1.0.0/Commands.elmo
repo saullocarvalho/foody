@@ -42,6 +42,19 @@ var _user$project$Commands$deleteType = function (typeId) {
 	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
 };
+var _user$project$Commands$consumeProduct = function (product) {
+	var apiUrl = '/api/products';
+	var consumeProduct = {
+		typeId: product.productType.id,
+		brandId: product.productBrand.id,
+		expiresAt: _user$project$Util$toIsoString(product.expiresAt),
+		consume: true
+	};
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$consumeEncoder(consumeProduct));
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$productDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$ConsumeProduct, request);
+};
 var _user$project$Commands$updateBrand = function (editedBrand) {
 	var body = _elm_lang$http$Http$jsonBody(
 		_user$project$Encoders$brandEncoder(editedBrand));

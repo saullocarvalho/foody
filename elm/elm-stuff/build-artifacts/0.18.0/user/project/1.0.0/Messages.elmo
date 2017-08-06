@@ -7,12 +7,18 @@ var _user$project$Messages$UrlChange = function (a) {
 var _user$project$Messages$ToDatePicker = function (a) {
 	return {ctor: 'ToDatePicker', _0: a};
 };
+var _user$project$Messages$ClickConsumeProduct = function (a) {
+	return {ctor: 'ClickConsumeProduct', _0: a};
+};
 var _user$project$Messages$ClickSaveProduct = {ctor: 'ClickSaveProduct'};
 var _user$project$Messages$SetProductBrand = function (a) {
 	return {ctor: 'SetProductBrand', _0: a};
 };
 var _user$project$Messages$SetProductType = function (a) {
 	return {ctor: 'SetProductType', _0: a};
+};
+var _user$project$Messages$ConsumeProduct = function (a) {
+	return {ctor: 'ConsumeProduct', _0: a};
 };
 var _user$project$Messages$CreateProduct = function (a) {
 	return {ctor: 'CreateProduct', _0: a};

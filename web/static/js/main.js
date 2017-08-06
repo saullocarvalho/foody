@@ -17513,6 +17513,10 @@ var _user$project$Model$SendProduct = F3(
 	function (a, b, c) {
 		return {typeId: a, brandId: b, expiresAt: c};
 	});
+var _user$project$Model$ConsumeProduct = F4(
+	function (a, b, c, d) {
+		return {typeId: a, brandId: b, expiresAt: c, consume: d};
+	});
 var _user$project$Model$Id = function (a) {
 	return {id: a};
 };
@@ -17538,12 +17542,18 @@ var _user$project$Messages$UrlChange = function (a) {
 var _user$project$Messages$ToDatePicker = function (a) {
 	return {ctor: 'ToDatePicker', _0: a};
 };
+var _user$project$Messages$ClickConsumeProduct = function (a) {
+	return {ctor: 'ClickConsumeProduct', _0: a};
+};
 var _user$project$Messages$ClickSaveProduct = {ctor: 'ClickSaveProduct'};
 var _user$project$Messages$SetProductBrand = function (a) {
 	return {ctor: 'SetProductBrand', _0: a};
 };
 var _user$project$Messages$SetProductType = function (a) {
 	return {ctor: 'SetProductType', _0: a};
+};
+var _user$project$Messages$ConsumeProduct = function (a) {
+	return {ctor: 'ConsumeProduct', _0: a};
 };
 var _user$project$Messages$CreateProduct = function (a) {
 	return {ctor: 'CreateProduct', _0: a};
@@ -17992,6 +18002,42 @@ var _user$project$Encoders$idEncoder = function (id) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$Encoders$consumeEncoder = function (p) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'type_id',
+				_1: _elm_lang$core$Json_Encode$int(p.typeId)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'brand_id',
+					_1: _elm_lang$core$Json_Encode$int(p.brandId)
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'expires_at',
+						_1: _elm_lang$core$Json_Encode$string(p.expiresAt)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'consume',
+							_1: _elm_lang$core$Json_Encode$bool(p.consume)
+						},
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
 var _user$project$Encoders$productEncoder = function (p) {
 	return _elm_lang$core$Json_Encode$object(
 		{
@@ -18045,6 +18091,40 @@ var _user$project$Encoders$typeEncoder = function (t) {
 		});
 };
 
+var _user$project$Util$toIsoString = function (date) {
+	var yearString = A3(
+		_elm_lang$core$String$padLeft,
+		2,
+		_elm_lang$core$Native_Utils.chr('0'),
+		_elm_lang$core$Basics$toString(
+			_elm_lang$core$Date$year(date)));
+	var dayString = A3(
+		_elm_lang$core$String$padLeft,
+		2,
+		_elm_lang$core$Native_Utils.chr('0'),
+		_elm_lang$core$Basics$toString(
+			_elm_lang$core$Date$day(date)));
+	var monthString = A3(
+		_elm_lang$core$String$padLeft,
+		2,
+		_elm_lang$core$Native_Utils.chr('0'),
+		_elm_lang$core$Basics$toString(
+			_justinmimbs$elm_date_extra$Date_Extra$monthNumber(date)));
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		yearString,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'-',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				monthString,
+				A2(_elm_lang$core$Basics_ops['++'], '-', dayString))));
+};
+var _user$project$Util$compareProduct = function (p) {
+	return _user$project$Util$toIsoString(p.expiresAt);
+};
+
 var _user$project$Commands$httpDelete = F3(
 	function (url, body, decoder) {
 		return _elm_lang$http$Http$request(
@@ -18088,6 +18168,19 @@ var _user$project$Commands$deleteType = function (typeId) {
 		_elm_lang$core$Basics$toString(typeId));
 	var request = A3(_user$project$Commands$httpDelete, apiUrl, body, _user$project$Decoders$typeDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Messages$DeleteType, request);
+};
+var _user$project$Commands$consumeProduct = function (product) {
+	var apiUrl = '/api/products';
+	var consumeProduct = {
+		typeId: product.productType.id,
+		brandId: product.productBrand.id,
+		expiresAt: _user$project$Util$toIsoString(product.expiresAt),
+		consume: true
+	};
+	var body = _elm_lang$http$Http$jsonBody(
+		_user$project$Encoders$consumeEncoder(consumeProduct));
+	var request = A3(_elm_lang$http$Http$post, apiUrl, body, _user$project$Decoders$productDecoder);
+	return A2(_elm_lang$http$Http$send, _user$project$Messages$ConsumeProduct, request);
 };
 var _user$project$Commands$updateBrand = function (editedBrand) {
 	var body = _elm_lang$http$Http$jsonBody(
@@ -18585,7 +18678,12 @@ var _user$project$Product_View$productView = function (p) {
 														_1: {
 															ctor: '::',
 															_0: A2(_elm_lang$html$Html_Attributes$attribute, 'arial-label', 'Consume'),
-															_1: {ctor: '[]'}
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Events$onClick(
+																	_user$project$Messages$ClickConsumeProduct(p)),
+																_1: {ctor: '[]'}
+															}
 														}
 													}
 												},
@@ -19356,40 +19454,6 @@ var _user$project$View$view = function (model) {
 	return _user$project$View$layout(model);
 };
 
-var _user$project$Util$toIsoString = function (date) {
-	var yearString = A3(
-		_elm_lang$core$String$padLeft,
-		2,
-		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(
-			_elm_lang$core$Date$year(date)));
-	var dayString = A3(
-		_elm_lang$core$String$padLeft,
-		2,
-		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(
-			_elm_lang$core$Date$day(date)));
-	var monthString = A3(
-		_elm_lang$core$String$padLeft,
-		2,
-		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(
-			_justinmimbs$elm_date_extra$Date_Extra$monthNumber(date)));
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		yearString,
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			'-',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				monthString,
-				A2(_elm_lang$core$Basics_ops['++'], '-', dayString))));
-};
-var _user$project$Util$compareProduct = function (p) {
-	return _user$project$Util$toIsoString(p.expiresAt);
-};
-
 var _user$project$Update$updateDeleteBrand = F2(
 	function (model, brandDeleted) {
 		var _p0 = model.brandList;
@@ -19584,12 +19648,58 @@ var _user$project$Update$updateCreateType = F2(
 				{ctor: '[]'});
 		}
 	});
-var _user$project$Update$updateCreateProduct = F2(
-	function (model, productCreated) {
+var _user$project$Update$updateConsumeProduct = F2(
+	function (model, productConsumed) {
 		var _p12 = model.productList;
 		if (_p12.ctor === 'Success') {
 			var _p13 = _p12._0;
 			var oldProducts = _p13.products;
+			var filteredProducts = A2(
+				_elm_lang$core$List$filter,
+				function (p) {
+					return !_elm_lang$core$Native_Utils.eq(
+						{
+							ctor: '_Tuple3',
+							_0: p.productType,
+							_1: p.productBrand,
+							_2: _user$project$Util$toIsoString(p.expiresAt)
+						},
+						{
+							ctor: '_Tuple3',
+							_0: productConsumed.productType,
+							_1: productConsumed.productBrand,
+							_2: _user$project$Util$toIsoString(productConsumed.expiresAt)
+						});
+				},
+				oldProducts);
+			var newProducts = (_elm_lang$core$Native_Utils.cmp(productConsumed.count, 0) > 0) ? A2(
+				_elm_lang$core$List$sortBy,
+				_user$project$Util$compareProduct,
+				{ctor: '::', _0: productConsumed, _1: filteredProducts}) : filteredProducts;
+			var newProductList = _elm_lang$core$Native_Utils.update(
+				_p13,
+				{products: newProducts});
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				_elm_lang$core$Native_Utils.update(
+					model,
+					{
+						productList: _user$project$Model$Success(newProductList)
+					}),
+				{ctor: '[]'});
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{ctor: '[]'});
+		}
+	});
+var _user$project$Update$updateCreateProduct = F2(
+	function (model, productCreated) {
+		var _p14 = model.productList;
+		if (_p14.ctor === 'Success') {
+			var _p15 = _p14._0;
+			var oldProducts = _p15.products;
 			var newProducts = A2(
 				_elm_lang$core$List$sortBy,
 				_user$project$Util$compareProduct,
@@ -19616,7 +19726,7 @@ var _user$project$Update$updateCreateProduct = F2(
 						oldProducts)
 				});
 			var newProductList = _elm_lang$core$Native_Utils.update(
-				_p13,
+				_p15,
 				{products: newProducts});
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -19634,9 +19744,9 @@ var _user$project$Update$updateCreateProduct = F2(
 		}
 	});
 var _user$project$Update$saveBrand = function (model) {
-	var _p14 = model.brandId;
-	if (_p14.ctor === 'Just') {
-		var editedBrand = {id: _p14._0, name: model.brandName};
+	var _p16 = model.brandId;
+	if (_p16.ctor === 'Just') {
+		var editedBrand = {id: _p16._0, name: model.brandName};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -19662,9 +19772,9 @@ var _user$project$Update$saveBrand = function (model) {
 	}
 };
 var _user$project$Update$saveType = function (model) {
-	var _p15 = model.typeId;
-	if (_p15.ctor === 'Just') {
-		var editedType = {id: _p15._0, name: model.typeName};
+	var _p17 = model.typeId;
+	if (_p17.ctor === 'Just') {
+		var editedType = {id: _p17._0, name: model.typeName};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -19689,19 +19799,19 @@ var _user$project$Update$saveType = function (model) {
 			});
 	}
 };
-var _user$project$Update$saveProduct = function (_p16) {
-	var _p17 = _p16;
-	var _p19 = _p17;
-	var _p18 = {ctor: '_Tuple3', _0: _p17.productTypeId, _1: _p17.productBrandId, _2: _p17.productExpiresAt};
-	if ((((_p18.ctor === '_Tuple3') && (_p18._0.ctor === 'Just')) && (_p18._1.ctor === 'Just')) && (_p18._2.ctor === 'Just')) {
+var _user$project$Update$saveProduct = function (_p18) {
+	var _p19 = _p18;
+	var _p21 = _p19;
+	var _p20 = {ctor: '_Tuple3', _0: _p19.productTypeId, _1: _p19.productBrandId, _2: _p19.productExpiresAt};
+	if ((((_p20.ctor === '_Tuple3') && (_p20._0.ctor === 'Just')) && (_p20._1.ctor === 'Just')) && (_p20._2.ctor === 'Just')) {
 		var newProduct = {
-			typeId: _p18._0._0,
-			brandId: _p18._1._0,
-			expiresAt: _user$project$Util$toIsoString(_p18._2._0)
+			typeId: _p20._0._0,
+			brandId: _p20._1._0,
+			expiresAt: _user$project$Util$toIsoString(_p20._2._0)
 		};
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
-			_p19,
+			_p21,
 			{
 				ctor: '::',
 				_0: _user$project$Commands$createProduct(newProduct),
@@ -19710,13 +19820,13 @@ var _user$project$Update$saveProduct = function (_p16) {
 	} else {
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
-			_p19,
+			_p21,
 			{ctor: '[]'});
 	}
 };
 var _user$project$Update$urlUpdate = function (model) {
-	var _p20 = model.route;
-	switch (_p20.ctor) {
+	var _p22 = model.route;
+	switch (_p22.ctor) {
 		case 'HomeIndexRoute':
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -19741,9 +19851,9 @@ var _user$project$Update$urlUpdate = function (model) {
 					_1: {ctor: '[]'}
 				});
 		case 'ProductIndexRoute':
-			var _p21 = _elm_community$elm_datepicker$DatePicker$init;
-			var datePicker = _p21._0;
-			var datePickerFx = _p21._1;
+			var _p23 = _elm_community$elm_datepicker$DatePicker$init;
+			var datePicker = _p23._0;
+			var datePickerFx = _p23._1;
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
@@ -19772,250 +19882,268 @@ var _user$project$Update$urlUpdate = function (model) {
 	}
 };
 var _user$project$Update$update = F2(
-	function (msg, _p22) {
-		var _p23 = _p22;
-		var _p31 = _p23;
-		var _p24 = msg;
-		switch (_p24.ctor) {
+	function (msg, _p24) {
+		var _p25 = _p24;
+		var _p33 = _p25;
+		var _p26 = msg;
+		switch (_p26.ctor) {
 			case 'FetchType':
-				if (_p24._0.ctor === 'Ok') {
+				if (_p26._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
-								typeList: _user$project$Model$Success(_p24._0._0)
+								typeList: _user$project$Model$Success(_p26._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
 								typeList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateType':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateType, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateType, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'UpdateType':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateType, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateType, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'DeleteType':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteType, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteType, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'SetTypeName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p31,
-						{typeName: _p24._0}),
+						_p33,
+						{typeName: _p26._0}),
 					{ctor: '[]'});
 			case 'ClickSaveType':
-				return _user$project$Update$saveType(_p31);
+				return _user$project$Update$saveType(_p33);
 			case 'ClickEditType':
-				var _p25 = _p24._0;
+				var _p27 = _p26._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p31,
+						_p33,
 						{
-							typeName: _p25.name,
-							typeId: _elm_lang$core$Maybe$Just(_p25.id)
+							typeName: _p27.name,
+							typeId: _elm_lang$core$Maybe$Just(_p27.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteType':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p31,
+					_p33,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteType(_p24._0),
+						_0: _user$project$Commands$deleteType(_p26._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchBrand':
-				if (_p24._0.ctor === 'Ok') {
+				if (_p26._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
-								brandList: _user$project$Model$Success(_p24._0._0)
+								brandList: _user$project$Model$Success(_p26._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
 								brandList: _user$project$Model$Failure('Something went wrong...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateBrand':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateBrand, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateBrand, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'UpdateBrand':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateUpdateBrand, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateUpdateBrand, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'DeleteBrand':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateDeleteBrand, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateDeleteBrand, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'SetBrandName':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p31,
-						{brandName: _p24._0}),
+						_p33,
+						{brandName: _p26._0}),
 					{ctor: '[]'});
 			case 'ClickSaveBrand':
-				return _user$project$Update$saveBrand(_p31);
+				return _user$project$Update$saveBrand(_p33);
 			case 'ClickEditBrand':
-				var _p26 = _p24._0;
+				var _p28 = _p26._0;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p31,
+						_p33,
 						{
-							brandName: _p26.name,
-							brandId: _elm_lang$core$Maybe$Just(_p26.id)
+							brandName: _p28.name,
+							brandId: _elm_lang$core$Maybe$Just(_p28.id)
 						}),
 					{ctor: '[]'});
 			case 'ClickDeleteBrand':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p31,
+					_p33,
 					{
 						ctor: '::',
-						_0: _user$project$Commands$deleteBrand(_p24._0),
+						_0: _user$project$Commands$deleteBrand(_p26._0),
 						_1: {ctor: '[]'}
 					});
 			case 'FetchProduct':
-				if (_p24._0.ctor === 'Ok') {
+				if (_p26._0.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
-								productList: _user$project$Model$Success(_p24._0._0)
+								productList: _user$project$Model$Success(_p26._0._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
 								productList: _user$project$Model$Failure('Something went wrong ...')
 							}),
 						{ctor: '[]'});
 				}
 			case 'CreateProduct':
-				if (_p24._0.ctor === 'Ok') {
-					return A2(_user$project$Update$updateCreateProduct, _p31, _p24._0._0);
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateCreateProduct, _p33, _p26._0._0);
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						_p31,
+						_p33,
+						{ctor: '[]'});
+				}
+			case 'ConsumeProduct':
+				if (_p26._0.ctor === 'Ok') {
+					return A2(_user$project$Update$updateConsumeProduct, _p33, _p26._0._0);
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_p33,
 						{ctor: '[]'});
 				}
 			case 'SetProductType':
-				var result = _elm_lang$core$String$toInt(_p24._0);
-				var _p27 = result;
-				if (_p27.ctor === 'Ok') {
+				var result = _elm_lang$core$String$toInt(_p26._0);
+				var _p29 = result;
+				if (_p29.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
-								productTypeId: _elm_lang$core$Maybe$Just(_p27._0)
+								productTypeId: _elm_lang$core$Maybe$Just(_p29._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{productTypeId: _elm_lang$core$Maybe$Nothing}),
 						{ctor: '[]'});
 				}
 			case 'SetProductBrand':
-				var result = _elm_lang$core$String$toInt(_p24._0);
-				var _p28 = result;
-				if (_p28.ctor === 'Ok') {
+				var result = _elm_lang$core$String$toInt(_p26._0);
+				var _p30 = result;
+				if (_p30.ctor === 'Ok') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{
-								productBrandId: _elm_lang$core$Maybe$Just(_p28._0)
+								productBrandId: _elm_lang$core$Maybe$Just(_p30._0)
 							}),
 						{ctor: '[]'});
 				} else {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							_p31,
+							_p33,
 							{productBrandId: _elm_lang$core$Maybe$Nothing}),
 						{ctor: '[]'});
 				}
 			case 'ClickSaveProduct':
-				return _user$project$Update$saveProduct(_p31);
+				return _user$project$Update$saveProduct(_p33);
+			case 'ClickConsumeProduct':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_p33,
+					{
+						ctor: '::',
+						_0: _user$project$Commands$consumeProduct(_p26._0),
+						_1: {ctor: '[]'}
+					});
 			case 'ToDatePicker':
-				var _p29 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p24._0, _p23.datePicker);
-				var newDatePicker = _p29._0;
-				var datePickerFx = _p29._1;
-				var event = _p29._2;
+				var _p31 = A3(_elm_community$elm_datepicker$DatePicker$update, _user$project$Settings$settings, _p26._0, _p25.datePicker);
+				var newDatePicker = _p31._0;
+				var datePickerFx = _p31._1;
+				var event = _p31._2;
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
-						_p31,
+						_p33,
 						{
 							productExpiresAt: function () {
-								var _p30 = event;
-								if (_p30.ctor === 'Changed') {
-									return _p30._0;
+								var _p32 = event;
+								if (_p32.ctor === 'Changed') {
+									return _p32._0;
 								} else {
-									return _p31.productExpiresAt;
+									return _p33.productExpiresAt;
 								}
 							}(),
 							datePicker: newDatePicker
@@ -20026,19 +20154,19 @@ var _user$project$Update$update = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'UrlChange':
-				var currentRoute = _user$project$Routing$parse(_p24._0);
+				var currentRoute = _user$project$Routing$parse(_p26._0);
 				return _user$project$Update$urlUpdate(
 					_elm_lang$core$Native_Utils.update(
-						_p31,
+						_p33,
 						{route: currentRoute}));
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_p31,
+					_p33,
 					{
 						ctor: '::',
 						_0: _elm_lang$navigation$Navigation$newUrl(
-							_user$project$Routing$toPath(_p24._0)),
+							_user$project$Routing$toPath(_p26._0)),
 						_1: {ctor: '[]'}
 					});
 		}
@@ -20065,7 +20193,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"CreateProduct":["Result.Result Http.Error Model.Product"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetProductBrand":["String"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"SetProductType":["String"],"ClickSaveProduct":[],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"CreateProduct":["Result.Result Http.Error Model.Product"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ConsumeProduct":["Result.Result Http.Error Model.Product"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetProductBrand":["String"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"ClickConsumeProduct":["Model.Product"],"SetProductType":["String"],"ClickSaveProduct":[],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

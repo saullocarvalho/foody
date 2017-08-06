@@ -84,5 +84,13 @@ type alias SendProduct =
     }
 
 
+type alias ConsumeProduct =
+    { typeId : Int
+    , brandId : Int
+    , expiresAt : String
+    , consume : Bool
+    }
+
+
 type alias Id =
     { id : Int }

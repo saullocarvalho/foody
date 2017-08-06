@@ -48,6 +48,10 @@ var _user$project$Model$SendProduct = F3(
 	function (a, b, c) {
 		return {typeId: a, brandId: b, expiresAt: c};
 	});
+var _user$project$Model$ConsumeProduct = F4(
+	function (a, b, c, d) {
+		return {typeId: a, brandId: b, expiresAt: c, consume: d};
+	});
 var _user$project$Model$Id = function (a) {
 	return {id: a};
 };

@@ -97,6 +97,12 @@ update msg ({ datePicker } as model) =
         CreateProduct (Err error) ->
             model ! []
 
+        ConsumeProduct (Ok productConsumed) ->
+            updateConsumeProduct model productConsumed
+
+        ConsumeProduct (Err error) ->
+            model ! []
+
         SetProductType typeId ->
             let
                 result =
@@ -123,6 +129,9 @@ update msg ({ datePicker } as model) =
 
         ClickSaveProduct ->
             saveProduct model
+
+        ClickConsumeProduct productToConsume ->
+            model ! [ consumeProduct productToConsume ]
 
         ToDatePicker msg ->
             let
@@ -254,6 +263,40 @@ updateCreateProduct model productCreated =
                                     oldProducts
                                )
                         )
+
+                newProductList =
+                    { oldProductList | products = newProducts }
+            in
+                { model | productList = Success newProductList } ! []
+
+        _ ->
+            model ! []
+
+
+updateConsumeProduct : Model -> Product -> ( Model, Cmd Msg )
+updateConsumeProduct model productConsumed =
+    case model.productList of
+        Success oldProductList ->
+            let
+                oldProducts =
+                    oldProductList.products
+
+                filteredProducts =
+                    (List.filter
+                        (\p ->
+                            ( p.productType, p.productBrand, toIsoString (p.expiresAt) ) /= ( productConsumed.productType, productConsumed.productBrand, toIsoString (productConsumed.expiresAt) )
+                        )
+                        oldProducts
+                    )
+
+                newProducts =
+                    if productConsumed.count > 0 then
+                        List.sortBy compareProduct
+                            (productConsumed
+                                :: filteredProducts
+                            )
+                    else
+                        filteredProducts
 
                 newProductList =
                     { oldProductList | products = newProducts }
