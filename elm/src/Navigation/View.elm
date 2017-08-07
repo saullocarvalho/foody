@@ -48,7 +48,8 @@ navigationCollapse =
         ]
         [ ul [ class "nav navbar-nav" ]
             [ li []
-                [ a [] [ text "Storage" ]
+                [ a [ onClick <| NavigateTo StorageRoute ]
+                    [ text "Storage" ]
                 ]
             , li [ class "dropdown" ]
                 [ a

@@ -27,7 +27,12 @@ var _user$project$Navigation_View$navigationCollapse = A2(
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$a,
-							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Messages$NavigateTo(_user$project$Routing$StorageRoute)),
+								_1: {ctor: '[]'}
+							},
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html$text('Storage'),

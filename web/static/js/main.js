@@ -17415,11 +17415,14 @@ var _user$project$Routing$toPath = function (route) {
 			return '/brands';
 		case 'ProductIndexRoute':
 			return '/products';
+		case 'StorageRoute':
+			return '/storage';
 		default:
 			return '/not-found';
 	}
 };
 var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
+var _user$project$Routing$StorageRoute = {ctor: 'StorageRoute'};
 var _user$project$Routing$ProductIndexRoute = {ctor: 'ProductIndexRoute'};
 var _user$project$Routing$BrandIndexRoute = {ctor: 'BrandIndexRoute'};
 var _user$project$Routing$TypeIndexRoute = {ctor: 'TypeIndexRoute'};
@@ -17449,7 +17452,14 @@ var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
 						_evancz$url_parser$UrlParser$map,
 						_user$project$Routing$ProductIndexRoute,
 						_evancz$url_parser$UrlParser$s('products')),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_evancz$url_parser$UrlParser$map,
+							_user$project$Routing$StorageRoute,
+							_evancz$url_parser$UrlParser$s('storage')),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		}
@@ -17475,7 +17485,9 @@ var _user$project$Model$Model = function (a) {
 									return function (j) {
 										return function (k) {
 											return function (l) {
-												return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, datePicker: k, route: l};
+												return function (m) {
+													return {typeList: a, typeName: b, typeId: c, brandList: d, brandName: e, brandId: f, productList: g, productBrandId: h, productTypeId: i, productExpiresAt: j, datePicker: k, route: l, today: m};
+												};
 											};
 										};
 									};
@@ -17530,9 +17542,12 @@ var _user$project$Model$Requesting = {ctor: 'Requesting'};
 var _user$project$Model$NotRequested = {ctor: 'NotRequested'};
 var _user$project$Model$initialModel = F2(
 	function (route, datePicker) {
-		return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, datePicker: datePicker, route: route};
+		return {typeList: _user$project$Model$NotRequested, typeName: '', typeId: _elm_lang$core$Maybe$Nothing, brandList: _user$project$Model$NotRequested, brandName: '', brandId: _elm_lang$core$Maybe$Nothing, productList: _user$project$Model$NotRequested, productBrandId: _elm_lang$core$Maybe$Nothing, productTypeId: _elm_lang$core$Maybe$Nothing, productExpiresAt: _elm_lang$core$Maybe$Nothing, datePicker: datePicker, route: route, today: _elm_lang$core$Maybe$Nothing};
 	});
 
+var _user$project$Messages$ReceiveDate = function (a) {
+	return {ctor: 'ReceiveDate', _0: a};
+};
 var _user$project$Messages$NavigateTo = function (a) {
 	return {ctor: 'NavigateTo', _0: a};
 };
@@ -19121,7 +19136,12 @@ var _user$project$Navigation_View$navigationCollapse = A2(
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$a,
-							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Messages$NavigateTo(_user$project$Routing$StorageRoute)),
+								_1: {ctor: '[]'}
+							},
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html$text('Storage'),
@@ -19397,6 +19417,188 @@ var _user$project$Navigation_View$navigation = A2(
 		_1: {ctor: '[]'}
 	});
 
+var _user$project$Storage_Item$storageItem = F2(
+	function (today, p) {
+		var timeToExpire = A3(_justinmimbs$elm_date_extra$Date_Extra$diff, _justinmimbs$elm_date_extra$Date_Extra$Day, today, p.expiresAt);
+		var itemClass = (_elm_lang$core$Native_Utils.cmp(timeToExpire, 5) < 1) ? 'danger' : ((_elm_lang$core$Native_Utils.cmp(timeToExpire, 10) < 1) ? 'warning' : '');
+		return A2(
+			_elm_lang$html$Html$tr,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(itemClass),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$td,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(p.productBrand.name),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$td,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(p.productType.name),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$td,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(_justinmimbs$elm_date_extra$Date_Extra$toUtcFormattedString, 'MMMM d, y', p.expiresAt)),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$td,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(p.count)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
+
+var _user$project$Storage_List$storageList = function (_p0) {
+	var _p1 = _p0;
+	var _p2 = {ctor: '_Tuple2', _0: _p1.productList, _1: _p1.today};
+	_v1_2:
+	do {
+		if (_p2.ctor === '_Tuple2') {
+			switch (_p2._0.ctor) {
+				case 'Success':
+					if (_p2._1.ctor === 'Just') {
+						return A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$table,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('table'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$thead,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$tr,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$th,
+															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Brand'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$th,
+																{ctor: '[]'},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text('Type'),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$th,
+																	{ctor: '[]'},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text('Expires At'),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$th,
+																		{ctor: '[]'},
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html$text('Count'),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$tbody,
+												{ctor: '[]'},
+												A2(
+													_elm_lang$core$List$map,
+													_user$project$Storage_Item$storageItem(_p2._1._0),
+													_p2._0._0.products)),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							});
+					} else {
+						break _v1_2;
+					}
+				case 'Failure':
+					return A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('alert alert-danger'),
+							_1: {
+								ctor: '::',
+								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(_p2._0._0),
+							_1: {ctor: '[]'}
+						});
+				default:
+					break _v1_2;
+			}
+		} else {
+			break _v1_2;
+		}
+	} while(false);
+	return _elm_lang$html$Html$text('');
+};
+
 var _user$project$View$notFoundView = _elm_lang$html$Html$text('Route not found');
 var _user$project$View$page = function (model) {
 	var _p0 = model.route;
@@ -19409,6 +19611,8 @@ var _user$project$View$page = function (model) {
 			return _user$project$Brand_Index$brandIndex(model);
 		case 'ProductIndexRoute':
 			return _user$project$Product_Index$productIndex(model);
+		case 'StorageRoute':
+			return _user$project$Storage_List$storageList(model);
 		default:
 			return _user$project$View$notFoundView;
 	}
@@ -19873,6 +20077,19 @@ var _user$project$Update$urlUpdate = function (model) {
 						}
 					}
 				});
+		case 'StorageRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$core$Task$perform, _user$project$Messages$ReceiveDate, _elm_lang$core$Date$now),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Commands$fetchProducts,
+						_1: {ctor: '[]'}
+					}
+				});
 		default:
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -20158,7 +20375,7 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						_p33,
 						{route: currentRoute}));
-			default:
+			case 'NavigateTo':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_p33,
@@ -20168,6 +20385,15 @@ var _user$project$Update$update = F2(
 							_user$project$Routing$toPath(_p26._0)),
 						_1: {ctor: '[]'}
 					});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p33,
+						{
+							today: _elm_lang$core$Maybe$Just(_p26._0)
+						}),
+					{ctor: '[]'});
 		}
 	});
 
@@ -20192,7 +20418,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"CreateProduct":["Result.Result Http.Error Model.Product"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ConsumeProduct":["Result.Result Http.Error Model.Product"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetProductBrand":["String"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"ClickConsumeProduct":["Model.Product"],"SetProductType":["String"],"ClickSaveProduct":[],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Messages.Msg":{"args":[],"tags":{"CreateType":["Result.Result Http.Error Model.Type"],"ClickDeleteBrand":["Int"],"ClickSaveBrand":[],"CreateProduct":["Result.Result Http.Error Model.Product"],"FetchBrand":["Result.Result Http.Error Model.BrandList"],"ConsumeProduct":["Result.Result Http.Error Model.Product"],"ClickDeleteType":["Int"],"ClickSaveType":[],"DeleteBrand":["Result.Result Http.Error Model.Brand"],"UpdateBrand":["Result.Result Http.Error Model.Brand"],"SetProductBrand":["String"],"SetTypeName":["String"],"SetBrandName":["String"],"UpdateType":["Result.Result Http.Error Model.Type"],"DeleteType":["Result.Result Http.Error Model.Type"],"ClickEditBrand":["Model.Brand"],"ClickConsumeProduct":["Model.Product"],"SetProductType":["String"],"ClickSaveProduct":[],"NavigateTo":["Routing.Route"],"FetchType":["Result.Result Http.Error Model.TypeList"],"FetchProduct":["Result.Result Http.Error Model.ProductList"],"ReceiveDate":["Date.Date"],"CreateBrand":["Result.Result Http.Error Model.Brand"],"ClickEditType":["Model.Type"],"UrlChange":["Navigation.Location"],"ToDatePicker":["DatePicker.Msg"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"DatePicker.Msg":{"args":[],"tags":{"MouseUp":[],"Focus":[],"Text":["String"],"MouseDown":[],"Blur":[],"ChangeFocus":["Date.Date"],"CurrentDate":["Date.Date"],"Pick":["Maybe.Maybe Date.Date"],"SubmitText":[]}},"Routing.Route":{"args":[],"tags":{"BrandIndexRoute":[],"HomeIndexRoute":[],"ProductIndexRoute":[],"TypeIndexRoute":[],"NotFoundRoute":[],"StorageRoute":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Date.Date":{"args":[],"tags":{"Date":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Model.Brand":{"args":[],"type":"{ id : Int, name : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Model.BrandList":{"args":[],"type":"{ brands : List Model.Brand }"},"Model.TypeList":{"args":[],"type":"{ types : List Model.Type }"},"Model.Type":{"args":[],"type":"{ id : Int, name : String }"},"Model.Product":{"args":[],"type":"{ productType : Model.Type , productBrand : Model.Brand , count : Int , expiresAt : Date.Date }"},"Model.ProductList":{"args":[],"type":"{ products : List Model.Product }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Messages.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

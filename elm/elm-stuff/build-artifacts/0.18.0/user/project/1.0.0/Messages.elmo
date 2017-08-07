@@ -1,3 +1,6 @@
+var _user$project$Messages$ReceiveDate = function (a) {
+	return {ctor: 'ReceiveDate', _0: a};
+};
 var _user$project$Messages$NavigateTo = function (a) {
 	return {ctor: 'NavigateTo', _0: a};
 };

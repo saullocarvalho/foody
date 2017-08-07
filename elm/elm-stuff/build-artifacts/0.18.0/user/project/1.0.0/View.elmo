@@ -10,6 +10,8 @@ var _user$project$View$page = function (model) {
 			return _user$project$Brand_Index$brandIndex(model);
 		case 'ProductIndexRoute':
 			return _user$project$Product_Index$productIndex(model);
+		case 'StorageRoute':
+			return _user$project$Storage_List$storageList(model);
 		default:
 			return _user$project$View$notFoundView;
 	}

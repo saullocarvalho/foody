@@ -418,6 +418,19 @@ var _user$project$Update$urlUpdate = function (model) {
 						}
 					}
 				});
+		case 'StorageRoute':
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				model,
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$core$Task$perform, _user$project$Messages$ReceiveDate, _elm_lang$core$Date$now),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Commands$fetchProducts,
+						_1: {ctor: '[]'}
+					}
+				});
 		default:
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
@@ -703,7 +716,7 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						_p33,
 						{route: currentRoute}));
-			default:
+			case 'NavigateTo':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_p33,
@@ -713,5 +726,14 @@ var _user$project$Update$update = F2(
 							_user$project$Routing$toPath(_p26._0)),
 						_1: {ctor: '[]'}
 					});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						_p33,
+						{
+							today: _elm_lang$core$Maybe$Just(_p26._0)
+						}),
+					{ctor: '[]'});
 		}
 	});

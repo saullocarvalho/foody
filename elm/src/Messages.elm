@@ -5,6 +5,7 @@ import Navigation
 import Model exposing (..)
 import Routing exposing (Route)
 import DatePicker exposing (..)
+import Date exposing (Date)
 
 
 type Msg
@@ -34,3 +35,4 @@ type Msg
     | ToDatePicker DatePicker.Msg
     | UrlChange Navigation.Location
     | NavigateTo Route
+    | ReceiveDate Date

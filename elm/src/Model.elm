@@ -26,6 +26,7 @@ initialModel route datePicker =
     , productExpiresAt = Nothing
     , datePicker = datePicker
     , route = route
+    , today = Nothing
     }
 
 
@@ -42,6 +43,7 @@ type alias Model =
     , productExpiresAt : Maybe Date
     , datePicker : DatePicker.DatePicker
     , route : Route
+    , today : Maybe Date
     }
 
 

@@ -9,6 +9,7 @@ import Type.Index exposing (typeIndex)
 import Brand.Index exposing (brandIndex)
 import Product.Index exposing (productIndex)
 import Navigation.View exposing (navigation)
+import Storage.List exposing (storageList)
 import Routing exposing (Route(..))
 
 
@@ -42,6 +43,9 @@ page model =
 
         ProductIndexRoute ->
             productIndex model
+
+        StorageRoute ->
+            storageList model
 
         NotFoundRoute ->
             notFoundView

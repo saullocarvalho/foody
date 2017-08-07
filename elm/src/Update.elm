@@ -8,6 +8,8 @@ import Settings exposing (settings)
 import Routing exposing (Route(..), parse, toPath)
 import Util exposing (..)
 import DatePicker exposing (DateEvent(..))
+import Task exposing (perform)
+import Date exposing (now)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -160,6 +162,9 @@ update msg ({ datePicker } as model) =
         NavigateTo route ->
             model ! [ Navigation.newUrl <| toPath route ]
 
+        ReceiveDate date ->
+            { model | today = Just date } ! []
+
 
 urlUpdate : Model -> ( Model, Cmd Messages.Msg )
 urlUpdate model =
@@ -179,6 +184,9 @@ urlUpdate model =
                     DatePicker.init
             in
                 model ! [ Cmd.map ToDatePicker datePickerFx, fetchTypes, fetchBrands, fetchProducts ]
+
+        StorageRoute ->
+            model ! [ Task.perform ReceiveDate Date.now, fetchProducts ]
 
         _ ->
             model ! []
